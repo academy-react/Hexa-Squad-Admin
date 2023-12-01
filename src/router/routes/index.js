@@ -12,6 +12,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 
 // ** Utils
 import { isObjEmpty } from "@utils";
+import { getUserData } from "../../utility/Utils";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -145,9 +146,9 @@ const MergeLayoutRoutes = (layout, defaultLayout) => {
 const getRoutes = (layout) => {
   const defaultLayout = layout || "vertical";
   const layouts = ["vertical", "horizontal", "blank"];
-
+  const user = getUserData();
   const AllRoutes = [];
-
+  const AllPrivetRoutes = [];
   layouts.forEach((layoutItem) => {
     const LayoutRoutes = MergeLayoutRoutes(layoutItem, defaultLayout);
 
@@ -156,8 +157,17 @@ const getRoutes = (layout) => {
       element: getLayout[layoutItem] || getLayout[defaultLayout],
       children: LayoutRoutes,
     });
+    AllPrivetRoutes.push({
+      path: "/",
+      element: <Navigate to={"/login"} />,
+      children: LayoutRoutes,
+    });
   });
-  return AllRoutes;
+  if (user) {
+    return AllRoutes;
+  } else {
+    return AllPrivetRoutes;
+  }
 };
 
 export { DefaultRoute, TemplateTitle, Routes, getRoutes };

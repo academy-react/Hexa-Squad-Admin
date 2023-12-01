@@ -14,7 +14,6 @@ import {
   Col,
   CardTitle,
   CardText,
-  Form,
   Label,
   Input,
   Button,
@@ -26,14 +25,41 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
+import instance from "../utility/interceptor";
+import { Field, Form, Formik } from "formik";
+import toast from "react-hot-toast";
+import { setItem } from "../utility/local-storage/storage.services";
+import { getProfile } from "../utility/api/GetData/GetProfile/GetProfile";
 
 const Login = () => {
   const { skin } = useSkin();
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
+  const onSubmitLogin = async (value) => {
+    console.log(value);
+    try {
+      const result = await instance.post("/Sign/Login", {
+        phoneOrGmail: value.phoneOrGmail,
+        password: value.password,
+        rememberMe: value.rememberMe,
+      });
+      const userInfo = await getProfile();
+      setItem("token", result.token);
+      setItem("userData", userInfo);
+      console.log(result);
+      if (result.success) {
+          window.location.pathname = "/";
+      } else {
+        toast.error(result.errors == null ? result.message : result.errors[0]);
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
   return (
-    <div className="auth-wrapper auth-cover">
+    <div className="auth-wrapper auth-cover IRANSans">
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
           <svg viewBox="0 0 139 95" version="1.1" height="28">
@@ -114,75 +140,71 @@ const Login = () => {
           lg="4"
           sm="12"
         >
-          <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
+          <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12" dir="rtl">
             <CardTitle tag="h2" className="fw-bold mb-1">
-              Welcome to Vuexy! 👋
+              به پنل ادمین خوش آمدید! 👋
             </CardTitle>
             <CardText className="mb-2">
-              Please sign-in to your account and start the adventure
+              لطفا برای دسترسی به پنل ادمین ورود کنید
             </CardText>
-            <Form
+            <Formik
               className="auth-login-form mt-2"
-              onSubmit={(e) => e.preventDefault()}
+              initialValues={{
+                phoneOrGmail: "",
+                password: "",
+                rememberMe: false,
+              }}
+              enableReinitialize={true}
+              onSubmit={(e) => {
+                onSubmitLogin(e);
+              }}
             >
-              <div className="mb-1">
-                <Label className="form-label" for="login-email">
-                  Email
-                </Label>
-                <Input
-                  type="email"
-                  id="login-email"
-                  placeholder="john@example.com"
-                  autoFocus
-                />
-              </div>
-              <div className="mb-1">
-                <div className="d-flex justify-content-between">
-                  <Label className="form-label" for="login-password">
-                    Password
+              <Form>
+                <div className="mb-1">
+                  <Label className="form-label" for="login-email">
+                    ایمیل یا شماره تماس
                   </Label>
-                  <Link to="/forgot-password">
-                    <small>Forgot Password?</small>
-                  </Link>
+                  <Field
+                    type="text"
+                    id="login-email"
+                    name="phoneOrGmail"
+                    placeholder="you@example.com یا شماره تماس"
+                    autoFocus
+                    className="form-control"
+                  />
                 </div>
-                <InputPasswordToggle
-                  className="input-group-merge"
-                  id="login-password"
-                />
-              </div>
-              <div className="form-check mb-1">
-                <Input type="checkbox" id="remember-me" />
-                <Label className="form-check-label" for="remember-me">
-                  Remember Me
-                </Label>
-              </div>
-              <Button tag={Link} to="/" color="primary" block>
-                Sign in
-              </Button>
-            </Form>
+                <div className="mb-1">
+                  <div className="d-flex justify-content-between">
+                    <Label className="form-label" for="login-password">
+                      رمز عبور
+                    </Label>
+                    <Link to="/forgot-password">
+                      <small>رمز عبور را فراموش کردید ؟</small>
+                    </Link>
+                  </div>
+                  <InputPasswordToggle
+                    className="input-group-merge"
+                    name={"password"}
+                    id="login-password"
+                  />
+                </div>
+                <div className="form-check mb-1">
+                  <Input type="checkbox" name="rememberMe" id="remember-me" />
+                  <Label className="form-check-label" for="remember-me">
+                    مرا به یاد بیاور !
+                  </Label>
+                </div>
+                <Button type="submit" color="primary" block>
+                  ورود به پنل
+                </Button>
+              </Form>
+            </Formik>
             <p className="text-center mt-2">
-              <span className="me-25">New on our platform?</span>
+              <span className="me-25">کاربر جدید هستید ؟</span>
               <Link to="/register">
-                <span>Create an account</span>
+                <span> ساخت اکانت جدید</span>
               </Link>
             </p>
-            <div className="divider my-2">
-              <div className="divider-text">or</div>
-            </div>
-            <div className="auth-footer-btn d-flex justify-content-center">
-              <Button color="facebook">
-                <Facebook size={14} />
-              </Button>
-              <Button color="twitter">
-                <Twitter size={14} />
-              </Button>
-              <Button color="google">
-                <Mail size={14} />
-              </Button>
-              <Button className="me-0" color="github">
-                <GitHub size={14} />
-              </Button>
-            </div>
           </Col>
         </Col>
       </Row>

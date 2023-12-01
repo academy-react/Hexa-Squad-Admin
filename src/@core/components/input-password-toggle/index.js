@@ -8,11 +8,13 @@ import { Eye, EyeOff } from "react-feather";
 
 // ** Reactstrap Imports
 import { InputGroup, Input, InputGroupText, Label } from "reactstrap";
+import { Field } from "formik";
 
 const InputPasswordToggle = forwardRef((props, ref) => {
   // ** Props
   const {
     label,
+    name,
     hideIcon,
     showIcon,
     visible,
@@ -52,12 +54,13 @@ const InputPasswordToggle = forwardRef((props, ref) => {
           "is-invalid": invalid,
         })}
       >
-        <Input
+        <Field
           ref={ref}
+          name={name}
           invalid={invalid}
           type={inputVisibility === false ? "password" : "text"}
           placeholder={placeholder ? placeholder : "············"}
-          className={classnames({
+          className={'form-control '+classnames({
             [inputClassName]: inputClassName,
           })}
           /*eslint-disable */

@@ -1,4 +1,5 @@
 // ** React Imports
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // ** Custom Components
@@ -26,8 +27,14 @@ import {
 
 // ** Default Avatar Image
 import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
+import { getUserData } from "../../../../utility/Utils";
 
 const UserDropdown = () => {
+  const [userData, setUserData] = useState({});
+  const userInfo = getUserData();
+  useEffect(() => {
+    setUserData(userInfo);
+  }, [userInfo]);
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
       <DropdownToggle
@@ -37,11 +44,11 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold">John Doe</span>
+          <span className="user-name fw-bold">{userData.fName} {userData.lName}</span>
           <span className="user-status">Admin</span>
         </div>
         <Avatar
-          img={defaultAvatar}
+          img={userData.currentPictureAddress}
           imgHeight="40"
           imgWidth="40"
           status="online"

@@ -17,7 +17,7 @@ const HorizontalLayout = (props) => {
   // }, [])
 
   return (
-    <Layout menuData={navigation} {...props}>
+    <Layout menuData={navigatio}  {...props}>
       <Outlet />
     </Layout>
   );

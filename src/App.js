@@ -1,7 +1,8 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 // ** Router Import
 import Router from "./router/Router";
+import { getProfile } from "./utility/api/GetData/GetProfile/GetProfile";
 
 const App = () => {
   return (
