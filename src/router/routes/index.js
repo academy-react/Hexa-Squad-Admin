@@ -35,6 +35,8 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 
+const UserList = lazy(() => import('../../views/apps/user/list/UserList')) 
+
 // ** Merge Routes
 const Routes = [
   {
@@ -84,6 +86,11 @@ const Routes = [
     meta: {
       layout: "blank",
     },
+  },
+
+  {
+    element: <UserList />,
+    path: '/apps/user/list'
   },
 ];
 
