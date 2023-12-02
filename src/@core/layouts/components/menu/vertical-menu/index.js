@@ -46,7 +46,7 @@ const Sidebar = (props) => {
   return (
     <Fragment>
       <div
-        className={classnames(
+        className={'IRANSans '+classnames(
           "main-menu menu-fixed menu-accordion menu-shadow",
           {
             expanded: menuHover || menuCollapsed === false,

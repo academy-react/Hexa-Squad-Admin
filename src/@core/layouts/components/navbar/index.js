@@ -25,7 +25,7 @@ const ThemeNavbar = (props) => {
 
   return (
     <Fragment>
-      <div className="bookmark-wrapper d-flex align-items-center">
+      <div className="bookmark-wrapper IRANSans d-flex align-items-center">
         <ul className="navbar-nav d-xl-none">
           <NavItem className="mobile-menu me-auto">
             <NavLink

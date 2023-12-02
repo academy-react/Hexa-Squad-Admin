@@ -13,6 +13,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
+import Courses from "../../pages/Courses";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -46,12 +47,8 @@ const Routes = [
     element: <Home />,
   },
   {
-    path: "/sample",
-    element: <Sample />,
-  },
-  {
-    path: "/second-page",
-    element: <SecondPage />,
+    path: "/Courses",
+    element: <Courses />,
   },
   {
     path: "/login",

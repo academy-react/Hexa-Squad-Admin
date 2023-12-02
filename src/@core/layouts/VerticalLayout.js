@@ -131,8 +131,8 @@ const VerticalLayout = (props) => {
   }
   return (
     <div
-      className={classnames(
-        `wrapper vertical-layout ${
+      className={'IRANSans '+classnames(
+        `wrapper vertical-layout  ${
           navbarWrapperClasses[navbarType] || "navbar-floating"
         } ${footerClasses[footerType] || "footer-static"}`,
         {

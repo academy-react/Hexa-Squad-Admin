@@ -113,8 +113,8 @@ const HorizontalLayout = (props) => {
 
   return (
     <div
-      className={classnames(
-        `wrapper horizontal-layout horizontal-menu ${
+      className={'IRANSans '+classnames(
+        `wrapper horizontal-layout  horizontal-menu ${
           navbarWrapperClasses[navbarType] || "navbar-floating"
         } ${footerClasses[footerType] || "footer-static"} menu-expanded`
       )}
