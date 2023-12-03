@@ -17,9 +17,7 @@ const Router = () => {
 
   const allRoutes = getRoutes(layout);
   const getHomeRoute = () => {
-    console.log("in function");
     const user = getUserData();
-    console.log(user);
     if (user) {
       return "/home";
     } else {
@@ -29,7 +27,7 @@ const Router = () => {
   const routes = useRoutes([
     {
       path: "/",
-      index:true,
+      index: true,
       element: <Navigate replace to={getHomeRoute()} />,
     },
     {

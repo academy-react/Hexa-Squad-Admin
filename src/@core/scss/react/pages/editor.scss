@@ -1,0 +1,22 @@
+@import "../../base/pages/modal-create-app.scss";
+.ce-block {
+  margin: 10px;
+  padding: 10px 0 10px 75px;
+  border-radius: 10px;
+  border: 1px solid;
+  .ce-block__content {
+    max-width: 1000px;
+  }
+}
+.ce-toolbar__actions {
+  top: 10px;
+  left: -60px;
+}
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn {
+  background-color: #eff2f5;
+  margin-left: 5px;
+}
+.codex-editor__redactor {
+  padding-bottom: 0 !important;
+}

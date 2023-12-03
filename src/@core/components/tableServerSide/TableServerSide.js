@@ -20,6 +20,7 @@ import {
   Col,
   Button,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
   <div className="form-check">
@@ -38,6 +39,7 @@ const DataTableServerSide = ({
   allData,
   data,
   BtnTitle,
+  BtnLink,
 }) => {
   const searchRef = useRef();
   console.log(data);
@@ -116,10 +118,15 @@ const DataTableServerSide = ({
         <CardHeader className="border-bottom">
           <CardTitle tag="h4">{title}</CardTitle>
           <CardTitle tag="h4">
-            <Button color="primary" className="d-flex gap-1 align-items-center">
-              {BtnTitle}
-              <Book />
-            </Button>
+            <Link to={BtnLink}>
+              <Button
+                color="primary"
+                className="d-flex gap-1 align-items-center"
+              >
+                {BtnTitle}
+                <Book />
+              </Button>
+            </Link>
           </CardTitle>
         </CardHeader>
         <Row className="mx-0 mt-1 mb-50">

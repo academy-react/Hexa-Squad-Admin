@@ -14,6 +14,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
 import Courses from "../../pages/Courses";
+import CreateCourse from "../../pages/CreateCourse";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -35,7 +36,7 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 
-const UserList = lazy(() => import('../../views/apps/user/list/UserList')) 
+const UserList = lazy(() => import("../../views/apps/user/list/UserList"));
 
 // ** Merge Routes
 const Routes = [
@@ -52,23 +53,10 @@ const Routes = [
     path: "/Courses",
     element: <Courses />,
   },
+  { path: "/Course/create", element: <CreateCourse /> },
   {
     path: "/login",
     element: <Login />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/register",
-    element: <Register />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
     meta: {
       layout: "blank",
     },
@@ -90,7 +78,7 @@ const Routes = [
 
   {
     element: <UserList />,
-    path: '/apps/user/list'
+    path: "/apps/user/list",
   },
 ];
 
