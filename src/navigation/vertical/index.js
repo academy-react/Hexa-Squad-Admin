@@ -15,14 +15,20 @@ export default [
   },
   {
     id: "users",
-    title: "User",
+    title: "کاربران",
     icon: <User size={20} />,
     children: [
       {
         id: "list",
-        title: "List",
-        icon: <Circle size={12} />,
-        navLink: "/apps/user/list",
+        title: "لیست کاربران",
+        icon: <List size={12} />,
+        navLink: "/apps/user/userList",
+      },
+      {
+        id: "list",
+        title: "لیست مدیران",
+        icon: <List size={12} />,
+        navLink: "/apps/user/adminList",
       },
       // {
       //   id: "view",

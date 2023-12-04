@@ -1,73 +1,58 @@
-import React, {useEffect, useState} from "react";
-import Select from "react-select";
-import UserTable from "./UserTable";
+
+import { useEffect, useState } from "react";
+import TableServerSide from "../../../../@core/components/tableServerSide/TableServerSide";
+import { userListColumns } from "../../../../@core/components/tableServerSide/data";
 import instance from "../../../../utility/interceptor";
+import { User } from "react-feather";
 
 const UserList = () => {
-  const options = [
-    { value: 3, label: 3 },
-    { value: 5, label: 5 },
-    { value: 6, label: 6 },
-    { value: 8, label: 8 },
-    { value: 10, label: 10 },
-  ];
-  const [selectedOptions, setSelectedOption] = useState(null);
+  const [data, setData] = useState([]);
+  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
 
-  const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
+  const userParams = {
+    PageNumber: currentPage,
+    RowsOfPage: rowsPerPage,
+    SortingCol: "DESC",
+    SortType: "InsertDate",
+    Query: searchValue,
+    IsActiveUser: "true",
+    IsDeletedUser: "true",
+    roleId: 3
   };
-  // const filterSearch = (value) => {
-  //   let filteredData = allData.filter((item) => {
-  //     return item.title.toLowerCase().indexOf(value.toLowerCase()) != -1;
-  //   });
-  //   setData(filteredData);
-  // };
-
-  // get User List
-  const [userList, setUserList] = useState([])
-
   const getUserList = async () => {
-    try{
-      const result = await instance.get("User/UserMannage?PageNumber=0&RowsOfPage=0&SortingCol=DESC&SortType=InsertDate&Query=&IsActiveUser=true&IsDeletedUser=true&roleId=3")
-      console.log("result=",result)
-      setUserList(result.listUser);
+    try {
+      const result = await instance.get("/User/UserMannage", {
+        params: userParams,
+      });
+      setData(result.listUser);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-
+  };
   useEffect(() => {
-    getUserList()
-  }, []);
-  console.log("userList=",userList)
+    getUserList();
+  }, [searchValue, currentPage, rowsPerPage]);
 
   return (
-    <>
-      <div className="row container">
-        <div className="col-md-8" style={{height: "150px"}}>
-          <i className="bi bi-search position-absolute right-4 top-3 "></i>
-          <input
-            type="search"
-            // onKeyUp={(event) => {
-            //   filterSearch(event.target.value);
-            // }}
-            placeholder="... جستجوی دوره"
-            className=""
-          />
-        </div>
-        <div className=" col-md-4" dir="rtl">
-          <Select
-            value={selectedOptions}
-            placeholder={6}
-            options={options}
-            className=""
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-      
-      <UserTable userList={userList} />
-    </>
+    <div>
+      <TableServerSide
+        allData={data}
+        data={data}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        serverSideColumns={userListColumns}
+        title={"لیست کاربران"}
+        BtnTitle={"اضافه کردن کاربر"}
+        BtnIcon={<User/>}
+      />
+    </div>
   );
-}
+};
+
 export default UserList;

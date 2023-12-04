@@ -1,32 +1,38 @@
-import { useEffect, useState } from "react";
-import TableServerSide from "../@core/components/tableServerSide/TableServerSide";
-import { serverSideColumns } from "../@core/components/tableServerSide/data";
-import instance from "../utility/interceptor";
-import { Book } from "react-feather";
 
-const Courses = () => {
+import { useEffect, useState } from "react";
+import TableServerSide from "../../../../@core/components/tableServerSide/TableServerSide";
+import { userListColumns } from "../../../../@core/components/tableServerSide/data";
+import instance from "../../../../utility/interceptor";
+import { User } from "react-feather";
+
+const AdminList = () => {
   const [data, setData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
 
-  const coursesParams = {
+  const userParams = {
     PageNumber: currentPage,
     RowsOfPage: rowsPerPage,
+    SortingCol: "DESC",
+    SortType: "InsertDate",
     Query: searchValue,
+    IsActiveUser: "true",
+    IsDeletedUser: "true",
+    roleId: 1
   };
-  const getTeacherCourses = async () => {
+  const getUserList = async () => {
     try {
-      const courses = await instance.get("/Course/TeacherCourseList", {
-        params: coursesParams,
+      const result = await instance.get("/User/UserMannage", {
+        params: userParams,
       });
-      setData(courses.teacherCourseDtos);
+      setData(result.listUser);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getTeacherCourses();
+    getUserList();
   }, [searchValue, currentPage, rowsPerPage]);
 
   return (
@@ -40,13 +46,13 @@ const Courses = () => {
         setCurrentPage={setCurrentPage}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
-        serverSideColumns={serverSideColumns}
-        title={"دوره های شما"}
-        BtnTitle={"اضافه کردن دوره"}
-        BtnIcon={<Book/>}
+        serverSideColumns={userListColumns}
+        title={"لیست مدیران"}
+        BtnTitle={"اضافه کردن مدیر"}
+        BtnIcon={<User/>}
       />
     </div>
   );
 };
 
-export default Courses;
+export default AdminList;
