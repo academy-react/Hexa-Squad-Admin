@@ -3,18 +3,18 @@ import TableServerSide from "../@core/components/tableServerSide/TableServerSide
 import { serverSideColumns } from "../@core/components/tableServerSide/data";
 import instance from "../utility/interceptor";
 
-const Courses = () => {
+const TeacherCourses = () => {
   const [data, setData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(null);
 
-  const coursesParams = {
-    PageNumber: currentPage,
-    RowsOfPage: rowsPerPage,
-    // Query: searchValue,
-  };
   const getTeacherCourses = async () => {
+    const coursesParams = {
+      PageNumber: currentPage,
+      RowsOfPage: rowsPerPage,
+      Query: searchValue,
+    };
     try {
       const courses = await instance.get("/Course/TeacherCourseList", {
         params: coursesParams,
@@ -26,7 +26,7 @@ const Courses = () => {
   };
   useEffect(() => {
     getTeacherCourses();
-  }, [searchValue, currentPage, rowsPerPage]);
+  }, [currentPage, searchValue, rowsPerPage]);
 
   return (
     <div>
@@ -41,11 +41,11 @@ const Courses = () => {
         setSearchValue={setSearchValue}
         serverSideColumns={serverSideColumns}
         title={"دوره های شما"}
-        BtnLink={'/Course/create'}
+        BtnLink={"/Course/create"}
         BtnTitle={"اضافه کردن دوره"}
       />
     </div>
   );
 };
 
-export default Courses;
+export default TeacherCourses;

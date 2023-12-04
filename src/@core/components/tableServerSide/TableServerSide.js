@@ -48,7 +48,11 @@ const DataTableServerSide = ({
     const value = e.target.value;
     clearTimeout(searchRef.current);
     const timeOut = setTimeout(() => {
-      setSearchValue(value);
+      if (value !== "") {
+        setSearchValue(value);
+      } else {
+        setSearchValue(null);
+      }
     }, 1000);
     searchRef.current = timeOut;
   };
@@ -99,9 +103,11 @@ const DataTableServerSide = ({
       q: searchValue,
     };
 
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0;
-    });
+    const isFiltered =
+      searchValue &&
+      Object.keys(filters).some(function (k) {
+        return filters[k].length > 0;
+      });
 
     if (data.length > 0) {
       return data;

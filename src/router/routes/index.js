@@ -13,7 +13,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
-import Courses from "../../pages/Courses";
+import TeacherCourses from "../../pages/TeacherCourses";
 import CreateCourse from "../../pages/CreateCourse";
 
 const getLayout = {
@@ -50,8 +50,8 @@ const Routes = [
     element: <Home />,
   },
   {
-    path: "/Courses",
-    element: <Courses />,
+    path: "/TeacherCourses",
+    element: <TeacherCourses />,
   },
   { path: "/Course/create", element: <CreateCourse /> },
   {

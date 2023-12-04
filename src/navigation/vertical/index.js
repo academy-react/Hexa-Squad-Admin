@@ -17,7 +17,7 @@ export default [
         id: "Courses",
         title: "لیست دوره های شما",
         icon: <List size={20} />,
-        navLink: "/Courses",
+        navLink: "/TeacherCourses",
       },
       {
         id: "createCourse",
