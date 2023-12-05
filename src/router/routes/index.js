@@ -36,7 +36,8 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 
-const UserList = lazy(() => import("../../views/apps/user/list/UserList"));
+const UserList = lazy(() => import('../../views/apps/user/list/UserList')) 
+const AdminList = lazy(() => import('../../views/apps/user/list/AdminList')) 
 
 // ** Merge Routes
 const Routes = [
@@ -78,7 +79,11 @@ const Routes = [
 
   {
     element: <UserList />,
-    path: "/apps/user/list",
+    path: '/apps/user/userList'
+  },
+  {
+    element: <AdminList />,
+    path: '/apps/user/adminList'
   },
 ];
 

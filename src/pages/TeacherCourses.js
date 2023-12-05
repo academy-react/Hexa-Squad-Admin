@@ -118,6 +118,7 @@ const TeacherCourses = () => {
         title={"دوره های شما"}
         BtnLink={"/Course/create"}
         BtnTitle={"اضافه کردن دوره"}
+        BtnIcon={<Book/>}
       />
     </div>
   );

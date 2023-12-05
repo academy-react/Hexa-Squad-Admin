@@ -6,7 +6,7 @@ import { serverSideColumns } from "./data";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
-import { Book, ChevronDown, PenTool, PhoneOutgoing } from "react-feather";
+import { Book,User, ChevronDown, PenTool, PhoneOutgoing } from "react-feather";
 import DataTable from "react-data-table-component";
 
 // ** Reactstrap Imports
@@ -39,6 +39,7 @@ const DataTableServerSide = ({
   allData,
   data,
   BtnTitle,
+  BtnIcon,
   BtnLink,
 }) => {
   const searchRef = useRef();
@@ -130,7 +131,7 @@ const DataTableServerSide = ({
                 className="d-flex gap-1 align-items-center"
               >
                 {BtnTitle}
-                <Book />
+                {BtnIcon}
               </Button>
             </Link>
           </CardTitle>
