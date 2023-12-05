@@ -15,7 +15,7 @@ import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
 import Courses from "../../pages/Courses";
 import CreateCourse from "../../pages/CreateCourse";
-
+import NewsList from "../../pages/NewsList";
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -80,6 +80,12 @@ const Routes = [
     element: <UserList />,
     path: "/apps/user/list",
   },
+
+  {
+    element:  <NewsList/> ,
+    path: "/NewsList",
+  },
+
 ];
 
 const getRouteMeta = (route) => {
