@@ -105,10 +105,10 @@ const CreateCourse = () => {
         termName = [...termName, { value: item.id, label: item.termName }];
         setTermNameState([...termName]);
       });
-      create.technologyDtos.map((item) => {
-        techName = [...techName, { value: item.id, label: item.techName }];
-        setTechNameState([...techName]);
-      });
+      // create.technologyDtos.map((item) => {
+      //   techName = [...techName, { value: item.id, label: item.techName }];
+      //   setTechNameState([...techName]);
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -309,7 +309,7 @@ const CreateCourse = () => {
               <EditorJsComponent setDescribe={setDescribe} />
             </Card>
           </CardBody>
-          <Button color="success" className="w-100 my-2">
+          <Button color="success" type="submit" className="w-100 my-2">
             ساخت دوره جدید
           </Button>
         </Form>
