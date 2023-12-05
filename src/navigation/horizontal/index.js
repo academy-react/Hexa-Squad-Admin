@@ -11,6 +11,6 @@ export default [
     id: "secondPage",
     title: "لیست دوره های شما",
     icon: <List size={20} />,
-    navLink: "/Courses",
+    navLink: "/TeacherCourses",
   },
 ];

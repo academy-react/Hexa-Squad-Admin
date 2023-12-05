@@ -17,7 +17,7 @@ export default [
         id: "Courses",
         title: "لیست دوره های شما",
         icon: <List size={20} />,
-        navLink: "/Courses",
+        navLink: "/TeacherCourses",
       },
       {
         id: "createCourse",
@@ -29,14 +29,20 @@ export default [
   },
   {
     id: "users",
-    title: "کاربر",
+    title: "کاربران",
     icon: <User size={20} />,
     children: [
       {
         id: "list",
         title: "لیست کاربران",
-        icon: <Circle size={12} />,
-        navLink: "/apps/user/list",
+        icon: <List size={12} />,
+        navLink: "/apps/user/userList",
+      },
+      {
+        id: "list",
+        title: "لیست مدیران",
+        icon: <List size={12} />,
+        navLink: "/apps/user/adminList",
       },
       // {
       //   id: "view",

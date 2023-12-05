@@ -5,7 +5,7 @@ import { userListColumns } from "../../../../@core/components/tableServerSide/da
 import instance from "../../../../utility/interceptor";
 import { User } from "react-feather";
 
-const UserList = () => {
+const AdminList = () => {
   const [data, setData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +19,7 @@ const UserList = () => {
     Query: searchValue,
     IsActiveUser: "true",
     IsDeletedUser: "true",
-    roleId: 3
+    roleId: 1
   };
   const getUserList = async () => {
     try {
@@ -47,12 +47,12 @@ const UserList = () => {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         serverSideColumns={userListColumns}
-        title={"لیست کاربران"}
-        BtnTitle={"اضافه کردن کاربر"}
+        title={"لیست مدیران"}
+        BtnTitle={"اضافه کردن مدیر"}
         BtnIcon={<User/>}
       />
     </div>
   );
 };
 
-export default UserList;
+export default AdminList;

@@ -6,7 +6,7 @@ import { serverSideColumns } from "./data";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
-import { Book, ChevronDown, PenTool, PhoneOutgoing } from "react-feather";
+import { Book,User, ChevronDown, PenTool, PhoneOutgoing } from "react-feather";
 import DataTable from "react-data-table-component";
 
 // ** Reactstrap Imports
@@ -39,6 +39,7 @@ const DataTableServerSide = ({
   allData,
   data,
   BtnTitle,
+  BtnIcon,
   BtnLink,
 }) => {
   const searchRef = useRef();
@@ -48,7 +49,11 @@ const DataTableServerSide = ({
     const value = e.target.value;
     clearTimeout(searchRef.current);
     const timeOut = setTimeout(() => {
-      setSearchValue(value);
+      if (value !== "") {
+        setSearchValue(value);
+      } else {
+        setSearchValue(null);
+      }
     }, 1000);
     searchRef.current = timeOut;
   };
@@ -99,9 +104,11 @@ const DataTableServerSide = ({
       q: searchValue,
     };
 
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0;
-    });
+    const isFiltered =
+      searchValue &&
+      Object.keys(filters).some(function (k) {
+        return filters[k].length > 0;
+      });
 
     if (data.length > 0) {
       return data;
@@ -124,7 +131,7 @@ const DataTableServerSide = ({
                 className="d-flex gap-1 align-items-center"
               >
                 {BtnTitle}
-                <Book />
+                {BtnIcon}
               </Button>
             </Link>
           </CardTitle>
