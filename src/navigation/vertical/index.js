@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, List, User } from "react-feather";
+import { Home, Circle, List, User, Edit } from "react-feather";
 
 export default [
   {
@@ -8,10 +8,24 @@ export default [
     navLink: "/home",
   },
   {
-    id: "secondPage",
-    title: "لیست دوره های شما",
+    id: "Course",
+    title: "دوره ها",
     icon: <List size={20} />,
-    navLink: "/Courses",
+    navLink: "/Course",
+    children: [
+      {
+        id: "Courses",
+        title: "لیست دوره های شما",
+        icon: <List size={20} />,
+        navLink: "/Courses",
+      },
+      {
+        id: "createCourse",
+        icon: <Edit />,
+        title: "ساخت دوره جدید",
+        navLink: "/Course/create",
+      },
+    ],
   },
   {
     id: "users",

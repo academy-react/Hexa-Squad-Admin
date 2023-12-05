@@ -13,7 +13,7 @@ const Courses = () => {
   const coursesParams = {
     PageNumber: currentPage,
     RowsOfPage: rowsPerPage,
-    Query: searchValue,
+    // Query: searchValue,
   };
   const getTeacherCourses = async () => {
     try {
@@ -42,6 +42,7 @@ const Courses = () => {
         setSearchValue={setSearchValue}
         serverSideColumns={serverSideColumns}
         title={"دوره های شما"}
+        BtnLink={'/Course/create'}
         BtnTitle={"اضافه کردن دوره"}
         BtnIcon={<Book/>}
       />

@@ -28,7 +28,7 @@ import "@styles/react/pages/page-authentication.scss";
 import instance from "../utility/interceptor";
 import { Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
-import { setItem } from "../utility/local-storage/storage.services";
+import { removeItem, setItem } from "../utility/local-storage/storage.services";
 import { getProfile } from "../utility/api/GetData/GetProfile/GetProfile";
 
 const Login = () => {

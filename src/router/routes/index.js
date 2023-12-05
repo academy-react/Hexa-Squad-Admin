@@ -14,6 +14,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
 import Courses from "../../pages/Courses";
+import CreateCourse from "../../pages/CreateCourse";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -53,23 +54,10 @@ const Routes = [
     path: "/Courses",
     element: <Courses />,
   },
+  { path: "/Course/create", element: <CreateCourse /> },
   {
     path: "/login",
     element: <Login />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/register",
-    element: <Register />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
     meta: {
       layout: "blank",
     },
