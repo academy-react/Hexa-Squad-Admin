@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import { selectThemeColors } from "../utility/Utils";
 import DeleteCourse from "../utility/api/DeleteData/DeleteCourse";
+import { ThemeColors } from "../utility/context/ThemeColors";
 
 const TeacherCourses = () => {
   const [data, setData] = useState([]);
@@ -93,7 +94,7 @@ const TeacherCourses = () => {
   const deleteCourse = () => {
     console.log("selectedRows", selectedRows);
     selectedRows.map((course) => {
-      DeleteCourse(course.courseId,'/TeacherCourses',true);
+      DeleteCourse(course.courseId, "/TeacherCourses", true);
     });
   };
 
@@ -135,7 +136,8 @@ const TeacherCourses = () => {
       <Row>
         <Col lg="3" sm="6">
           <StatsHorizontal
-            theme={selectThemeColors}
+            // theme={selectThemeColors}
+            backGroundColor={isALLData && "#0002"}
             className=" cursor-pointer rounded"
             icon={<BookOpen size={21} />}
             color="warning"
@@ -151,7 +153,8 @@ const TeacherCourses = () => {
         </Col>
         <Col lg="3" sm="6">
           <StatsHorizontal
-            theme={selectThemeColors}
+            // theme={selectThemeColors}
+            backGroundColor={isActiveData && "#0002"}
             className=" cursor-pointer rounded"
             icon={<BookOpen size={21} />}
             color="success"
@@ -167,7 +170,8 @@ const TeacherCourses = () => {
         </Col>
         <Col lg="3" sm="6">
           <StatsHorizontal
-            theme={selectThemeColors}
+            // theme={ThemeColors}
+            backGroundColor={isDeletedData && "#0002"}
             className=" cursor-pointer rounded"
             icon={<Trash2 size={21} />}
             color="danger"
@@ -183,7 +187,8 @@ const TeacherCourses = () => {
         </Col>
         <Col lg="3" sm="6">
           <StatsHorizontal
-            theme={selectThemeColors}
+            // theme={selectThemeColors}
+            backGroundColor={isCurrentData && "#0002"}
             className=" cursor-pointer rounded"
             icon={<Book size={21} />}
             color="primary"

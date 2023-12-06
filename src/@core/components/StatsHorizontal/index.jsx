@@ -14,9 +14,10 @@ const StatsHorizontal = ({
   className,
   statsMargin,
   onclick,
+  backGroundColor,
 }) => {
   return (
-    <Card onClick={onclick}>
+    <Card onClick={onclick} style={{ background: backGroundColor }}>
       <CardBody className={className}>
         <div className="d-flex justify-content-between align-items-center">
           <div>
