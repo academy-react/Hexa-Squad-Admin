@@ -21,7 +21,7 @@ const PickerRange = ({ picker, setDateRange }) => {
         style={{
           width: "100%",
           background: "transparent",
-          color: "#777",
+          color: "#888",
           padding: "0.571rem 1rem",
           height: "40px",
         }}

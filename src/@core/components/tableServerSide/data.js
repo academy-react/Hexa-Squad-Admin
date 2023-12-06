@@ -1,12 +1,23 @@
 import { Badge } from "reactstrap";
 import Avatar from "../avatar";
-import { Edit, Eye, Trash2,  Link, MoreVertical } from "react-feather";
-import { Navigate } from "react-router-dom";
-
+import {
+  Edit,
+  Eye,
+  Trash2,
+  Link,
+  MoreVertical,
+  Trash,
+  Check,
+  X,
+} from "react-feather";
+import { Navigate, useNavigate } from "react-router-dom";
+import DeleteCourse from "../../../utility/api/DeleteData/DeleteCourse";
+import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
 export const serverSideColumns = [
   {
     sortable: true,
     name: "نام دوره",
+    sortField: "Title",
     minWidth: "225px",
     selector: (row) => row.title,
     cell: (row) => (
@@ -22,25 +33,36 @@ export const serverSideColumns = [
   {
     sortable: true,
     name: "نام مدرس",
-    minWidth: "250px",
+    sortField: "FullName",
+    minWidth: "150px",
     selector: (row) => row.fullName,
   },
   {
     sortable: true,
     name: "قیمت دوره",
-    minWidth: "250px",
+    sortField: "Cost",
+    minWidth: "150px",
     selector: (row) => row.cost,
   },
   {
     sortable: true,
+    name: "وضعیت برگذاری",
+    sortField: "StatusName",
+    minWidth: "150px",
+    selector: (row) => row.statusName,
+  },
+  {
+    sortable: true,
     name: "سطح دوره",
+    sortField: "LevelName",
     minWidth: "150px",
     selector: (row) => row.levelName,
     link: (row) => row.id,
   },
   {
-    sortable: false,
+    sortable: true,
     name: "وضعیت فعال بودن",
+    sortField: "IsActive",
     minWidth: "150px",
     selector: (row) => row.isActive,
     cell: (row) => (
@@ -58,16 +80,95 @@ export const serverSideColumns = [
     ),
   },
   {
+    sortable: true,
+    name: "وضعیت حذف بودن",
+    sortField: "IsActive",
+    minWidth: "150px",
+    selector: (row) => row.isdelete,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate">
+            {row.isdelete ? (
+              <Badge color="light-danger">حذف شده</Badge>
+            ) : (
+              <Badge color="light-success">حذف نشده</Badge>
+            )}
+          </span>
+        </div>
+      </div>
+    ),
+  },
+  {
     sortable: false,
     name: "انجام عملیات",
-    minWidth: "150px",
+    minWidth: "330px",
     selector: (row) => row.isActive,
     cell: (row) => (
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Eye/>
-            <Edit/>
+            <Eye color="blue" className="cursor-pointer" />
+            <Edit className="cursor-pointer" />
+            {row.isdelete ? (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  DeleteCourse(row.courseId, "/TeacherCourses", false);
+                }}
+                style={{ color: "green" }}
+              >
+                لغو حذف
+                <Trash color="green" />
+              </div>
+            ) : (
+              <Trash
+                color="red"
+                className="cursor-pointer"
+                onClick={() => {
+                  DeleteCourse(row.courseId, "/TeacherCourses", true);
+                }}
+              />
+            )}
+            {row.isActive ? (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  activeAndDeActiveCourse(
+                    row.courseId,
+                    "/TeacherCourses",
+                    false
+                  );
+                }}
+                style={{ color: "red" }}
+              >
+                <X
+                  color="red"
+                  className="cursor-pointer"
+                  style={{ margin: " 0 5px" }}
+                />
+                غیر فعال کردن دوره
+              </div>
+            ) : (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  activeAndDeActiveCourse(
+                    row.courseId,
+                    "/TeacherCourses",
+                    true
+                  );
+                }}
+                style={{ color: "green" }}
+              >
+                <Check
+                  color="green"
+                  className="cursor-pointer "
+                  style={{ margin: " 0 5px" }}
+                />
+                فعال کردن دوره
+              </div>
+            )}
           </span>
         </div>
       </div>
@@ -86,13 +187,15 @@ export const userListColumns = [
     sortable: true,
     name: "نام ",
     minWidth: "250px",
-    
+
     // selector: (row) => row.title,
     cell: (row) => (
       <div className="d-flex align-items-center">
         {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
         <div className="user-info text-truncate ms-1">
-          <span className="d-block fw-bold text-truncate">{row.fname}{" "}{row.lname} </span>
+          <span className="d-block fw-bold text-truncate">
+            {row.fname} {row.lname}{" "}
+          </span>
           {/* <small>{row.typeName}</small> */}
         </div>
       </div>
@@ -145,9 +248,9 @@ export const userListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Eye className="text-muted cursor-pointer"/>
-            <Edit className="text-primary cursor-pointer"/>
-            <Trash2 className="text-danger cursor-pointer"/>
+            <Eye className="text-muted cursor-pointer" />
+            <Edit className="text-primary cursor-pointer" />
+            <Trash2 className="text-danger cursor-pointer" />
           </span>
         </div>
       </div>

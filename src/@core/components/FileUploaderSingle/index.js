@@ -22,7 +22,7 @@ const FileUploaderSingle = ({ setFiles, files, Title }) => {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     onDrop: (acceptedFiles) => {
-      setFiles([...files, ...acceptedFiles.map((file) => Object.assign(file))]);
+      setFiles([...acceptedFiles.map((file) => Object.assign(file))]);
     },
   });
 
@@ -33,8 +33,8 @@ const FileUploaderSingle = ({ setFiles, files, Title }) => {
           className="rounded"
           alt={file.name}
           src={URL.createObjectURL(file)}
-          height="28"
-          width="28"
+          height="80"
+          width="80"
         />
       );
     } else {
@@ -56,29 +56,22 @@ const FileUploaderSingle = ({ setFiles, files, Title }) => {
     }
   };
 
-  const fileList = files.map((file, index) => (
+  const fileList = (file) => (
     <ListGroupItem
-      key={`${file.name}-${index}`}
+      key={`${files[file].name}`}
       className="d-flex align-items-center justify-content-between"
     >
-      <div className="file-details d-flex align-items-center">
-        <div className="file-preview me-1">{renderFilePreview(file)}</div>
+      <div className="file-details d-flex align-items-center justify-content-center">
+        <div className="file-preview me-1">
+          {renderFilePreview(files[file])}
+        </div>
         <div>
-          <p className="file-name mb-0">{file.name}</p>
-          <p className="file-size mb-0">{renderFileSize(file.size)}</p>
+          <p className="file-name mb-0">{files[file].name}</p>
+          <p className="file-size mb-0">{renderFileSize(files[file].size)}</p>
         </div>
       </div>
-      <Button
-        color="danger"
-        outline
-        size="sm"
-        className="btn-icon"
-        onClick={() => handleRemoveFile(file)}
-      >
-        <X size={14} />
-      </Button>
     </ListGroupItem>
-  ));
+  );
 
   const handleRemoveAllFiles = () => {
     setFiles([]);
@@ -103,7 +96,7 @@ const FileUploaderSingle = ({ setFiles, files, Title }) => {
         </div>
         {files.length ? (
           <Fragment>
-            <ListGroup className="my-2">{fileList}</ListGroup>
+            <ListGroup className="my-2">{fileList(0)}</ListGroup>
             <div className="d-flex justify-content-end">
               <Button
                 className="me-1"

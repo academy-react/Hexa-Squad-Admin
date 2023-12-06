@@ -14,8 +14,8 @@ import PublicRoute from "@components/routes/PublicRoute";
 import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
 import TeacherCourses from "../../pages/TeacherCourses";
-import CreateCourse from "../../pages/CreateCourse";
 import NewsList from "../../pages/NewsList";
+import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,

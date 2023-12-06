@@ -6,7 +6,14 @@ import { serverSideColumns } from "./data";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
-import { Book,User, ChevronDown, PenTool, PhoneOutgoing } from "react-feather";
+import {
+  Book,
+  User,
+  ChevronDown,
+  PenTool,
+  PhoneOutgoing,
+  Trash,
+} from "react-feather";
 import DataTable from "react-data-table-component";
 
 // ** Reactstrap Imports
@@ -41,8 +48,12 @@ const DataTableServerSide = ({
   BtnTitle,
   BtnIcon,
   BtnLink,
+  onSort,
+  deleteOject,
+  setSelectedRows,
 }) => {
   const searchRef = useRef();
+  const [isChecked, setIsChecked] = useState(false);
   console.log(data);
   // ** Function to handle filter
   const handleFilter = (e) => {
@@ -58,6 +69,15 @@ const DataTableServerSide = ({
     searchRef.current = timeOut;
   };
 
+  const onSelectedCheckbox = (value) => {
+    console.log(value);
+    setSelectedRows(value.selectedRows);
+    if (value.selectedCount > 0) {
+      setIsChecked(true);
+    } else if (value.selectedCount == 0) {
+      setIsChecked(false);
+    }
+  };
   // ** Function to handle Pagination and get data
   const handlePagination = (page) => {
     setCurrentPage(page.selected + 1);
@@ -67,7 +87,7 @@ const DataTableServerSide = ({
   const handlePerPage = (e) => {
     setRowsPerPage(parseInt(e.target.value));
   };
-
+  console.log(data);
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data.length / rowsPerPage);
@@ -146,6 +166,7 @@ const DataTableServerSide = ({
                 className="dataTable-select"
                 type="select"
                 id="sort-select"
+                style={{ width: "5rem" }}
                 value={rowsPerPage}
                 onChange={(e) => handlePerPage(e)}
               >
@@ -161,7 +182,25 @@ const DataTableServerSide = ({
           </Col>
           <Col
             className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-            sm="6"
+            sm="2"
+          >
+            {isChecked ? (
+              <Button
+                color="danger"
+                className="d-flex align-items-center justify-content-center gap-1 "
+                style={{ padding: "8px 10px" }}
+                onClick={deleteOject}
+              >
+                <Trash size={18} />
+                حذف دوره
+              </Button>
+            ) : (
+              ""
+            )}
+          </Col>
+          <Col
+            className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
+            sm="4"
           >
             <Label className="me-1" for="search-input">
               جستجو
@@ -176,20 +215,28 @@ const DataTableServerSide = ({
             />
           </Col>
         </Row>
-        <div className="react-dataTable">
-          <DataTable
-            noHeader
-            pagination
-            paginationServer
-            selectableRows
-            className="react-dataTable"
-            columns={serverSideColumns}
-            sortIcon={<ChevronDown size={10} />}
-            paginationComponent={CustomPagination}
-            data={dataToRender()}
-            paginationDefaultPage={currentPage + 1}
-            selectableRowsComponent={BootstrapCheckbox}
-          />
+        <div className="react-dataTable position-relative">
+          {dataToRender() == 0 ? (
+            <div style={{ background: "#fff" }} className="py-3 text-center">
+              لیست مد نظر شما خالی است
+            </div>
+          ) : (
+            <DataTable
+              noHeader
+              pagination
+              paginationServer
+              selectableRows
+              className="react-dataTable"
+              columns={serverSideColumns}
+              onSort={onSort}
+              sortIcon={<ChevronDown size={10} />}
+              paginationComponent={CustomPagination}
+              data={dataToRender()}
+              paginationDefaultPage={currentPage + 1}
+              selectableRowsComponent={BootstrapCheckbox}
+              onSelectedRowsChange={onSelectedCheckbox}
+            />
+          )}
         </div>
       </Card>
     </Fragment>

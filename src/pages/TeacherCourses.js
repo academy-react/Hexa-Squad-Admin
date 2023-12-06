@@ -4,46 +4,107 @@ import { serverSideColumns } from "../@core/components/tableServerSide/data";
 import instance from "../utility/interceptor";
 import StatsHorizontal from "../@core/components/StatsHorizontal";
 import { Book, BookOpen, Cpu, GitBranch, Trash, Trash2 } from "react-feather";
-import { Col, Row } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  Col,
+  Label,
+  Row,
+} from "reactstrap";
 import { selectThemeColors } from "../utility/Utils";
+import DeleteCourse from "../utility/api/DeleteData/DeleteCourse";
 
 const TeacherCourses = () => {
   const [data, setData] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [sort, setSort] = useState("DESC");
+  const [sortColumn, setSortColumn] = useState("Id");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState(null);
   const [activeCourses, setActiveCourses] = useState([]);
-  const [expireCourses, setExpireCourses] = useState([]);
   const [deletedCourses, setDeletedCourses] = useState([]);
   const [currentCourses, setCurrentCourses] = useState([]);
+  const [allActiveCourses, setAllActiveCourses] = useState([]);
+  const [allDeletedCourses, setAllDeletedCourses] = useState([]);
+  const [allCurrentCourses, setAllCurrentCourses] = useState([]);
+  const [isALLData, setIsALLData] = useState(true);
+  const [isActiveData, setIsActiveData] = useState(false);
+  const [isDeletedData, setIsDeletedData] = useState(false);
+  const [isCurrentData, setIsCurrentData] = useState(false);
+
+  const getData = () => {
+    if (isALLData) {
+      return data;
+    } else if (isActiveData) {
+      return activeCourses;
+    } else if (isDeletedData) {
+      return deletedCourses;
+    } else if (isCurrentData) {
+      return currentCourses;
+    }
+  };
+  const getAllData = () => {
+    if (isALLData) {
+      return allData;
+    } else if (isActiveData) {
+      return allActiveCourses;
+    } else if (isDeletedData) {
+      return allDeletedCourses;
+    } else if (isCurrentData) {
+      return allCurrentCourses;
+    }
+  };
+  const getTitle = () => {
+    if (isALLData) {
+      return "همه دوره های شما";
+    } else if (isActiveData) {
+      return "دوره های فعال شما";
+    } else if (isDeletedData) {
+      return "دوره های حذف شده شما";
+    } else if (isCurrentData) {
+      return "دوره های در حال برگذاری";
+    }
+  };
+
   const getTeacherCourses = async () => {
     const coursesParams = {
       PageNumber: currentPage,
       RowsOfPage: rowsPerPage,
       Query: searchValue,
+      SortingCol: sort,
+      SortType: sortColumn,
     };
     try {
+      console.log(coursesParams);
       const courses = await instance.get("/Course/TeacherCourseList", {
         params: coursesParams,
       });
       setData(courses.teacherCourseDtos);
+      setAllData(courses.teacherCourseDtos);
     } catch (error) {
       console.log(error);
     }
   };
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const deleteCourse = () => {
+    console.log("selectedRows", selectedRows);
+    selectedRows.map((course) => {
+      DeleteCourse(course.courseId,'/TeacherCourses',true);
+    });
+  };
+
   useEffect(() => {
     getTeacherCourses();
-  }, [currentPage, searchValue, rowsPerPage]);
+  }, [currentPage, searchValue, rowsPerPage, sort, sortColumn]);
   useEffect(() => {
     let active =
       data.length !== 0 &&
       data.filter((course) => {
         return course.isActive === true;
-      });
-    let expire =
-      data.length !== 0 &&
-      data.filter((course) => {
-        return course.isExpire === true;
       });
     let deleted =
       data.length !== 0 &&
@@ -55,70 +116,105 @@ const TeacherCourses = () => {
       data.filter((course) => {
         return course.statusName === "درحال برگذاری";
       });
-      setActiveCourses(active)
-      setExpireCourses(expire)
-      setDeletedCourses(deleted)
-      setCurrentCourses(itsStatus)
+    setActiveCourses(active);
+    setAllActiveCourses(active);
+    setDeletedCourses(deleted);
+    setAllDeletedCourses(deleted);
+    setCurrentCourses(itsStatus);
+    setAllCurrentCourses(itsStatus);
   }, [data]);
 
+  const handleSort = (column, sortDirection) => {
+    setSort(sortDirection.toUpperCase());
+    setSortColumn(column.sortField);
+    console.log("sortField", column.sortField);
+    console.log("sortDirection", sortDirection);
+  };
   return (
     <div>
       <Row>
         <Col lg="3" sm="6">
           <StatsHorizontal
             theme={selectThemeColors}
-            className=" rounded"
+            className=" cursor-pointer rounded"
+            icon={<BookOpen size={21} />}
+            color="warning"
+            onclick={() => {
+              setIsALLData(true);
+              setIsActiveData(false);
+              setIsCurrentData(false);
+              setIsDeletedData(false);
+            }}
+            stats={data.length}
+            statTitle="همه دوره های شما"
+          />
+        </Col>
+        <Col lg="3" sm="6">
+          <StatsHorizontal
+            theme={selectThemeColors}
+            className=" cursor-pointer rounded"
             icon={<BookOpen size={21} />}
             color="success"
+            onclick={() => {
+              setIsALLData(false);
+              setIsActiveData(true);
+              setIsCurrentData(false);
+              setIsDeletedData(false);
+            }}
             stats={activeCourses.length}
-            statTitle="دوره های تایید شده شما"
+            statTitle="دوره های فعال شما"
           />
         </Col>
         <Col lg="3" sm="6">
           <StatsHorizontal
             theme={selectThemeColors}
-            className=" rounded"
-            icon={<Trash size={21} />}
-            color="warning"
-            stats={expireCourses.length}
-            statTitle="دوره های منقضی شده"
-          />
-        </Col>
-        <Col lg="3" sm="6">
-          <StatsHorizontal
-            theme={selectThemeColors}
-            className=" rounded"
+            className=" cursor-pointer rounded"
             icon={<Trash2 size={21} />}
             color="danger"
+            onclick={() => {
+              setIsALLData(false);
+              setIsActiveData(false);
+              setIsCurrentData(false);
+              setIsDeletedData(true);
+            }}
             stats={deletedCourses.length}
-            statTitle='دوره های حذف شده'
+            statTitle="دوره های حذف شده"
           />
         </Col>
         <Col lg="3" sm="6">
           <StatsHorizontal
             theme={selectThemeColors}
-            className=" rounded"
+            className=" cursor-pointer rounded"
             icon={<Book size={21} />}
             color="primary"
+            onclick={() => {
+              setIsALLData(false);
+              setIsActiveData(false);
+              setIsCurrentData(true);
+              setIsDeletedData(false);
+            }}
             stats={currentCourses.length}
-            statTitle='دوره های در حال برگذاری'
+            statTitle="دوره های در حال برگذاری"
           />
         </Col>
       </Row>
       <TableServerSide
-        allData={data}
-        data={data}
+        allData={getAllData()}
+        data={getData()}
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
         currentPage={currentPage}
+        deleteOject={deleteCourse}
+        setSelectedRows={setSelectedRows}
+        onSort={handleSort}
         setCurrentPage={setCurrentPage}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         serverSideColumns={serverSideColumns}
-        title={"دوره های شما"}
+        title={getTitle()}
         BtnLink={"/Course/create"}
         BtnTitle={"اضافه کردن دوره"}
-        BtnIcon={<Book/>}
+        BtnIcon={<Book />}
       />
     </div>
   );
