@@ -91,7 +91,6 @@ const DataTableServerSide = ({
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data.length / rowsPerPage);
-
     return (
       <ReactPaginate
         previousLabel={""}
@@ -180,44 +179,48 @@ const DataTableServerSide = ({
               {/* <Label for='sort-select'>عدد</Label> */}
             </div>
           </Col>
-          <Col
-            className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-            sm="2"
-          >
-            {isChecked ? (
-              <Button
-                color="danger"
-                className="d-flex align-items-center justify-content-center gap-1 "
-                style={{ padding: "8px 10px" }}
-                onClick={deleteOject}
+          <Col sm="6">
+            <Row>
+              <Col
+                className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
+                xs='4'
               >
-                <Trash size={18} />
-                حذف دوره
-              </Button>
-            ) : (
-              ""
-            )}
-          </Col>
-          <Col
-            className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-            sm="4"
-          >
-            <Label className="me-1" for="search-input">
-              جستجو
-            </Label>
-            <Input
-              className="dataTable-filter"
-              type="text"
-              bsSize="sm"
-              id="search-input"
-              // value={searchValue}
-              onChange={handleFilter}
-            />
+                {isChecked ? (
+                  <Button
+                    color="danger"
+                    className="d-flex align-items-center justify-content-center gap-1 "
+                    style={{ padding: "8px 10px" }}
+                    onClick={deleteOject}
+                  >
+                    <Trash size={18} />
+                    حذف دوره
+                  </Button>
+                ) : (
+                  ""
+                )}
+              </Col>
+              <Col
+                className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
+                xs="8"
+              >
+                <Label className="me-1" for="search-input">
+                  جستجو
+                </Label>
+                <Input
+                  className="dataTable-filter"
+                  type="text"
+                  bsSize="sm"
+                  id="search-input"
+                  // value={searchValue}
+                  onChange={handleFilter}
+                />
+              </Col>
+            </Row>
           </Col>
         </Row>
         <div className="react-dataTable position-relative">
           {dataToRender() == 0 ? (
-            <div style={{ background: "#fff" }} className="py-3 text-center">
+            <div className="py-3 text-center">
               لیست مد نظر شما خالی است
             </div>
           ) : (

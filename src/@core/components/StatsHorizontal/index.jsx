@@ -53,7 +53,7 @@ export default StatsHorizontal;
 
 // ** PropTypes
 StatsHorizontal.propTypes = {
-  stats: PropTypes.string,
+  stats: PropTypes.object,
   renderStats: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.element.isRequired,

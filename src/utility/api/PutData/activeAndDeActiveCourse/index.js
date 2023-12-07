@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import instance from "../../interceptor";
+import instance from "../../../interceptor";
 
 const activeAndDeActiveCourse = async (id, to, active) => {
   const obj = {

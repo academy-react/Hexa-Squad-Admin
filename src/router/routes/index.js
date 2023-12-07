@@ -17,6 +17,8 @@ import TeacherCourses from "../../pages/TeacherCourses";
 import NewsList from "../../pages/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 import NewsDetails from "../../pages/News/NewsDetails"
+import UpdateCourse from "../../pages/UpdateCourse/UpdateCourse";
+import DetailCourse from "../../pages/DetailCourse/DetailCourse";
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -24,7 +26,7 @@ const getLayout = {
 };
 
 // ** Document title
-const TemplateTitle = "%s - Vuexy React Admin Template";
+const TemplateTitle = "%s -  Admin Panel";
 
 // ** Default Route
 const DefaultRoute = "/home";
@@ -37,8 +39,8 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 
-const UserList = lazy(() => import('../../views/apps/user/list/UserList')) 
-const AdminList = lazy(() => import('../../views/apps/user/list/AdminList')) 
+const UserList = lazy(() => import("../../views/apps/user/list/UserList"));
+const AdminList = lazy(() => import("../../views/apps/user/list/AdminList"));
 
 // ** Merge Routes
 const Routes = [
@@ -56,6 +58,21 @@ const Routes = [
     element: <TeacherCourses />,
   },
   { path: "/Course/create", element: <CreateCourse /> },
+  {
+    path: "/Course/edit",
+    element: <UpdateCourse />,
+    children: [{ path: "/Course/edit/:id", element: <UpdateCourse /> }],
+  },
+  {
+    path: "/user",
+    children: [{ path: "/user/:id" }],
+  },
+  {
+    path: "/Course/detail",
+    element: <DetailCourse />,
+    children: [{ path: "/Course/detail/:id", element: <DetailCourse /> }],
+  },
+
   {
     path: "/login",
     element: <Login />,
@@ -80,15 +97,15 @@ const Routes = [
 
   {
     element: <UserList />,
-    path: '/apps/user/userList'
+    path: "/user/userList",
   },
   {
     element: <AdminList />,
-    path: '/apps/user/adminList'
+    path: "/user/adminList",
   },
 
   {
-    element:  <NewsList/> ,
+    element: <NewsList />,
     path: "/NewsList",
   },
   {

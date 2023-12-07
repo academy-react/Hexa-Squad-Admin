@@ -104,7 +104,7 @@ const FileUploaderSingle = ({ setFiles, files, Title }) => {
                 outline
                 onClick={handleRemoveAllFiles}
               >
-                حذف همه
+                حذف عکس
               </Button>
             </div>
           </Fragment>

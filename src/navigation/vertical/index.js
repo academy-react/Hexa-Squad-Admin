@@ -33,16 +33,16 @@ export default [
     icon: <User size={20} />,
     children: [
       {
-        id: "list",
+        id: "usersList",
         title: "لیست کاربران",
         icon: <List size={12} />,
-        navLink: "/apps/user/userList",
+        navLink: "/user/userList",
       },
       {
-        id: "list",
+        id: "adminList",
         title: "لیست مدیران",
         icon: <List size={12} />,
-        navLink: "/apps/user/adminList",
+        navLink: "/user/adminList",
       },
       // {
       //   id: "view",
