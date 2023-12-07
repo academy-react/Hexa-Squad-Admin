@@ -28,6 +28,7 @@ import AddImage from "./steps/AddImage";
 import AddCourseInfo from "./steps/AddCourseInfo";
 import AddProperties from "./steps/AddProperties";
 import AddCourseDescribe from "./steps/AddCourseDescribe";
+import BreadCrumbs from "../../@core/components/breadcrumbs";
 const CreateCourse = () => {
   const ref = useRef(null);
   const [title, setTitle] = useState();
@@ -90,7 +91,12 @@ const CreateCourse = () => {
       subtitle: "تصویر دوره را وارد کنید .",
       icon: <Image size={18} />,
       content: (
-        <AddImage stepper={stepper}files={files}setFiles={setFiles}type="wizard-modern"/>
+        <AddImage
+          stepper={stepper}
+          files={files}
+          setFiles={setFiles}
+          type="wizard-modern"
+        />
       ),
     },
     {
@@ -99,7 +105,7 @@ const CreateCourse = () => {
       subtitle: "اضافه کردن اطلاعات دوره .",
       icon: <FileText size={18} />,
       content: (
-        <AddCourseInfo 
+        <AddCourseInfo
           setStartDate={setStartDate}
           setEndDate={setEndDate}
           setCost={setCost}
@@ -123,7 +129,11 @@ const CreateCourse = () => {
       subtitle: "ویژگی های دوره را وارد کنید",
       icon: <Edit size={18} />,
       content: (
-        <AddProperties setTypeNameId={setTypeNameId}setLevelNameId={setLevelNameId}setClassRoomNameId={setClassRoomNameId}setTeacherNameId={setTeacherNameId}
+        <AddProperties
+          setTypeNameId={setTypeNameId}
+          setLevelNameId={setLevelNameId}
+          setClassRoomNameId={setClassRoomNameId}
+          setTeacherNameId={setTeacherNameId}
           setTermNameId={setTermNameId}
           stepper={stepper}
           type="wizard-modern"
@@ -135,12 +145,26 @@ const CreateCourse = () => {
       title: "توضیحات دوره",
       subtitle: "توضیحات دوره را وارد کنید",
       icon: <AlignCenter size={18} />,
-      content: <AddCourseDescribe onSubmit={postCourse} setDescribe={setDescribe} stepper={stepper} type="wizard-modern" />,
+      content: (
+        <AddCourseDescribe
+          onSubmit={postCourse}
+          setDescribe={setDescribe}
+          stepper={stepper}
+          type="wizard-modern"
+        />
+      ),
     },
   ];
 
   return (
     <Fragment>
+      {/* <BreadCrumbs
+        title={"اضافه کردن دوره"}
+        data={[
+          { title: "دوره ها", link: "/Courses" },
+          { title: "اضافه کردن دوره", link: "/Course/create" },
+        ]}
+      /> */}
       <div className="modern-horizontal-wizard">
         <Wizard
           type="modern-horizontal"

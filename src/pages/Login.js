@@ -1,6 +1,6 @@
 // ** React Imports
 import { useSkin } from "@hooks/useSkin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // ** Icons Imports
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
@@ -29,10 +29,11 @@ import instance from "../utility/interceptor";
 import { Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 import { removeItem, setItem } from "../utility/local-storage/storage.services";
-import { getProfile } from "../utility/api/GetData/GetProfile/GetProfile";
+import { getProfile } from "../utility/api/GetData/GetProfile";
 
 const Login = () => {
   const { skin } = useSkin();
+  const navigator = useNavigate();
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
@@ -49,7 +50,7 @@ const Login = () => {
       setItem("userData", userInfo);
       console.log(result);
       if (result.success) {
-          window.location.pathname = "/";
+        navigator('/')
       } else {
         toast.error(result.errors == null ? result.message : result.errors[0]);
       }

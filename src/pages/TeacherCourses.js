@@ -3,19 +3,10 @@ import TableServerSide from "../@core/components/tableServerSide/TableServerSide
 import { serverSideColumns } from "../@core/components/tableServerSide/data";
 import instance from "../utility/interceptor";
 import StatsHorizontal from "../@core/components/StatsHorizontal";
-import { Book, BookOpen, Cpu, GitBranch, Trash, Trash2 } from "react-feather";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Col,
-  Label,
-  Row,
-} from "reactstrap";
-import { selectThemeColors } from "../utility/Utils";
-import DeleteCourse from "../utility/api/DeleteData/DeleteCourse";
-import { ThemeColors } from "../utility/context/ThemeColors";
+import { Book, BookOpen, Trash2 } from "react-feather";
+import { Col, Row } from "reactstrap";
+import DeleteCourse from "../utility/api/DeleteData";
+import BreadCrumbs from "../@core/components/breadcrumbs";
 
 const TeacherCourses = () => {
   const [data, setData] = useState([]);
@@ -133,6 +124,10 @@ const TeacherCourses = () => {
   };
   return (
     <div>
+      <BreadCrumbs
+        title={"لیست دوره های استاد"}
+        data={[{ title: "لیست دوره ها", link: "/TeacherCourses" }]}
+      />
       <Row>
         <Col lg="3" sm="6">
           <StatsHorizontal
@@ -147,7 +142,7 @@ const TeacherCourses = () => {
               setIsCurrentData(false);
               setIsDeletedData(false);
             }}
-            stats={data.length}
+            stats={<h3> {data.length}</h3>}
             statTitle="همه دوره های شما"
           />
         </Col>
@@ -164,7 +159,7 @@ const TeacherCourses = () => {
               setIsCurrentData(false);
               setIsDeletedData(false);
             }}
-            stats={activeCourses.length}
+            stats={<h3> {activeCourses.length}</h3>}
             statTitle="دوره های فعال شما"
           />
         </Col>
@@ -181,7 +176,7 @@ const TeacherCourses = () => {
               setIsCurrentData(false);
               setIsDeletedData(true);
             }}
-            stats={deletedCourses.length}
+            stats={<h3> {deletedCourses.length}</h3>}
             statTitle="دوره های حذف شده"
           />
         </Col>
@@ -198,7 +193,7 @@ const TeacherCourses = () => {
               setIsCurrentData(true);
               setIsDeletedData(false);
             }}
-            stats={currentCourses.length}
+            stats={<h3> {currentCourses.length}</h3>}
             statTitle="دوره های در حال برگذاری"
           />
         </Col>
