@@ -13,9 +13,6 @@ import {
 } from "react-feather";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar"
 import { Navigate, useNavigate } from "react-router-dom";
-import DeleteCourse from "../../../utility/api/DeleteData/DeleteCourse";
-
-
 import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
 export const serverSideColumns = [
