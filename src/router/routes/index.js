@@ -16,6 +16,7 @@ import { getUserData } from "../../utility/Utils";
 import TeacherCourses from "../../pages/TeacherCourses";
 import NewsList from "../../pages/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
+import NewsDetails from "../../pages/News/NewsDetails"
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -89,6 +90,13 @@ const Routes = [
   {
     element:  <NewsList/> ,
     path: "/NewsList",
+  },
+  {
+    element:  <NewsDetails/>,
+    path: "/NewsDetails",
+    children: [
+      {path: "/NewsDetails/:id", element:<NewsDetails/>}
+    ]
   },
 
 ];

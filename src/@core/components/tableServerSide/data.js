@@ -1,15 +1,16 @@
 import { Badge } from "reactstrap";
 import Avatar from "../avatar";
+import { Link } from "react-router-dom";
 import {
   Edit,
   Eye,
   Trash2,
-  Link,
   MoreVertical,
   Trash,
   Check,
   X,
 } from "react-feather";
+import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar"
 import { Navigate, useNavigate } from "react-router-dom";
 import DeleteCourse from "../../../utility/api/DeleteData/DeleteCourse";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
@@ -256,4 +257,98 @@ export const userListColumns = [
       </div>
     ),
   },
+];
+
+export const NewsListColumns = [
+  {
+    sortable: true,
+    name: "نام بلاگ",
+    minWidth: "225px",
+    // selector: (row) => row.title,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate">{row.title}</span>
+          {/* <small>{row.typeName}</small> */}
+        </div>
+      </div>
+    ),
+  },
+  {
+    sortable: true,
+    name: "دسته بندی",
+    minWidth: "150px",
+    selector: (row) => row.newsCatregoryName,
+  },
+  {
+    sortable: true,
+    name: " نویسنده",
+    minWidth: "380px",
+    selector: (row) => row.addUserFullName,
+  },
+  
+  {
+    sortable: true,
+    name: " اخرین اپدیت ",
+   
+    minWidth: "150px",
+    selector: (row) => GregorianToSolar(row.updateDate),
+   
+  },
+
+  {
+    sortable: true,
+    name: "  تعداد بازدید",
+   
+    minWidth: "150px",
+    selector: (row) => row.currentView,
+
+  },
+
+  {
+    sortable: false,
+    name: "انجام عملیات",
+    minWidth: "330px",
+    
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate d-flex gap-1">
+         <Link to={'/NewsDetails/'+row.id}> <Eye color="blue" className="cursor-pointer" /></Link>
+            <Edit className="cursor-pointer" />
+            {row.isdelete ? (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  DeleteCourse(row.courseId, "/TeacherCourses", false);
+                }}
+                style={{ color: "green" }}
+              >
+                لغو حذف
+                <Trash color="green" />
+              </div>
+            ) : (
+              <Trash
+                color="red"
+                className="cursor-pointer"
+                onClick={() => {
+                  DeleteCourse(row.courseId, "/TeacherCourses", true);
+                }}
+              />
+            )}
+
+
+             
+          </span>
+        </div>
+      </div>
+    ),
+  },
+  // {
+  //   sortable: true,
+  //   name: "Salary",
+  //   minWidth: "150px",
+  //   selector: (row) => row.salary,
+  // },
 ];
