@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TableServerSide from "../@core/components/tableServerSide/TableServerSide";
-import { serverSideColumns } from "../@core/components/tableServerSide/data";
+import { NewsListColumns } from "../@core/components/tableServerSide/data";
 import instance from "../utility/interceptor";
 
 const Courses = () => {
@@ -39,7 +39,7 @@ const Courses = () => {
         setCurrentPage={setCurrentPage}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
-        serverSideColumns={serverSideColumns}
+        serverSideColumns={NewsListColumns}
         title={ "اخبار شما" }
         
       />

@@ -5,21 +5,22 @@ import {
   Edit,
   Eye,
   Trash2,
-  // Link,
   MoreVertical,
   Trash,
   Check,
   X,
+  XCircle, CheckCircle 
 } from "react-feather";
+import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar"
 import { Navigate, useNavigate } from "react-router-dom";
-import DeleteCourse from "../../../utility/api/DeleteData/DeleteCourse";
+import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
 export const serverSideColumns = [
   {
     sortable: true,
     name: "نام دوره",
     sortField: "Title",
-    minWidth: "225px",
+    minWidth: "200px",
     selector: (row) => row.title,
     cell: (row) => (
       <div className="d-flex align-items-center">
@@ -35,14 +36,14 @@ export const serverSideColumns = [
     sortable: true,
     name: "نام مدرس",
     sortField: "FullName",
-    minWidth: "150px",
+    minWidth: "55px",
     selector: (row) => row.fullName,
   },
   {
     sortable: true,
     name: "قیمت دوره",
     sortField: "Cost",
-    minWidth: "150px",
+    minWidth: "130px",
     selector: (row) => row.cost,
   },
   {
@@ -56,15 +57,15 @@ export const serverSideColumns = [
     sortable: true,
     name: "سطح دوره",
     sortField: "LevelName",
-    minWidth: "150px",
+    minWidth: "120px",
     selector: (row) => row.levelName,
     link: (row) => row.id,
   },
   {
     sortable: true,
-    name: "وضعیت فعال بودن",
+    name: "وضعیت",
     sortField: "IsActive",
-    minWidth: "150px",
+    minWidth: "50px",
     selector: (row) => row.isActive,
     cell: (row) => (
       <div className="d-flex align-items-center">
@@ -80,9 +81,41 @@ export const serverSideColumns = [
       </div>
     ),
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // {user.courses.l>0 &&}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   {
     sortable: true,
-    name: "وضعیت حذف بودن",
+    name: "وضعیت حذف",
     sortField: "IsActive",
     minWidth: "150px",
     selector: (row) => row.isdelete,
@@ -109,27 +142,34 @@ export const serverSideColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Eye color="blue" className="cursor-pointer" />
-            <Edit className="cursor-pointer" />
+            <Link to={"/Course/detail/" + row.courseId}>
+              <Eye color="#7367f0" className="cursor-pointer" />
+            </Link>
+            <Link to={"/Course/update/" + row.courseId}>
+              <Edit color="#fffa" className="cursor-pointer" />
+            </Link>
+
             {row.isdelete ? (
               <div
-                className="cursor-pointer"
+                className="cursor-pointer "
                 onClick={() => {
                   DeleteCourse(row.courseId, "/TeacherCourses", false);
                 }}
-                style={{ color: "green" }}
+                style={{ color: "#28c76f", width: "4rem" }}
               >
                 لغو حذف
-                <Trash color="green" />
+                <Trash color="#28c76f" />
               </div>
             ) : (
-              <Trash
-                color="red"
-                className="cursor-pointer"
-                onClick={() => {
-                  DeleteCourse(row.courseId, "/TeacherCourses", true);
-                }}
-              />
+              <div style={{ width: "4rem" }}>
+                <Trash
+                  color="#ff4949"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    DeleteCourse(row.courseId, "/TeacherCourses", true);
+                  }}
+                />
+              </div>
             )}
             {row.isActive ? (
               <div
@@ -143,8 +183,8 @@ export const serverSideColumns = [
                 }}
                 style={{ color: "red" }}
               >
-                <X
-                  color="red"
+                <XCircle
+                  color="#ff4949"
                   className="cursor-pointer"
                   style={{ margin: " 0 5px" }}
                 />
@@ -160,10 +200,10 @@ export const serverSideColumns = [
                     true
                   );
                 }}
-                style={{ color: "green" }}
+                style={{ color: "#28c76f" }}
               >
-                <Check
-                  color="green"
+                <CheckCircle
+                  color="#28c76f"
                   className="cursor-pointer "
                   style={{ margin: " 0 5px" }}
                 />
@@ -175,14 +215,7 @@ export const serverSideColumns = [
       </div>
     ),
   },
-  // {
-  //   sortable: true,
-  //   name: "Salary",
-  //   minWidth: "150px",
-  //   selector: (row) => row.salary,
-  // },
 ];
-
 export const userListColumns = [
   {
     sortable: true,
@@ -249,7 +282,7 @@ export const userListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Link to={"/apps/user/userList/userInfo/" + row.id}>
+            <Link to={"/user/userList/userInfo/" + row.id}>
               <Eye className="text-muted cursor-pointer" />
             </Link>
             <Edit className="text-primary cursor-pointer" />
@@ -259,4 +292,98 @@ export const userListColumns = [
       </div>
     ),
   },
+];
+
+export const NewsListColumns = [
+  {
+    sortable: true,
+    name: "نام بلاگ",
+    minWidth: "225px",
+    // selector: (row) => row.title,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate">{row.title}</span>
+          {/* <small>{row.typeName}</small> */}
+        </div>
+      </div>
+    ),
+  },
+  {
+    sortable: true,
+    name: "دسته بندی",
+    minWidth: "150px",
+    selector: (row) => row.newsCatregoryName,
+  },
+  {
+    sortable: true,
+    name: " نویسنده",
+    minWidth: "380px",
+    selector: (row) => row.addUserFullName,
+  },
+  
+  {
+    sortable: true,
+    name: " اخرین اپدیت ",
+   
+    minWidth: "150px",
+    selector: (row) => GregorianToSolar(row.updateDate),
+   
+  },
+
+  {
+    sortable: true,
+    name: "  تعداد بازدید",
+   
+    minWidth: "150px",
+    selector: (row) => row.currentView,
+
+  },
+
+  {
+    sortable: false,
+    name: "انجام عملیات",
+    minWidth: "330px",
+    
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate d-flex gap-1">
+         <Link to={'/NewsDetails/'+row.id}> <Eye color="blue" className="cursor-pointer" /></Link>
+            <Edit className="cursor-pointer" />
+            {row.isdelete ? (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  DeleteCourse(row.courseId, "/TeacherCourses", false);
+                }}
+                style={{ color: "green" }}
+              >
+                لغو حذف
+                <Trash color="green" />
+              </div>
+            ) : (
+              <Trash
+                color="red"
+                className="cursor-pointer"
+                onClick={() => {
+                  DeleteCourse(row.courseId, "/TeacherCourses", true);
+                }}
+              />
+            )}
+
+
+             
+          </span>
+        </div>
+      </div>
+    ),
+  },
+  // {
+  //   sortable: true,
+  //   name: "Salary",
+  //   minWidth: "150px",
+  //   selector: (row) => row.salary,
+  // },
 ];

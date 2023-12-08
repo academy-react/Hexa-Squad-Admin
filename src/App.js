@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 
 // ** Router Import
 import Router from "./router/Router";
-import { getProfile } from "./utility/api/GetData/GetProfile/GetProfile";
+import { getProfile } from "./utility/api/GetData/GetProfile";
 import { MantineProvider } from "@mantine/core";
 import { Navigate, useNavigate } from "react-router-dom";
 

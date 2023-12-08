@@ -18,6 +18,9 @@ import NewsList from "../../pages/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 import Profile from "../../views/apps/user/profile/index";
 
+import NewsDetails from "../../pages/News/NewsDetails"
+import UpdateCourse from "../../pages/UpdateCourse/UpdateCourse";
+import DetailCourse from "../../pages/DetailCourse/DetailCourse";
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -25,7 +28,7 @@ const getLayout = {
 };
 
 // ** Document title
-const TemplateTitle = "%s - Vuexy React Admin Template";
+const TemplateTitle = "%s -  Admin Panel";
 
 // ** Default Route
 const DefaultRoute = "/home";
@@ -58,6 +61,21 @@ const Routes = [
   },
   { path: "/Course/create", element: <CreateCourse /> },
   {
+    path: "/Course/edit",
+    element: <UpdateCourse />,
+    children: [{ path: "/Course/edit/:id", element: <UpdateCourse /> }],
+  },
+  {
+    path: "/user",
+    children: [{ path: "/user/:id" }],
+  },
+  {
+    path: "/Course/detail",
+    element: <DetailCourse />,
+    children: [{ path: "/Course/detail/:id", element: <DetailCourse /> }],
+  },
+
+  {
     path: "/login",
     element: <Login />,
     meta: {
@@ -81,24 +99,36 @@ const Routes = [
 
   {
     element: <UserList />,
-    path: "/apps/user/userList",
+    path: "/user/userList",
   },
   {
     element: <Profile />,
-    path: "/apps/user/userList/userInfo",
+    path: "/user/userList/userInfo",
     children: [
-      { path: "/apps/user/userList/userInfo/:id", element: <Profile /> },
+      { path: "/user/userList/userInfo/:id", element: <Profile /> },
     ],
   },
   {
     element: <AdminList />,
     path: "/apps/user/adminList",
   },
+  {
+    element: <AdminList />,
+    path: "/user/adminList",
+  },
 
   {
     element: <NewsList />,
     path: "/NewsList",
   },
+  {
+    element:  <NewsDetails/>,
+    path: "/NewsDetails",
+    children: [
+      {path: "/NewsDetails/:id", element:<NewsDetails/>}
+    ]
+  },
+
 ];
 
 const getRouteMeta = (route) => {

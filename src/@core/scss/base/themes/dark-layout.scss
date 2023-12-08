@@ -7,8 +7,8 @@
 // 	Author URL: http://www.themeforest.net/user/pixinvent
 // ================================================================================================
 
-@import '../bootstrap-extended/include'; // Bootstrap includes
-@import '../components/include'; // Components includes
+@import "../bootstrap-extended/include"; // Bootstrap includes
+@import "../components/include"; // Components includes
 
 .dark-layout {
   @at-root body#{&} {
@@ -20,7 +20,21 @@
     background-color: $theme-dark-body-bg;
   }
   // universal elements
-  //heading tags
+  //heading tags[dir]
+  .react-dataTable .rdt_TableHead .rdt_TableHeadRow {
+    background-color: #343d55;
+    border-color: #3b4253;
+  }
+  .react-dataTable .rdt_TableHead .rdt_TableHeadRow .rdt_TableCol_Sortable {
+    color: #d0d2d6;
+  }
+  .react-dataTable .rdt_TableBody .rdt_TableRow {
+    background-color: #283046;
+    border-color: #3b4253;
+  }
+  .react-dataTable .rdt_TableBody .rdt_TableRow {
+    color: #b4b7bd;
+  }
   h1,
   h2,
   h3,
@@ -112,7 +126,12 @@
 
   // main navbar and header navbar shadow(generic navbar)
   .header-navbar-shadow {
-    background: linear-gradient(180deg, rgba(22, 29, 49, 0.9) 44%, rgba(22, 29, 49, 0.43) 73%, rgba(22, 29, 49, 0));
+    background: linear-gradient(
+      180deg,
+      rgba(22, 29, 49, 0.9) 44%,
+      rgba(22, 29, 49, 0.43) 73%,
+      rgba(22, 29, 49, 0)
+    );
   }
 
   // main header navbar dark style
@@ -275,7 +294,7 @@
       background-color: transparent !important;
     }
 
-    &[class*='bg-'] {
+    &[class*="bg-"] {
       .navbar-nav {
         .nav-item {
           .nav-link {
@@ -463,9 +482,13 @@
     color: $theme-dark-body-color;
     &:after {
       background-image: str-replace(
-        str-replace($accordion-button-icon, '#{$accordion-icon-color}', $theme-dark-body-color),
-        '#',
-        '%23'
+        str-replace(
+          $accordion-button-icon,
+          "#{$accordion-icon-color}",
+          $theme-dark-body-color
+        ),
+        "#",
+        "%23"
       );
     }
   }
@@ -517,13 +540,13 @@
         color: $theme-dark-body-color;
       }
     }
-    &:not([class*='breadcrumb-']) {
+    &:not([class*="breadcrumb-"]) {
       .breadcrumb-item + .breadcrumb-item {
         &:before {
           background-image: url(str-replace(
-            str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+            str-replace($chevron-right, "currentColor", $theme-dark-body-color),
+            "#",
+            "%23"
           ));
         }
       }
@@ -535,9 +558,9 @@
     &.breadcrumb {
       .breadcrumb-item + .breadcrumb-item:before {
         background-image: url(str-replace(
-          str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
+          str-replace($chevron-right, "currentColor", $theme-dark-body-color),
+          "#",
+          "%23"
         ));
       }
     }
@@ -545,7 +568,7 @@
 
   /* buttons */
   .btn {
-    &:not([class*='btn-']) {
+    &:not([class*="btn-"]) {
       color: $theme-dark-body-color;
     }
 
@@ -576,7 +599,7 @@
   }
 
   .btn-group {
-    label[class*='btn-outline-'] {
+    label[class*="btn-outline-"] {
       color: $primary !important;
     }
   }
@@ -615,7 +638,7 @@
   /* modal */
   .modal {
     .modal-header,
-    .modal-header[class*='bg-'] {
+    .modal-header[class*="bg-"] {
       // why removed !important? Not working if added bg-COLOR class with modal-header
       // background-color: $theme-dark-card-bg !important;
       background-color: $theme-dark-body-bg;
@@ -628,9 +651,13 @@
       color: $theme-dark-body-color;
       box-shadow: 0 3px 8px 0 rgba(11, 10, 25, 0.49) !important;
       background-image: str-replace(
-        str-replace($btn-close-bg, '#{$btn-close-color}', $theme-dark-body-color),
-        '#',
-        '%23'
+        str-replace(
+          $btn-close-bg,
+          "#{$btn-close-color}",
+          $theme-dark-body-color
+        ),
+        "#",
+        "%23"
       );
     }
 
@@ -645,7 +672,17 @@
   /* Close btn */
   .btn-close {
     background: transparent
-      escape-svg(str-replace(str-replace($btn-close-bg, '#{$btn-close-color}', $theme-dark-body-color), '#', '%23'))
+      escape-svg(
+        str-replace(
+          str-replace(
+            $btn-close-bg,
+            "#{$btn-close-color}",
+            $theme-dark-body-color
+          ),
+          "#",
+          "%23"
+        )
+      )
       center / $btn-close-width auto no-repeat;
   }
 
@@ -657,7 +694,7 @@
 
   /* pagination */
   .pagination {
-    &:not([class*='pagination-']) {
+    &:not([class*="pagination-"]) {
       .page-item {
         &.active {
           background-color: $theme-dark-pagination-bg;
@@ -689,7 +726,7 @@
       }
     }
 
-    &[class*='pagination-'] {
+    &[class*="pagination-"] {
       .page-item:not(.active) {
         .page-link {
           background-color: $theme-dark-pagination-bg;
@@ -721,18 +758,22 @@
       &.prev {
         .page-link:before {
           background-image: url(str-replace(
-            str-replace($chevron-left, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+            str-replace($chevron-left, "currentColor", $theme-dark-body-color),
+            "#",
+            "%23"
           ));
         }
         &.disabled {
           .page-link {
             &:before {
               background-image: url(str-replace(
-                str-replace($chevron-left, 'currentColor', $theme-dark-text-muted-color),
-                '#',
-                '%23'
+                str-replace(
+                  $chevron-left,
+                  "currentColor",
+                  $theme-dark-text-muted-color
+                ),
+                "#",
+                "%23"
               ));
             }
           }
@@ -742,18 +783,22 @@
       &.next {
         .page-link::after {
           background-image: url(str-replace(
-            str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+            str-replace($chevron-right, "currentColor", $theme-dark-body-color),
+            "#",
+            "%23"
           ));
         }
         &.disabled {
           .page-link {
             &:after {
               background-image: url(str-replace(
-                str-replace($chevron-right, 'currentColor', $theme-dark-text-muted-color),
-                '#',
-                '%23'
+                str-replace(
+                  $chevron-right,
+                  "currentColor",
+                  $theme-dark-text-muted-color
+                ),
+                "#",
+                "%23"
               ));
             }
           }
@@ -861,9 +906,13 @@
       .btn-close {
         background-color: transparent !important;
         background-image: str-replace(
-          str-replace($btn-close-bg, '#{$btn-close-color}', $theme-dark-body-color),
-          '#',
-          '%23'
+          str-replace(
+            $btn-close-bg,
+            "#{$btn-close-color}",
+            $theme-dark-body-color
+          ),
+          "#",
+          "%23"
         );
         box-shadow: none !important;
         text-shadow: none;
@@ -874,7 +923,7 @@
   /* list group */
   .list-group {
     .list-group-item {
-      &:not([class*='list-group-item-']),
+      &:not([class*="list-group-item-"]),
       &.list-group-item-action:not(.active):not(:active) {
         background-color: $theme-dark-card-bg;
         border-color: $theme-dark-border-color;
@@ -914,7 +963,11 @@
     }
 
     &.list-group-circle .list-group-item:after {
-      background-image: url(str-replace(str-replace($circle, 'currentColor', $theme-dark-body-color), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($circle, "currentColor", $theme-dark-body-color),
+        "#",
+        "%23"
+      ));
     }
   }
 
@@ -928,7 +981,7 @@
   .avatar {
     background-color: $theme-dark-body-bg;
 
-    [class*='avatar-status-'] {
+    [class*="avatar-status-"] {
       border-color: $theme-dark-card-bg;
     }
   }
@@ -936,7 +989,8 @@
     .avatar {
       img,
       .avatar-content {
-        box-shadow: 0 0 0 2px $theme-dark-card-bg, inset 0 0 0 1px rgba($theme-dark-card-bg, 0.07);
+        box-shadow: 0 0 0 2px $theme-dark-card-bg,
+          inset 0 0 0 1px rgba($theme-dark-card-bg, 0.07);
       }
     }
   }
@@ -1111,7 +1165,7 @@
     }
 
     &:disabled,
-    &[readonly='readonly'] {
+    &[readonly="readonly"] {
       opacity: 0.5;
     }
   }
@@ -1170,16 +1224,20 @@
       border-color: $theme-dark-switch-bg-disabled;
     }
     .form-check-input:not(:checked):not(:focus) {
-      background-image: str-replace(str-replace($form-switch-bg-image, '#{$form-switch-color}', $white), '#', '%23');
+      background-image: str-replace(
+        str-replace($form-switch-bg-image, "#{$form-switch-color}", $white),
+        "#",
+        "%23"
+      );
     }
   }
 
   select.form-select {
-    &:not([multiple='multiple']) {
+    &:not([multiple="multiple"]) {
       background-image: url(str-replace(
-        str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-        '#',
-        '%23'
+        str-replace($chevron-down, "currentColor", $theme-dark-body-color),
+        "#",
+        "%23"
       ));
     }
   }
@@ -1277,7 +1335,7 @@
 
     .thead,
     tbody {
-      tr:not([class*='table-']) {
+      tr:not([class*="table-"]) {
         th,
         td {
           border-color: $theme-dark-border-color;
@@ -1388,7 +1446,7 @@
       .buttons-pdf,
       .buttons-print,
       .btn-secondary,
-      .dt-button-collection [class*='buttons-'] {
+      .dt-button-collection [class*="buttons-"] {
         color: $white;
         background-color: $theme-dark-body-bg !important;
         &:active {
@@ -1398,7 +1456,7 @@
       }
     }
     .dt-button-collection {
-      > div[role='menu'] {
+      > div[role="menu"] {
         box-shadow: $theme-dark-box-shadow;
       }
     }
@@ -1420,16 +1478,20 @@
         .sorting_desc {
           &:before {
             background-image: url(str-replace(
-              str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
-              '#',
-              '%23'
+              str-replace($chevron-up, "currentColor", $theme-dark-body-color),
+              "#",
+              "%23"
             ));
           }
           &:after {
             background-image: url(str-replace(
-              str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-              '#',
-              '%23'
+              str-replace(
+                $chevron-down,
+                "currentColor",
+                $theme-dark-body-color
+              ),
+              "#",
+              "%23"
             ));
           }
         }
@@ -1517,7 +1579,7 @@
 
   // list group circle for kb
   .list-group-circle {
-    .list-group-item:not([class*='list-group-item-']),
+    .list-group-item:not([class*="list-group-item-"]),
     .list-group-item-action {
       &:hover,
       &:focus,
@@ -1637,9 +1699,13 @@
         .email-info-dropup {
           .dropdown-toggle::after {
             background-image: url(str-replace(
-              str-replace($chevron-down, 'currentColor', $theme-dark-text-muted-color),
-              '#',
-              '%23'
+              str-replace(
+                $chevron-down,
+                "currentColor",
+                $theme-dark-text-muted-color
+              ),
+              "#",
+              "%23"
             ));
           }
         }
@@ -2233,7 +2299,9 @@
 
   /********** HORIZONTAL LAYOUT **********/
   .horizontal-layout {
-    &.navbar-sticky .horizontal-menu-wrapper .navbar-horizontal.header-navbar.fixed-top {
+    &.navbar-sticky
+      .horizontal-menu-wrapper
+      .navbar-horizontal.header-navbar.fixed-top {
       box-shadow: 0 4px 24px 0 rgba($black, 0.75) !important;
     }
     .horizontal-menu-wrapper {
@@ -2256,7 +2324,11 @@
           .active {
             .nav-link {
               &.dropdown-toggle::after {
-                background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $white), '#', '%23'));
+                background-image: url(str-replace(
+                  str-replace($chevron-down, "currentColor", $white),
+                  "#",
+                  "%23"
+                ));
               }
             }
           }
@@ -2268,9 +2340,13 @@
           .nav-link {
             &.dropdown-toggle::after {
               background-image: url(str-replace(
-                str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-                '#',
-                '%23'
+                str-replace(
+                  $chevron-down,
+                  "currentColor",
+                  $theme-dark-body-color
+                ),
+                "#",
+                "%23"
               ));
             }
           }
@@ -2300,15 +2376,23 @@
           .dropdown-toggle {
             &::after {
               background-image: url(str-replace(
-                str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-                '#',
-                '%23'
+                str-replace(
+                  $chevron-right,
+                  "currentColor",
+                  $theme-dark-body-color
+                ),
+                "#",
+                "%23"
               ));
             }
             &:hover,
             &:active {
               &::after {
-                background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $white), '#', '%23'));
+                background-image: url(str-replace(
+                  str-replace($chevron-right, "currentColor", $white),
+                  "#",
+                  "%23"
+                ));
               }
             }
           }

@@ -6,10 +6,10 @@ import { getRoutes } from "./routes";
 
 // ** Hooks Imports
 import { useLayout } from "@hooks/useLayout";
-import { getProfile } from "../utility/api/GetData/GetProfile/GetProfile";
 import Login from "../pages/Login";
 import { getUserData } from "../utility/Utils";
 import Register from "../pages/Register";
+import Home from "../pages/Home";
 
 const Router = () => {
   // ** Hooks
@@ -18,6 +18,7 @@ const Router = () => {
   const allRoutes = getRoutes(layout);
   const getHomeRoute = () => {
     const user = getUserData();
+    // console.log(user);
     if (user) {
       return "/home";
     } else {
