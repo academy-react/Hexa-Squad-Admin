@@ -81,38 +81,6 @@ export const serverSideColumns = [
       </div>
     ),
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // {user.courses.l>0 &&}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   {
     sortable: true,
     name: "وضعیت حذف",
@@ -242,7 +210,7 @@ export const userListColumns = [
     selector: (row) => row.gmail,
   },
   {
-    sortable: true,
+    sortable: false,
     name: "شماره موبایل",
     minWidth: "200px",
     selector: (row) => row.phoneNumber,
@@ -263,7 +231,7 @@ export const userListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate">
-            {row.active ? (
+            {row.active === "True" ? (
               <Badge color="light-success">فعال</Badge>
             ) : (
               <Badge color="light-danger">غیر فعال</Badge>

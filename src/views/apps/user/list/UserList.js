@@ -22,49 +22,43 @@ const UserList = () => {
   const [sort, setSort] = useState("DESC");
   const [sortColumn, setSortColumn] = useState("InsertDate");
   const [currentPage, setCurrentPage] = useState(1);
-  const [IsActiveUser, setIsActiveUser] = useState(null)
+  const [isActiveUser, setIsActiveUser] = useState(false)
+  const [isDeleteUser, setIsDeleteUser] = useState(false)
+
+  const [allDeletedUsers, setAllDeletedUsers] = useState([])
+  const [deletedUsers, setDeletedUsers] = useState([]);
   const [searchValue, setSearchValue] = useState(null);
   const [activeUsers, setActiveUsers] = useState([]);
-  const [deletedCourses, setDeletedCourses] = useState([]);
-  const [currentCourses, setCurrentCourses] = useState([]);
   const [allActiveUsers, setAllActiveUsers] = useState([]);
-  const [allDeletedCourses, setAllDeletedCourses] = useState([]);
-  const [allCurrentCourses, setAllCurrentCourses] = useState([]);
   const [isALLData, setIsALLData] = useState(true);
-  const [isActiveData, setIsActiveData] = useState(false);
-  const [isDeletedData, setIsDeletedData] = useState(false);
-  const [isCurrentData, setIsCurrentData] = useState(false);
+
+
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const getData = () => {
     if (isALLData) {
       return data;
-    } else if (isActiveData) {
+    } else if (isActiveUser) {
       return activeUsers;
-    // } else if (isDeletedData) {
-    //   return deletedCourses;
-    } else if (isCurrentData) {
-      return currentCourses;
+    } else if (isDeleteUser) {
+      return deletedUsers;
     }
   };
   const getAllData = () => {
     if (isALLData) {
       return allData;
-    } else if (isActiveData) {
+    } else if (isActiveUser) {
       return allActiveUsers;
-    // } else if (isDeletedData) {
-    //   return allDeletedCourses;
-    } else if (isCurrentData) {
-      return allCurrentCourses;
+    } else if (isDeleteUser) {
+      return allDeletedUsers;
     }
   };
   const getTitle = () => {
     if (isALLData) {
       return "همه ی کاربران شما";
-    } else if (isActiveData) {
+    } else if (isActiveUser) {
       return "کاربران فعال شما";
-    // } else if (isDeletedData) {
-    //   return "دوره های حذف شده شما";
-    } else if (isCurrentData) {
+    } else if (isDeleteUser) {
       return "کاربران حذف شده";
     }
   };
@@ -75,8 +69,8 @@ const UserList = () => {
     SortingCol: sort,
     SortType: sortColumn,
     Query: searchValue,
-    IsActiveUser: IsActiveUser,
-    IsDeletedUser: "true",
+    IsActiveUser: isActiveUser,
+    IsDeletedUser: isDeleteUser,
     roleId: 3
   };
   const getUserList = async () => {
@@ -92,30 +86,30 @@ const UserList = () => {
   };
   useEffect(() => {
     getUserList();
-  }, [searchValue, currentPage, rowsPerPage]);
-  useEffect(() => {
-    let isActive =
-      data.length !== 0 &&
-      data.filter((user) => {
-        return user.active === true;
-      });
-    // let deleted =
-    //   data.length !== 0 &&
-    //   data.filter((course) => {
-    //     return course.isdelete === true;
-    //   });
-    // let itsStatus =
-    //   data.length !== 0 &&
-    //   data.filter((course) => {
-    //     return course.statusName === "درحال برگذاری";
-    //   });
-    setActiveUsers(isActive);
-    setAllActiveUsers(isActive);
-    // setDeletedCourses(deleted);
-    // setAllDeletedCourses(deleted);
-    // setCurrentCourses(itsStatus);
-    // setAllCurrentCourses(itsStatus);
-  }, [data]);
+  }, [searchValue, currentPage, rowsPerPage, isActiveUser, isDeleteUser]);
+  // useEffect(() => {
+  //   let isActive =
+  //     data.length !== 0 &&
+  //     data.filter((user) => {
+  //       return user.active === true;
+  //     });
+  //   // let deleted =
+  //   //   data.length !== 0 &&
+  //   //   data.filter((course) => {
+  //   //     return course.isdelete === true;
+  //   //   });
+  //   // let itsStatus =
+  //   //   data.length !== 0 &&
+  //   //   data.filter((course) => {
+  //   //     return course.statusName === "درحال برگذاری";
+  //   //   });
+  //   setActiveUsers(isActive);
+  //   setAllActiveUsers(isActive);
+  //   // setDeletedCourses(deleted);
+  //   // setAllDeletedCourses(deleted);
+  //   // setCurrentCourses(itsStatus);
+  //   // setAllCurrentCourses(itsStatus);
+  // }, [data]);
 
   const handleSort = (column, sortDirection) => {
     setSort(sortDirection.toUpperCase());
@@ -133,12 +127,11 @@ const UserList = () => {
             backGroundColor={isALLData && "#0002"}
             className=" cursor-pointer rounded"
             icon={<User size={21} />}
-            color="warning"
+            color="primary"
             onclick={() => {
               setIsALLData(true);
-              setIsActiveData(false);
-              setIsCurrentData(false);
-              // setIsDeletedData(false);
+              setIsActiveUser(true);
+              setIsDeleteUser(false);
             }}
             stats={data.length}
             statTitle="همه ی کاربران شما"
@@ -147,51 +140,32 @@ const UserList = () => {
         <Col lg="3" sm="6">
           <StatsHorizontal
             // theme={selectThemeColors}
-            backGroundColor={isActiveData && "#0002"}
+            backGroundColor={isActiveUser && "#0002"}
             className=" cursor-pointer rounded"
             icon={<User size={21} />}
             color="success"
             onclick={() => {
               setIsALLData(false);
-              setIsActiveData(true);
-              setIsCurrentData(false);
-              // setIsDeletedData(false);
+              setIsActiveUser(true);
+              setIsDeleteUser(false);
             }}
             stats={activeUsers.length}
             statTitle="کاربران فعال شما"
           />
         </Col>
-        {/* <Col lg="3" sm="6">
+        <Col lg="3" sm="6">
           <StatsHorizontal
-            // theme={ThemeColors}
-            backGroundColor={isDeletedData && "#0002"}
+            // theme={selectThemeColors}
+            backGroundColor={isDeleteUser && "#0002"}
             className=" cursor-pointer rounded"
             icon={<Trash2 size={21} />}
             color="danger"
             onclick={() => {
               setIsALLData(false);
-              setIsActiveData(false);
-              setIsCurrentData(false);
-              // setIsDeletedData(true);
+              setIsActiveUser(false);
+              setIsDeleteUser(true);
             }}
-            stats={deletedCourses.length}
-            statTitle="دوره های حذف شده"
-          />
-        </Col> */}
-        <Col lg="3" sm="6">
-          <StatsHorizontal
-            // theme={selectThemeColors}
-            backGroundColor={isCurrentData && "#0002"}
-            className=" cursor-pointer rounded"
-            icon={<Trash2 size={21} />}
-            color="primary"
-            onclick={() => {
-              setIsALLData(false);
-              setIsActiveData(false);
-              setIsCurrentData(true);
-              // setIsDeletedData(false);
-            }}
-            stats={currentCourses.length}
+            stats={deletedUsers.length}
             statTitle="کاربران حذف شده"
           />
         </Col>
@@ -202,13 +176,12 @@ const UserList = () => {
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
         currentPage={currentPage}
-        // setSelectedRows={setSelectedRows}
+        setSelectedRows={setSelectedRows}
         onSort={handleSort}
         setCurrentPage={setCurrentPage}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         serverSideColumns={userListColumns}
-        // BtnLink={"/Course/create"}
         title={getTitle()}
         BtnTitle={"اضافه کردن کاربر"}
         BtnIcon={<User/>}

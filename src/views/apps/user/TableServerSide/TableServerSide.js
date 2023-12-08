@@ -51,7 +51,6 @@ const DataTableServerSide = ({
   data,
   BtnTitle,
   BtnIcon,
-  BtnLink,
   onSort,
   deleteOject,
   setSelectedRows,
@@ -61,7 +60,6 @@ const DataTableServerSide = ({
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
-
 
   const searchRef = useRef();
   const [isChecked, setIsChecked] = useState(false);
