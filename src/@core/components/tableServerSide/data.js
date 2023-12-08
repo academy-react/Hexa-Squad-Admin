@@ -251,7 +251,7 @@ export const userListColumns = [
     sortable: true,
     name: "تاریخ",
     minWidth: "150px",
-    selector: (row) => row.insertDate.slice(0, 10),
+    selector: (row) => GregorianToSolar(row.insertDate),
     link: (row) => row.id,
   },
   {
@@ -282,10 +282,12 @@ export const userListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Link to={"/user/userList/userInfo/" + row.id}>
+            <Link to={"/user/userInfo/" + row.id}>
               <Eye className="text-muted cursor-pointer" />
             </Link>
-            <Edit className="text-primary cursor-pointer" />
+            <Link to={"/user/userInfoEdit/" + row.id}>
+              <Edit className="text-primary cursor-pointer" />
+            </Link>
             <Trash2 className="text-danger cursor-pointer" />
           </span>
         </div>

@@ -17,6 +17,7 @@ import TeacherCourses from "../../pages/TeacherCourses";
 import NewsList from "../../pages/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 import Profile from "../../views/apps/user/profile/index";
+import EditProfile from "../../views/apps/user/profile/EditProfile/EditProfile";
 
 import NewsDetails from "../../pages/News/NewsDetails"
 import UpdateCourse from "../../pages/UpdateCourse/UpdateCourse";
@@ -103,14 +104,17 @@ const Routes = [
   },
   {
     element: <Profile />,
-    path: "/user/userList/userInfo",
+    path: "/user/userInfo",
     children: [
-      { path: "/user/userList/userInfo/:id", element: <Profile /> },
+      { path: "/user/userInfo/:id", element: <Profile /> },
     ],
   },
   {
-    element: <AdminList />,
-    path: "/apps/user/adminList",
+    element: <EditProfile />,
+    path: "/user/userInfoEdit",
+    children: [
+      { path: "/user/userInfoEdit/:id", element: <EditProfile /> },
+    ],
   },
   {
     element: <AdminList />,

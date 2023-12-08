@@ -15,6 +15,7 @@ import { Row, Col, Button } from "reactstrap";
 // ** Demo Components
 // import ProfilePoll from './ProfilePolls'
 import ProfileAbout from "./ProfileAbout";
+import ProfileConnection from "./ProfileConnection";
 // import ProfilePosts from './ProfilePosts'
 import ProfileHeader from "./ProfileHeader";
 // import ProfileTwitterFeeds from './ProfileTwitterFeeds'
@@ -70,6 +71,7 @@ const Profile = () => {
                 xs={{ order: 2 }}
               >
                 <ProfileAbout data={data} />
+                <ProfileConnection data={data} />
                 {/* <ProfileSuggestedPages data={data.suggestedPages} /> */}
                 {/* <ProfileTwitterFeeds data={data.twitterFeeds} /> */}
               </Col>
@@ -90,23 +92,7 @@ const Profile = () => {
                 {/* <ProfilePoll data={data.polls} /> */}
               </Col>
             </Row>
-            <Row>
-              <Col className="text-center" sm="12">
-                <Button
-                  color="primary"
-                  className="border-0 mb-1 profile-load-more"
-                  size="sm"
-                  onClick={handleBlock}
-                >
-                  <UILoader
-                    blocking={block}
-                    overlayColor="rgba(255,255,255, .5)"
-                  >
-                    <span> Load More</span>
-                  </UILoader>
-                </Button>
-              </Col>
-            </Row>
+            
           </section>
         </div>
       ) : null}
