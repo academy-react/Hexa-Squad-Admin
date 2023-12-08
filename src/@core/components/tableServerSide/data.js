@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import { Badge } from "reactstrap";
 import Avatar from "../avatar";
 import {
   Edit,
   Eye,
   Trash2,
-  Link,
+  // Link,
   MoreVertical,
   Trash,
   Check,
@@ -248,7 +249,9 @@ export const userListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Eye className="text-muted cursor-pointer" />
+            <Link to={"/apps/user/userList/userInfo/" + row.id}>
+              <Eye className="text-muted cursor-pointer" />
+            </Link>
             <Edit className="text-primary cursor-pointer" />
             <Trash2 className="text-danger cursor-pointer" />
           </span>

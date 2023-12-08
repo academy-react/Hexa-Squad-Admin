@@ -16,6 +16,8 @@ import { getUserData } from "../../utility/Utils";
 import TeacherCourses from "../../pages/TeacherCourses";
 import NewsList from "../../pages/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
+import Profile from "../../views/apps/user/profile/index";
+
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -36,8 +38,8 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 
-const UserList = lazy(() => import('../../views/apps/user/list/UserList')) 
-const AdminList = lazy(() => import('../../views/apps/user/list/AdminList')) 
+const UserList = lazy(() => import("../../views/apps/user/list/UserList"));
+const AdminList = lazy(() => import("../../views/apps/user/list/AdminList"));
 
 // ** Merge Routes
 const Routes = [
@@ -79,18 +81,24 @@ const Routes = [
 
   {
     element: <UserList />,
-    path: '/apps/user/userList'
+    path: "/apps/user/userList",
+  },
+  {
+    element: <Profile />,
+    path: "/apps/user/userList/userInfo",
+    children: [
+      { path: "/apps/user/userList/userInfo/:id", element: <Profile /> },
+    ],
   },
   {
     element: <AdminList />,
-    path: '/apps/user/adminList'
+    path: "/apps/user/adminList",
   },
 
   {
-    element:  <NewsList/> ,
+    element: <NewsList />,
     path: "/NewsList",
   },
-
 ];
 
 const getRouteMeta = (route) => {
