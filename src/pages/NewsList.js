@@ -41,6 +41,8 @@ const Courses = () => {
         setSearchValue={setSearchValue}
         serverSideColumns={NewsListColumns}
         title={ "اخبار شما" }
+        BtnTitle={"اضافه کردن بلاگ"}
+        BtnLink={"/AddNews"}
         
       />
     </div>

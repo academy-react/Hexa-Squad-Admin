@@ -296,7 +296,7 @@ export const NewsListColumns = [
   {
     sortable: true,
     name: "نام بلاگ",
-    minWidth: "225px",
+    minWidth: "280px",
     // selector: (row) => row.title,
     cell: (row) => (
       <div className="d-flex align-items-center">
@@ -317,7 +317,7 @@ export const NewsListColumns = [
   {
     sortable: true,
     name: " نویسنده",
-    minWidth: "380px",
+    minWidth: "300px",
     selector: (row) => row.addUserFullName,
   },
   
@@ -334,7 +334,7 @@ export const NewsListColumns = [
     sortable: true,
     name: "  تعداد بازدید",
    
-    minWidth: "150px",
+    minWidth: "120px",
     selector: (row) => row.currentView,
 
   },
@@ -342,15 +342,15 @@ export const NewsListColumns = [
   {
     sortable: false,
     name: "انجام عملیات",
-    minWidth: "330px",
+    minWidth: "120px",
     
     cell: (row) => (
       <div className="d-flex align-items-center">
-        <div className="user-info text-truncate ms-1">
+        <div className="user-info text-truncate ms-2">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
          <Link to={'/NewsDetails/'+row.id}> <Eye color="blue" className="cursor-pointer" /></Link>
-            <Edit className="cursor-pointer" />
-            {row.isdelete ? (
+           <Link to={'/EditBlog'}> <Edit className="cursor-pointer" /></Link>
+            {/* {row.isdelete ? (
               <div
                 className="cursor-pointer"
                 onClick={() => {
@@ -369,7 +369,7 @@ export const NewsListColumns = [
                   DeleteCourse(row.courseId, "/TeacherCourses", true);
                 }}
               />
-            )}
+            )} */}
 
 
              

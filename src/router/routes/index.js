@@ -19,6 +19,11 @@ import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 import NewsDetails from "../../pages/News/NewsDetails"
 import UpdateCourse from "../../pages/UpdateCourse/UpdateCourse";
 import DetailCourse from "../../pages/DetailCourse/DetailCourse";
+import AddNews from "../../pages/News/AddNews"
+import EditBlog from "../../pages/News/EditBlog"
+
+
+
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -109,11 +114,26 @@ const Routes = [
     path: "/NewsList",
   },
   {
+    element: <AddNews/>,
+    path: "/AddNews",
+    children: [
+      {path: "/AddNews/:id", element:<AddNews/>}
+    ]
+  },
+  {
+    element:<EditBlog/>,
+    path: "/EditBlog",
+    // children: [
+    //   {path: "/EditBlog/:id", element:<NewsDetails/>}
+    // ]
+  },
+  {
     element:  <NewsDetails/>,
     path: "/NewsDetails",
     children: [
       {path: "/NewsDetails/:id", element:<NewsDetails/>}
     ]
+    
   },
 
 ];

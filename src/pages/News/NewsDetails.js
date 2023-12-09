@@ -1,6 +1,6 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
-import logo from "../../assets/images/logo/logo.png"
+import pic from "../../assets/images/icons/News.jpg"
 // ** Third Party Components
 import axios from 'axios'
 import classnames from 'classnames'
@@ -20,10 +20,12 @@ import {
 import { kFormatter } from '@utils'
 
 // ** Custom Components
-// import Sidebar from '../BlogSidebar'
+import { useParams } from 'react-router-dom'
+import Sidebar from './BlogSidebar'
 import Avatar from '@components/avatar'
 import Breadcrumbs from '@components/breadcrumbs'
-
+import GregorianToSolar from "../../utility/GregorianToSolar/GregorianToSolar"
+import { Link } from "react-router-dom";
 // ** Reactstrap Imports
 import {
   Row,
@@ -41,16 +43,18 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  UncontrolledDropdown
+  UncontrolledDropdown,
+  
 } from 'reactstrap'
 
 // ** Styles
 import '@styles/base/pages/page-blog.scss'
 
 // ** Images
-import cmtImg from '@src/assets/images/portrait/small/avatar-s-6.jpg'
-import { useParams } from 'react-router-dom'
+import cmtImg from '../../assets/images/logo/logo.svg'
+
 import instance from '../../utility/interceptor'
+import NewsComments from './NewsComments'
 
 const BlogDetails = () => {
   // ** States
@@ -128,7 +132,7 @@ fetchNewsData()
 
   return (
     <Fragment>
-      <Breadcrumbs title='جزئیات اخبار' data={[{ title: 'Pages' }, { title: 'Blog' }, { title: 'Details' }]} />
+      <Breadcrumbs title='جزئیات اخبار' data={[{ title: 'اخبار' }, { title: 'جزییات خبر' }]} />
       <div className='blog-wrapper'>
         <div className='content-detached content-left'>
           <div className='content-body'>
@@ -136,24 +140,28 @@ fetchNewsData()
               <Row>
                 <Col sm='12'>
                   <Card className='mb-3'>
-                    <CardImg src={logo} className='img-fluid' top />
+                  
+                    <CardImg src={data.currentImageAddress == null ? pic : data.currentImageAddress} className='h-25 ' top />
                     <CardBody>
                       <CardTitle tag='h4'>{data.title}</CardTitle>
                       <div className='d-flex'>
                         {/* <Avatar className='me-50' img={data.blog.avatar} imgHeight='24' imgWidth='24' /> */}
-                        <div>
-                          <small className='text-muted me-25'>by</small>
+                        <div dir="ltr">
+                          <small className='text-muted me-25' > </small>
                           <small>
                             <a className='text-body' href='/' onClick={e => e.preventDefault()}>
                               {data.addUserFullName}
                             </a>
                           </small>
                           <span className='text-muted ms-50 me-25'>|</span>
-                          <small className='text-muted'>{data.insertDate}</small>
+                          <small className='text-secondary'>{GregorianToSolar(data.insertDate)}</small>
+                          <span className='text-muted ms-50 me-25'>|</span>
+                          <small className='text-primary'>{data.newsCatregoryName}</small>
                         </div>
                       </div>
                       {/* <div className='my-1 py-25'>{renderTags()}</div> */}
                       <div
+                      className='my-1 py-25 lh-lg fs-5 '
                         dangerouslySetInnerHTML={{
                           __html: data.describe
                         }}
@@ -163,7 +171,7 @@ fetchNewsData()
                           <Avatar img={cmtImg} className='me-2' imgHeight='60' imgWidth='60' />
                         </div>
                         <div>
-                          <h6 className='fw-bolder'>{data.addUserFullName}</h6>
+                          <h6 className='fw-bolder mt-1'>{data.addUserFullName}</h6>
                           <CardText className='mb-0'>
                            
                           </CardText>
@@ -180,16 +188,18 @@ fetchNewsData()
                               {/* <div className='text-body align-middle'>{kFormatter(data.blog.comments)}</div> */}
                             </a>
                           </div>
-                          <div className='d-flex align-items-cente'>
-                            <a className='me-50' href='/' onClick={e => e.preventDefault()}>
-                              <Bookmark size={21} className='text-body align-middle' />
-                            </a>
-                            <a href='/' onClick={e => e.preventDefault()}>
+                          {/* <div className='d-flex align-items-center'> */}
+                            {/* <a className='me-50' href='/' onClick={e => e.preventDefault()}> */}
+                              
+                              {/* <Bookmark size={21} className='text-body align-middle' /> */}
+                            {/* </a> */}
+                            {/* <a href='/' onClick={e => e.preventDefault()}> */}
                               {/* <div className='text-body align-middle'>{data.blog.bookmarked}</div> */}
-                            </a>
-                          </div>
+                            {/* </a> */}
+                          {/* </div> */}
+                          
                         </div>
-                        <UncontrolledDropdown className='dropdown-icon-wrapper'>
+                        {/* <UncontrolledDropdown className='dropdown-icon-wrapper'>
                           <DropdownToggle tag='span'>
                             <Share2 size={21} className='text-body cursor-pointer' />
                           </DropdownToggle>
@@ -209,10 +219,14 @@ fetchNewsData()
                             <DropdownItem className='py-50 px-1'>
                               <Linkedin size={18} />
                             </DropdownItem>
+                            
                           </DropdownMenu>
-                        </UncontrolledDropdown>
+                          
+                        </UncontrolledDropdown> */}
+                     <Link to={'/EditBlog'}><Button.Ripple color='primary'>ویرایش</Button.Ripple></Link>
                       </div>
                     </CardBody>
+                    
                   </Card>
                 </Col>
                 <Col sm='12' id='blogComment'>
@@ -263,10 +277,14 @@ fetchNewsData()
                 </Col> */}
               </Row>
             ) : null}
+            <NewsComments NewsId={NewsParams.id}/>
           </div>
+         
         </div>
-        {/* <Sidebar /> */}
+        
+        <Sidebar />
       </div>
+   
     </Fragment>
   )
 }
