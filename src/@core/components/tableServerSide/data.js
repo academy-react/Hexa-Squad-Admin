@@ -1,20 +1,25 @@
+import { Link } from "react-router-dom";
 import { Badge } from "reactstrap";
 import Avatar from "../avatar";
-import { Link } from "react-router-dom";
 import {
   Edit,
   Eye,
   Trash2,
   MoreVertical,
   Trash,
+  UserMinus,
+  UserCheck,
   Check,
-  X,
+  CheckSquare,
   XCircle, CheckCircle 
 } from "react-feather";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar"
 import { Navigate, useNavigate } from "react-router-dom";
 import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
+import DeleteUser from "../../../utility/api/DeleteData/DeleteUser";
+import ActiveUser from "../../../utility/api/PutData/ActiveUser";
+
 export const serverSideColumns = [
   {
     sortable: true,
@@ -81,38 +86,6 @@ export const serverSideColumns = [
       </div>
     ),
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // {user.courses.l>0 &&}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   {
     sortable: true,
     name: "وضعیت حذف",
@@ -242,7 +215,7 @@ export const userListColumns = [
     selector: (row) => row.gmail,
   },
   {
-    sortable: true,
+    sortable: false,
     name: "شماره موبایل",
     minWidth: "200px",
     selector: (row) => row.phoneNumber,
@@ -251,7 +224,7 @@ export const userListColumns = [
     sortable: true,
     name: "تاریخ",
     minWidth: "150px",
-    selector: (row) => row.insertDate.slice(0, 10),
+    selector: (row) => GregorianToSolar(row.insertDate),
     link: (row) => row.id,
   },
   {
@@ -263,7 +236,7 @@ export const userListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate">
-            {row.active ? (
+            {row.active === "True" ? (
               <Badge color="light-success">فعال</Badge>
             ) : (
               <Badge color="light-danger">غیر فعال</Badge>
@@ -282,9 +255,26 @@ export const userListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Eye className="text-muted cursor-pointer" />
-            <Edit className="text-primary cursor-pointer" />
-            <Trash2 className="text-danger cursor-pointer" />
+            <Link to={"/user/userInfo/" + row.id}>
+              <Eye className="text-muted cursor-pointer" />
+            </Link>
+            <Link to={"/user/userInfoEdit/" + row.id}>
+              <Edit className="text-primary cursor-pointer" />
+            </Link>
+
+            {row.active === "True" ? (
+              <UserMinus 
+                className="text-danger cursor-pointer" 
+                onClick={() => DeleteUser(row.id)}
+              />
+              ) : (
+                <UserCheck 
+                  className="text-primary cursor-pointer" 
+                  onClick={() => ActiveUser(row.id)}
+                />
+              )
+            }
+            {/* <Trash2 className="text-danger cursor-pointer" /> */}
           </span>
         </div>
       </div>
