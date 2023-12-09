@@ -14,6 +14,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import DeleteUser from "../../../../utility/api/DeleteData/DeleteUser";
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -22,6 +23,7 @@ const UserList = () => {
   const [sort, setSort] = useState("DESC");
   const [sortColumn, setSortColumn] = useState("InsertDate");
   const [currentPage, setCurrentPage] = useState(1);
+  const [roleId, setRoleId] = useState(3)
   const [isActiveUser, setIsActiveUser] = useState(false)
   const [isDeleteUser, setIsDeleteUser] = useState(false)
 
@@ -71,7 +73,7 @@ const UserList = () => {
     Query: searchValue,
     IsActiveUser: isActiveUser,
     IsDeletedUser: isDeleteUser,
-    roleId: 3
+    roleId: roleId
   };
   const getUserList = async () => {
     try {
@@ -86,36 +88,37 @@ const UserList = () => {
   };
   useEffect(() => {
     getUserList();
-  }, [searchValue, currentPage, rowsPerPage, isActiveUser, isDeleteUser]);
-  // useEffect(() => {
-  //   let isActive =
-  //     data.length !== 0 &&
-  //     data.filter((user) => {
-  //       return user.active === true;
-  //     });
-  //   // let deleted =
-  //   //   data.length !== 0 &&
-  //   //   data.filter((course) => {
-  //   //     return course.isdelete === true;
-  //   //   });
-  //   // let itsStatus =
-  //   //   data.length !== 0 &&
-  //   //   data.filter((course) => {
-  //   //     return course.statusName === "درحال برگذاری";
-  //   //   });
-  //   setActiveUsers(isActive);
-  //   setAllActiveUsers(isActive);
-  //   // setDeletedCourses(deleted);
-  //   // setAllDeletedCourses(deleted);
-  //   // setCurrentCourses(itsStatus);
-  //   // setAllCurrentCourses(itsStatus);
-  // }, [data]);
+  }, [searchValue, currentPage, rowsPerPage, isActiveUser, isDeleteUser, roleId]);
+  useEffect(() => {
+    let isActive =
+      data.length !== 0 &&
+      data.filter((user) => {
+        return user.active === "True";
+      });
+    let deleted =
+      data.length !== 0 &&
+      data.filter((user) => {
+        return user.active === "False";
+      });
+    setActiveUsers(isActive);
+    setAllActiveUsers(isActive);
+    setDeletedUsers(deleted);
+    setAllDeletedUsers(deleted);
+  }, [data]);
 
   const handleSort = (column, sortDirection) => {
     setSort(sortDirection.toUpperCase());
     setSortColumn(column.sortField);
     console.log("sortField", column.sortField);
     console.log("sortDirection", sortDirection);
+  };
+
+  // Delete User
+  const deleteUser = () => {
+    console.log("selectedRows", selectedRows);
+    selectedRows.map((user) => {
+      DeleteUser(user.id, "/user/userList");
+    });
   };
 
   return (
@@ -176,12 +179,16 @@ const UserList = () => {
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
         currentPage={currentPage}
+        setRoleId={setRoleId}
+
         setSelectedRows={setSelectedRows}
         onSort={handleSort}
         setCurrentPage={setCurrentPage}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         serverSideColumns={userListColumns}
+        deleteOject={deleteUser}
+
         title={getTitle()}
         BtnTitle={"اضافه کردن کاربر"}
         BtnIcon={<User/>}

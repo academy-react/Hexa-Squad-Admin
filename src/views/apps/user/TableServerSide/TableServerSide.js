@@ -1,5 +1,6 @@
 // ** React Imports
 import { useRef, Fragment, useState, useEffect, memo, forwardRef } from "react";
+import Select from 'react-select'
 
 // ** Table Columns
 import { serverSideColumns } from "../../../../@core/components/tableServerSide/data";
@@ -45,6 +46,8 @@ const DataTableServerSide = ({
   rowsPerPage,
   currentPage,
   setCurrentPage,
+  setRoleId,
+
   searchValue,
   setSearchValue,
   allData,
@@ -58,6 +61,17 @@ const DataTableServerSide = ({
 
   // Function to toggle sidebar // Add User Toggle
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  // Select Role
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
+  const roleOptions = [
+    { value: '', label: 'Select Role' },
+    { value: 'admin', label: 'Administrator' },
+    { value: 'author', label: 'Teacher' },
+    { value: 'editor', label: 'Student' },
+    { value: 'maintainer', label: 'CourseAssistance' },
+    { value: 'subscriber', label: 'EmployeeAdmin' }
+  ]
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
@@ -96,7 +110,7 @@ const DataTableServerSide = ({
   const handlePerPage = (e) => {
     setRowsPerPage(parseInt(e.target.value));
   };
-  console.log(data);
+
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data.length / rowsPerPage);
@@ -130,6 +144,7 @@ const DataTableServerSide = ({
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
+      role: currentRole.value,
       q: searchValue,
     };
 
@@ -165,7 +180,7 @@ const DataTableServerSide = ({
           </CardTitle>
         </CardHeader>
         <Row className="mx-0 mt-1 mb-50">
-          <Col sm="6">
+          <Col sm="2">
             <div className="d-flex gap-1 align-items-center">
               <Label for="sort-select" className="text-nowrap">
                 تعداد در صفحه{" "}
@@ -188,6 +203,32 @@ const DataTableServerSide = ({
               {/* <Label for='sort-select'>عدد</Label> */}
             </div>
           </Col>
+          <Col sm="4">
+              <div className="d-flex gap-1 align-items-center">
+              <Label for='role-select'>نقش کاربر</Label>
+              <Select
+                isClearable={false}
+                value={currentRole}
+                options={roleOptions}
+                className='react-select'
+                classNamePrefix='select'
+                onChange={data => {
+                  setCurrentRole(data)
+                  // dispatch(
+                  //   getData({
+                  //     sort,
+                  //     sortColumn,
+                  //     q: searchTerm,
+                  //     role: data.value,
+                  //     page: currentPage,
+                  //     perPage: rowsPerPage,
+                  //     status: currentStatus.value,
+                  //   })
+                  // )
+                }}
+              />
+              </div>
+            </Col>
           <Col
             className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
             sm="2"
@@ -200,7 +241,7 @@ const DataTableServerSide = ({
                 onClick={deleteOject}
               >
                 <Trash size={18} />
-                حذف دوره
+                حذف کاربر
               </Button>
             ) : (
               ""

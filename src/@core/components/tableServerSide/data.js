@@ -7,14 +7,19 @@ import {
   Trash2,
   MoreVertical,
   Trash,
+  UserMinus,
+  UserCheck,
   Check,
-  X,
+  CheckSquare,
   XCircle, CheckCircle 
 } from "react-feather";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar"
 import { Navigate, useNavigate } from "react-router-dom";
 import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
+import DeleteUser from "../../../utility/api/DeleteData/DeleteUser";
+import ActiveUser from "../../../utility/api/PutData/ActiveUser";
+
 export const serverSideColumns = [
   {
     sortable: true,
@@ -256,7 +261,20 @@ export const userListColumns = [
             <Link to={"/user/userInfoEdit/" + row.id}>
               <Edit className="text-primary cursor-pointer" />
             </Link>
-            <Trash2 className="text-danger cursor-pointer" />
+
+            {row.active === "True" ? (
+              <Trash2 
+                className="text-danger cursor-pointer" 
+                onClick={() => DeleteUser(row.id)}
+              />
+              ) : (
+                <CheckSquare 
+                  className="text-primary cursor-pointer" 
+                  onClick={() => ActiveUser(row.id)}
+                />
+              )
+            }
+            {/* <Trash2 className="text-danger cursor-pointer" /> */}
           </span>
         </div>
       </div>

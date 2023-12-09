@@ -1,11 +1,11 @@
 // ** React Imports
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
-import toast from "react-hot-toast";
-import instance from '../../../../utility/interceptor';
+import DeleteUser from '../../../../utility/api/DeleteData/DeleteUser';
+import ActiveUser from '../../../../utility/api/PutData/ActiveUser';
 
 // ** Icons Imports
-import { AlignJustify, Rss, Info, Image, Users, Edit, Trash } from 'react-feather'
+import { AlignJustify } from 'react-feather'
 
 // ** Reactstrap Imports
 import { Card, CardImg, Collapse, Navbar, Nav, NavItem, NavLink, Button } from 'reactstrap'
@@ -20,54 +20,6 @@ const ProfileHeader = ({ data }) => {
   const toggle = () => setIsOpen(!isOpen)
 
   // const [userActive, setUserActive] = useState(data.active)
-
-  // Delete User API
-  const DeleteUser = async () => {
-    const obj = {
-      userId: data.id,
-    };
-    try {
-      const deletedUser = await toast.promise(
-        instance.delete("/User/DeleteUser", { data: obj }),
-        {
-          loading: "در حال حذف کردن کاربر",
-          success: "عملیات با موفقیت انجام شد",
-        }
-      );
-      if (deletedUser.success) {
-        setTimeout(() => {
-          window.location = to;
-        }, 600);
-      }
-      console.log(deletedUser);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Active User 
-  const ActiveUser = async () => {
-    const obj = {
-      userId: data.id,
-    };
-    try {
-      const activedUser = await toast.promise(
-        instance.put("/User/ReverseToActiveUser", obj),
-        {
-          loading: "در حال فعال کردن کاربر",
-          success: "عملیات با موفقیت انجام شد",
-        }
-      );
-      if (activedUser.success) {
-        setTimeout(() => {
-          window.location = to;
-        }, 600);
-      }
-      console.log(activedUser);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   
   return (
     <Card className='profile-header mb-2'>
@@ -98,11 +50,11 @@ const ProfileHeader = ({ data }) => {
 
               {data.active === true 
                 ? 
-                  <Button color='danger' onClick={DeleteUser}>
+                  <Button color='danger' onClick={() => DeleteUser(data.id)}>
                     <span className='fw-bold d-none d-md-block'>حذف کردن کاربر</span>
                   </Button>   
                 :  
-                  <Button color='primary' onClick={ActiveUser}>
+                  <Button color='primary' onClick={() => ActiveUser(data.id)}>
                     <span className='fw-bold d-none d-md-block'>فعال کردن کاربر</span>
                   </Button>         
               }
