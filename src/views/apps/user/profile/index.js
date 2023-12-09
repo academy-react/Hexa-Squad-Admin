@@ -25,6 +25,7 @@ import ProfileLatestPhotos from "./ProfileLatestPhotos";
 
 // ** Styles
 import "@styles/react/pages/page-profile.scss";
+import BreadCrumbs from "../../../../@core/components/breadcrumbs";
 
 const Profile = () => {
   // ** States
@@ -56,6 +57,13 @@ const Profile = () => {
 
   return (
     <Fragment>
+      <BreadCrumbs
+        title={"اطلاعات کاربر"}
+        data={[
+          { title: "لیست کاربران", link: "/user/userList" },
+          { title: "اطلاعات کاربر", link: "/user/userInfo"+urlParam.id }
+        ]}
+      />
       {data !== null ? (
         <div id="user-profile">
           <Row>

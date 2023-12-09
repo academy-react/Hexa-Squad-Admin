@@ -7,6 +7,7 @@ import instance from "../../../../../utility/interceptor";
 import Wizard from "../../../../../@core/components/wizard";
 import AddUserInfo from "./steps/AddUserInfo";
 import AddUserConnection from "./steps/AddUserConnection";
+import BreadCrumbs from "../../../../../@core/components/breadcrumbs";
 
 const EditProfile = () => {  
 
@@ -109,6 +110,13 @@ const EditProfile = () => {
 
   return (
     <Fragment>
+      <BreadCrumbs
+        title={"ویرایش اطلاعات کاربر"}
+        data={[
+          { title: "لیست کاربران", link: "/user/userList" },
+          { title: "ویرایش اطلاعات کاربر", link: "/user/userList"+urlParam.id }
+        ]}
+      />
       <div className="modern-horizontal-wizard">
         <Wizard
           type="modern-horizontal"

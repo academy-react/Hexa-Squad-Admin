@@ -263,12 +263,12 @@ export const userListColumns = [
             </Link>
 
             {row.active === "True" ? (
-              <Trash2 
+              <UserMinus 
                 className="text-danger cursor-pointer" 
                 onClick={() => DeleteUser(row.id)}
               />
               ) : (
-                <CheckSquare 
+                <UserCheck 
                   className="text-primary cursor-pointer" 
                   onClick={() => ActiveUser(row.id)}
                 />

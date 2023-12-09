@@ -15,6 +15,8 @@ import {
   Row,
 } from "reactstrap";
 import DeleteUser from "../../../../utility/api/DeleteData/DeleteUser";
+import BreadCrumbs from "../../../../@core/components/breadcrumbs";
+
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -33,8 +35,6 @@ const UserList = () => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [allActiveUsers, setAllActiveUsers] = useState([]);
   const [isALLData, setIsALLData] = useState(true);
-
-
   const [selectedRows, setSelectedRows] = useState([]);
 
   const getData = () => {
@@ -123,6 +123,10 @@ const UserList = () => {
 
   return (
     <div>
+      <BreadCrumbs
+        title={"لیست کاربران هگزا اسکواد"}
+        data={[{ title: "لیست کاربران", link: "/user/userList" }]}
+      />
       <Row>
         <Col lg="3" sm="6">
           <StatsHorizontal
