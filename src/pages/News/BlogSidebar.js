@@ -32,7 +32,7 @@ const BlogSidebar = () => {
         params: NewsParams,
       });
      const result= News.news
-      setData(result.slice(result.length - 7 , result.length-2));
+      setData(result.slice(0 , 4));
     } catch (error) {
       console.log(error);
     }

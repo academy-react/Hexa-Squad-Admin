@@ -223,7 +223,7 @@ fetchNewsData()
                           </DropdownMenu>
                           
                         </UncontrolledDropdown> */}
-                     <Link to={'/EditBlog'}><Button.Ripple color='primary'>ویرایش</Button.Ripple></Link>
+                     <Link to={"/EditBlog/" + data.id}><Button.Ripple color='primary'>ویرایش</Button.Ripple></Link>
                       </div>
                     </CardBody>
                     
