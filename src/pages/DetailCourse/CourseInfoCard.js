@@ -35,12 +35,15 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import { Link } from "react-router-dom";
 import GetTeacher from "../../utility/api/GetData/GetTeacher";
 import DeleteCourse from "../../utility/api/DeleteData";
+import GetCourseGroups from "../../utility/api/GetData/GetCourseGroups/GetCourseGroups";
 
 const MySwal = withReactContent(Swal);
 
 const UserInfoCard = ({ detail }) => {
   const [teacherDetails, setTeacherDetails] = useState();
+  const [courseGroup, setCourseGroup] = useState();
   const [teches, setTeches] = useState([]);
+  console.log(courseGroup, "courseGroup");
   // ** render user img
   const renderUserImg = () => {
     if (detail.imageAddress) {
@@ -119,8 +122,15 @@ const UserInfoCard = ({ detail }) => {
     console.log(data);
     setTeacherDetails(data);
   };
+  const getCourseGroups = async () => {
+    const data = await GetCourseGroups(detail.teacherId, detail.courseId);
+    console.log(data);
+    setCourseGroup(data);
+  };
+  console.log(courseGroup);
   useEffect(() => {
     detail.teacherId && getTeacherDetails();
+    detail.teacherId && getCourseGroups();
     detail.courseTeches && setTeches(detail.courseTeches);
   }, [detail.teacherId]);
 
@@ -158,8 +168,10 @@ const UserInfoCard = ({ detail }) => {
                 <Check className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">{detail.courseLevelName}</h4>
-                <small>سطح دوره</small>
+                <h4 className="mb-0">
+                  {courseGroup && courseGroup[0]?.groupName}
+                </h4>
+                <small>گروه دوره</small>
               </div>
             </div>
           </div>
@@ -173,7 +185,7 @@ const UserInfoCard = ({ detail }) => {
                 </li>
                 <li className="mb-75">
                   <span className="fw-bolder me-25">نام استاد : </span>
-                  <Link to={"/user/" + detail.teacherId}>
+                  <Link to={"/user/userInfo/" + detail.teacherId}>
                     {teacherDetails ? teacherDetails.fullName : ""}
                   </Link>
                 </li>
@@ -215,14 +227,16 @@ const UserInfoCard = ({ detail }) => {
                       {" "}
                       تکنولوژی های دوره :{" "}
                     </span>
-                    {teches.map((thech, i) => (
-                      <Badge
-                        className="text-capitalize"
-                        color={"light-primary"}
-                      >
-                        {thech.techName}
-                      </Badge>
-                    ))}
+                    <div className="tech">
+                      {teches.map((thech, i) => (
+                        <Badge
+                          className="text-capitalize"
+                          color={"light-primary"}
+                        >
+                          {thech}
+                        </Badge>
+                      ))}
+                    </div>
                   </li>
                 ) : (
                   ""

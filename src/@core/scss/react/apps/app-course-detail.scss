@@ -1,5 +1,5 @@
-@import '../../base/bootstrap-extended/include';
-@import '../../base/components/include';
+@import "../../base/bootstrap-extended/include";
+@import "../../base/components/include";
 
 // Users App
 // ========================================================================
@@ -16,4 +16,15 @@
       margin-top: 1rem;
     }
   }
+}
+.gmlwXk {
+  min-height: 200px;
+}
+.min-h-70 {
+  min-height: 70vh;
+}
+.tech {
+  display: flex;
+  margin: 5px 0;
+  gap: 5px;
 }

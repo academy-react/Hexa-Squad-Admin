@@ -1,5 +1,5 @@
 import { Button, CardBody, CardHeader, Row } from "reactstrap";
-import FormikInput from "../../../../../../@core/components/FormikInput";
+import FormikInput from "../../../../../@core/components/FormikInput";
 import { Form, Formik } from "formik";
 import { Fragment, useState } from "react";
 import { ArrowLeft } from "react-feather";

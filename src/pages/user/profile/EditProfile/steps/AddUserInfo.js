@@ -1,11 +1,11 @@
 import { Button, CardBody, CardHeader, Row } from "reactstrap";
-import FormikInput from "../../../../../../@core/components/FormikInput";
+import FormikInput from "../../../../../@core/components/FormikInput";
 import { Form, Formik } from "formik";
 import { Fragment, useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight } from "react-feather";
-import PickerRange from "../../../../../../@core/components/PickerRange";
+// import PickerRange from "../../../../../../@core/components/PickerRange";
 import DatePicker from "react-multi-date-picker";
-import { jalali_to_gregorian } from "../../../../../../utility/jalaliToGregorian";
+// import { jalali_to_gregorian } from "../../../../../../utility/jalaliToGregorian";
 
 const AddUserInfo = ({
   stepper,

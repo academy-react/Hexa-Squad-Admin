@@ -1,8 +1,8 @@
 // ** React Imports
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
-import DeleteUser from '../../../../utility/api/DeleteData/DeleteUser';
-import ActiveUser from '../../../../utility/api/PutData/ActiveUser';
+import DeleteUser from '../../../utility/api/DeleteData/DeleteUser';
+import ActiveUser from '../../../utility/api/PutData/ActiveUser';
 
 // ** Icons Imports
 import { AlignJustify } from 'react-feather'
@@ -10,8 +10,8 @@ import { AlignJustify } from 'react-feather'
 // ** Reactstrap Imports
 import { Card, CardImg, Collapse, Navbar, Nav, NavItem, NavLink, Button } from 'reactstrap'
 
-import profileBg from "../../../../assets/images/pages/pages/profile-bg.jpg";
-import userIcon from "../../../../assets/images/pages/pages/userIcon2.jpg";
+import profileBg from "../../../assets/images/pages/pages/profile-bg.jpg";
+import userIcon from "../../../assets/images/pages/pages/userIcon2.jpg";
 
 const ProfileHeader = ({ data }) => {
   // ** States

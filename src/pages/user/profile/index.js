@@ -3,7 +3,7 @@ import { Fragment, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 // ** Third Party Components
-import instance from "../../../../utility/interceptor";
+import instance from "../../../utility/interceptor";
 
 // ** Custom Components
 import UILoader from "@components/ui-loader";
@@ -25,7 +25,8 @@ import ProfileLatestPhotos from "./ProfileLatestPhotos";
 
 // ** Styles
 import "@styles/react/pages/page-profile.scss";
-import BreadCrumbs from "../../../../@core/components/breadcrumbs";
+import BreadCrumbs from "../../../@core/components/breadcrumbs";
+// import BreadCrumbs from "../../../../@core/components/breadcrumbs";
 
 const Profile = () => {
   // ** States

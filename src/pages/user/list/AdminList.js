@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
-import TableServerSide from "../../../../@core/components/tableServerSide/TableServerSide";
-import { userListColumns } from "../../../../@core/components/tableServerSide/data";
-import instance from "../../../../utility/interceptor";
+import TableServerSide from "../../../@core/components/tableServerSide/TableServerSide";
+import { userListColumns } from "../../../@core/components/tableServerSide/data";
+import instance from "../../../utility/interceptor";
 import { User } from "react-feather";
 
 const AdminList = () => {
@@ -10,10 +10,10 @@ const AdminList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
-
+console.log(data);
   const userParams = {
     PageNumber: currentPage,
-    RowsOfPage: rowsPerPage,
+    RowsOfPage: 1000,
     SortingCol: "DESC",
     SortType: "InsertDate",
     Query: searchValue,

@@ -2,17 +2,27 @@ import { useEffect, useState } from "react";
 import TableServerSide from "../@core/components/tableServerSide/TableServerSide";
 import { NewsListColumns } from "../@core/components/tableServerSide/data";
 import instance from "../utility/interceptor";
+import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
 
 const Courses = () => {
   const [data, setData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchValue, setSearchValue] = useState("");
-
+  const [searchValue, setSearchValue] = useState(null);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const Btn = () => (
+    <Link to={"/AddNews"}>
+      <Button color="primary" className="d-flex gap-1 align-items-center">
+        {"اضافه کردن بلاگ"}
+      </Button>
+    </Link>
+  );
+  console.log(data);
   const NewsParams = {
-    PageNumber: currentPage,
-    RowsOfPage: rowsPerPage,
-    // Query: searchValue,
+    PageNumber: 1,
+    RowsOfPage: 1000,
+    Query: searchValue,
   };
   const getNewsList = async () => {
     try {
@@ -39,11 +49,10 @@ const Courses = () => {
         setCurrentPage={setCurrentPage}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
+        setSelectedRows={setSelectedRows}
         serverSideColumns={NewsListColumns}
-        title={ "اخبار شما" }
-        BtnTitle={"اضافه کردن بلاگ"}
-        BtnLink={"/AddNews"}
-        
+        title={"اخبار شما"}
+        btn={<Btn />}
       />
     </div>
   );

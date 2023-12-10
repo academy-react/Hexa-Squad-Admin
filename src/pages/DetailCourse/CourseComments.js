@@ -25,6 +25,7 @@ import RejectComment from "../../utility/api/PostData/RejectComment";
 import DeleteCourseComment from "../../utility/api/DeleteData/DeleteCourseComment";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import TableServerSide from "../../@core/components/tableServerSide/TableServerSide";
 
 // const projectsArr = [
 //   {
@@ -113,15 +114,15 @@ export const handleSuspendedClick = (id, courseId) => {
         id,
         "/Course/detail/" + courseId
       );
-      console.log(deleteCourse);
-      MySwal.fire({
-        icon: "success",
-        title: "موفقیت آمیز !",
-        text: "کامنت با موفقیت حذف شد .",
-        customClass: {
-          confirmButton: "btn btn-success",
-        },
-      });
+      deleteCourse.success &&
+        MySwal.fire({
+          icon: "success",
+          title: "موفقیت آمیز !",
+          text: "کامنت با موفقیت حذف شد .",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
     } else if (result.dismiss === MySwal.DismissReason.cancel) {
       MySwal.fire({
         title: "کامنت حذف نشد",
@@ -225,70 +226,58 @@ export const columns = [
 ];
 
 const CourseComments = ({ detail }) => {
+  const [allComments, setAllComments] = useState([]);
   const [comments, setComments] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  const [itemOffset, setItemOffset] = useState(0);
-  const countInPage = 5;
-  const endOffset = itemOffset + countInPage;
-  const currentItems = comments.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(comments.length / countInPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [countInPage, setCountInPage] = useState(7);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [searchValue, setSearchValue] = useState(null);
+  const deleteSelectedRows = async () => {
+    selectedRows.map(async (item) => {
+      const deleteCourse = await DeleteCourseComment(
+        item.id,
+        "/Course/detail/" + item.courseId
+      );
+      console.log(deleteCourse);
+    });
+  };
+  const filterSearch = (values) => {
+    console.log("All data", allComments);
+    let filteredData = allComments.filter((item) => {
+      return item.title.indexOf(values) != -1;
+    });
+    setComments(filteredData);
+  };
 
   const getComments = async () => {
     const result = await GetCourseComments(detail.courseId);
     console.log("getComments result : ", result);
     setComments(result);
+    setAllComments(result);
   };
   useEffect(() => {
     detail.courseId && getComments();
   }, [detail.courseId]);
-
-  const handlePagination = (page) => {
-    const newOffset = (page.selected * countInPage) % comments.length;
-    setItemOffset(newOffset);
-    // setCurrentPage(page.selected + 1);
-  };
-  const CustomPagination = () => {
-    // const count = Math.ceil(detail.length / 5);
-    return (
-      <ReactPaginate
-        previousLabel={""}
-        nextLabel={""}
-        breakLabel="..."
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={2}
-        renderOnZeroPageCount={null}
-        activeClassName="active"
-        // forcePage={pageCount !== 0 && pageCount }
-        onPageChange={handlePagination}
-        pageClassName="page-item"
-        breakClassName="page-item"
-        nextLinkClassName="page-link"
-        pageLinkClassName="page-link"
-        breakLinkClassName="page-link"
-        previousLinkClassName="page-link"
-        nextClassName="page-item next-item"
-        previousClassName="page-item prev-item"
-        containerClassName={
-          "pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1"
-        }
-      />
-    );
-  };
+  useEffect(() => {
+    filterSearch();
+  }, [searchValue]);
   return (
     <Card>
-      <CardHeader tag="h4">نظرات کاربران</CardHeader>
       <div className="react-dataTable user-view-account-projects">
-        <DataTable
-          noHeader
-          pagination
-          paginationServer
-          paginationComponent={CustomPagination}
-          responsive
-          columns={columns}
-          data={currentItems}
-          className="react-dataTable"
-          sortIcon={<ChevronDown size={10} />}
+        <TableServerSide
+          allData={allComments}
+          data={comments}
+          rowsPerPage={countInPage}
+          setRowsPerPage={setCountInPage}
+          currentPage={currentPage}
+          deleteOject={deleteSelectedRows}
+          setSelectedRows={setSelectedRows}
+          onSort={() => {}}
+          setCurrentPage={setCurrentPage}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          serverSideColumns={columns}
+          title={"نظرات کاربران"}
         />
       </div>
     </Card>

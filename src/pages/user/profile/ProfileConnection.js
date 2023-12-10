@@ -1,6 +1,6 @@
 // ** Reactstrap Imports
 import { Card, CardBody, CardText, Row } from 'reactstrap'
-import GregorianToSolar from '../../../../utility/GregorianToSolar/GregorianToSolar'
+// import GregorianToSolar from '../../../../utility/GregorianToSolar/GregorianToSolar'
 
 const ProfileConnection = ({ data }) => {
 

@@ -1,151 +1,62 @@
 // ** React Imports
 import { useState, useEffect } from "react";
 
-// ** Table Columns
-import { columns } from "./columns";
-
 // ** Third Party Components
 import DataTable from "react-data-table-component";
-import {
-  ChevronDown,
-  ExternalLink,
-  Printer,
-  FileText,
-  File,
-  Clipboard,
-  Copy,
-} from "react-feather";
+import { ChevronDown } from "react-feather";
 
 // ** Reactstrap Imports
-import {
-  Card,
-  CardTitle,
-  CardHeader,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledButtonDropdown,
-} from "reactstrap";
-
-// ** Store & Actions
-// import { getData } from '@src/views/apps/invoice/store'
-// import { useDispatch, useSelector } from 'react-redux'
-
-// ** Styles
-import "@styles/react/apps/app-invoice.scss";
-import "@styles/react/libs/tables/react-dataTable-component.scss";
-
-const InvoiceList = () => {
-  // ** Store Vars
-  // const dispatch = useDispatch()
-  // const store = useSelector(state => state.invoice)
-
-  // ** States
-  const data = [];
-  const allData = [];
-  const [value] = useState("");
-  const [rowsPerPage] = useState(6);
-  const [currentPage] = useState(1);
-  const [statusValue] = useState("");
-  const [sort, setSort] = useState("desc");
-  const [sortColumn, setSortColumn] = useState("id");
-
-  // useEffect(() => {
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       q: value,
-  //       sortColumn,
-  //       page: currentPage,
-  //       perPage: rowsPerPage,
-  //       status: statusValue
-  //     })
-  //   )
-  // }, [dispatch, store.data.length])
-
-  const dataToRender = () => {
-    const filters = {
-      status: statusValue,
-      q: value,
-    };
-
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0;
+import { Card } from "reactstrap";
+import TableServerSide from "../../@core/components/tableServerSide/TableServerSide";
+import GetCourseReserves from "../../utility/api/GetData/GetCourseReserves/GetCourseReserves";
+import { reserveColumns } from "../../@core/components/tableServerSide/data";
+const InvoiceList = ({ detail }) => {
+  const [allComments, setAllComments] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [countInPage, setCountInPage] = useState(7);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [searchValue, setSearchValue] = useState(null);
+  const filterSearch = (values) => {
+    console.log("All data", allComments);
+    let filteredData = allComments.filter((item) => {
+      return item.title.indexOf(values) != -1;
     });
-
-    if (data.length > 0) {
-      return data.slice(0, rowsPerPage);
-    } else if (data.length === 0 && isFiltered) {
-      return [];
-    } else {
-      return allData.slice(0, rowsPerPage);
-    }
+    setComments(filteredData);
   };
 
-  const handleSort = (column, sortDirection) => {
-    setSort(sortDirection);
-    setSortColumn(column.sortField);
-    // dispatch(
-    //   getData({
-    //     q: value,
-    //     page: currentPage,
-    //     sort: sortDirection,
-    //     status: statusValue,
-    //     perPage: rowsPerPage,
-    //     sortColumn: column.sortField
-    //   })
-    // )
+  const getComments = async () => {
+    const result = await GetCourseReserves(detail.courseId);
+    console.log("getComments result : ", result);
+    setComments(result);
+    setAllComments(result);
   };
-
+  useEffect(() => {
+    detail.courseId && getComments();
+  }, [detail.courseId]);
+  useEffect(() => {
+    filterSearch();
+  }, [searchValue]);
   return (
-    <div className="invoice-list-wrapper">
-      <Card>
-        <CardHeader className="py-1">
-          <CardTitle tag="h4">Invoices</CardTitle>
-          <UncontrolledButtonDropdown>
-            <DropdownToggle color="secondary" outline caret>
-              <ExternalLink className="font-small-4 me-50" />
-              <span>Export</span>
-            </DropdownToggle>
-            <DropdownMenu end>
-              <DropdownItem className="w-100">
-                <Printer className="font-small-4 me-50" />
-                <span>Print</span>
-              </DropdownItem>
-              <DropdownItem className="w-100">
-                <FileText className="font-small-4 me-50" />
-                <span>CSV</span>
-              </DropdownItem>
-              <DropdownItem className="w-100">
-                <File className="font-small-4 me-50" />
-                <span>Excel</span>
-              </DropdownItem>
-              <DropdownItem className="w-100">
-                <Clipboard className="font-small-4 me-50" />
-                <span>PDF</span>
-              </DropdownItem>
-              <DropdownItem className="w-100">
-                <Copy className="font-small-4 me-50" />
-                <span>Copy</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledButtonDropdown>
-        </CardHeader>
-        <div className="invoice-list-dataTable react-dataTable">
-          <DataTable
-            noHeader
-            sortServer
-            columns={columns}
-            responsive={true}
-            onSort={handleSort}
-            data={dataToRender()}
-            sortIcon={<ChevronDown />}
-            className="react-dataTable"
-            defaultSortField="invoiceId"
-          />
-        </div>
-      </Card>
-    </div>
+    <Card>
+      <div className="react-dataTable user-view-account-projects">
+        <TableServerSide
+          allData={allComments}
+          data={comments}
+          rowsPerPage={countInPage}
+          setRowsPerPage={setCountInPage}
+          currentPage={currentPage}
+          deleteOject={() => {}}
+          setSelectedRows={setSelectedRows}
+          onSort={() => {}}
+          setCurrentPage={setCurrentPage}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          serverSideColumns={reserveColumns}
+          title={""}
+        />
+      </div>
+    </Card>
   );
 };
 
