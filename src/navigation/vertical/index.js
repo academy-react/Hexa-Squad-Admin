@@ -1,4 +1,12 @@
-import { Home, Circle, List, User, Edit } from "react-feather";
+import {
+  Home,
+  Circle,
+  List,
+  User,
+  Edit,
+  BookOpen,
+  Coffee,
+} from "react-feather";
 
 export default [
   {
@@ -15,9 +23,21 @@ export default [
     children: [
       {
         id: "Courses",
+        title: "لیست دوره ها",
+        icon: <BookOpen size={20} />,
+        navLink: "/Course/Courses",
+      },
+      {
+        id: "TeacherCourses",
         title: "لیست دوره های شما",
         icon: <List size={20} />,
-        navLink: "/TeacherCourses",
+        navLink: "/Course/TeacherCourses",
+      },
+      {
+        id: "reserveUsers",
+        icon: <Coffee />,
+        title: "دوره های رزرو شده کاربران",
+        navLink: "/reserveUsers",
       },
       {
         id: "createCourse",
@@ -27,6 +47,7 @@ export default [
       },
     ],
   },
+
   {
     id: "users",
     title: "کاربران",
@@ -64,7 +85,12 @@ export default [
         icon: <List size={20} />,
         navLink: "/NewsList",
       },
-
+      {
+        id: "NewsList",
+        title: " ایجاد خبر جدید",
+        icon: <List size={20} />,
+        navLink: "/AddNews",
+      },
     ],
   },
 ];

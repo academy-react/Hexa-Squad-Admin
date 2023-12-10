@@ -1,9 +1,8 @@
-
 import { useEffect, useState } from "react";
 import TableServerSide from "../TableServerSide/TableServerSide";
-import { userListColumns } from "../../../../@core/components/tableServerSide/data";
-import StatsHorizontal from "../../../../@core/components/StatsHorizontal";
-import instance from "../../../../utility/interceptor";
+import { userListColumns } from "../../../@core/components/tableServerSide/data";
+import StatsHorizontal from "../../../@core/components/StatsHorizontal";
+import instance from "../../../utility/interceptor";
 import { User, BookOpen, Cpu, GitBranch, Trash, Trash2 } from "react-feather";
 import {
   Card,
@@ -14,9 +13,8 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import DeleteUser from "../../../../utility/api/DeleteData/DeleteUser";
-import BreadCrumbs from "../../../../@core/components/breadcrumbs";
-
+import DeleteUser from "../../../utility/api/DeleteData/DeleteUser";
+import BreadCrumbs from "../../../@core/components/breadcrumbs";
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -25,16 +23,16 @@ const UserList = () => {
   const [sort, setSort] = useState("DESC");
   const [sortColumn, setSortColumn] = useState("InsertDate");
   const [currentPage, setCurrentPage] = useState(1);
-  const [roleId, setRoleId] = useState(3)
-  const [isActiveUser, setIsActiveUser] = useState(false)
-  const [isDeleteUser, setIsDeleteUser] = useState(false)
+  const [roleId, setRoleId] = useState(3);
+  const [isActiveUser, setIsActiveUser] = useState(false);
+  const [isDeleteUser, setIsDeleteUser] = useState(false);
+  const [isALLData, setIsALLData] = useState(true);
 
-  const [allDeletedUsers, setAllDeletedUsers] = useState([])
+  const [allDeletedUsers, setAllDeletedUsers] = useState([]);
   const [deletedUsers, setDeletedUsers] = useState([]);
   const [searchValue, setSearchValue] = useState(null);
   const [activeUsers, setActiveUsers] = useState([]);
   const [allActiveUsers, setAllActiveUsers] = useState([]);
-  const [isALLData, setIsALLData] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
 
   const getData = () => {
@@ -66,14 +64,14 @@ const UserList = () => {
   };
 
   const userParams = {
-    PageNumber: currentPage,
-    RowsOfPage: rowsPerPage,
+    PageNumber: 1,
+    RowsOfPage: 1000,
     SortingCol: sort,
     SortType: sortColumn,
     Query: searchValue,
-    IsActiveUser: isActiveUser,
-    IsDeletedUser: isDeleteUser,
-    roleId: roleId
+    // IsActiveUser: isActiveUser,
+    // IsDeletedUser: isDeleteUser,
+    roleId: roleId,
   };
   const getUserList = async () => {
     try {
@@ -88,7 +86,7 @@ const UserList = () => {
   };
   useEffect(() => {
     getUserList();
-  }, [searchValue, currentPage, rowsPerPage, isActiveUser, isDeleteUser, roleId]);
+  }, [searchValue, currentPage, rowsPerPage, roleId]);
   useEffect(() => {
     let isActive =
       data.length !== 0 &&
@@ -98,12 +96,10 @@ const UserList = () => {
     let deleted =
       data.length !== 0 &&
       data.filter((user) => {
-        return user.active === "False";
+        return user.active === 'False';
       });
     setActiveUsers(isActive);
-    setAllActiveUsers(isActive);
     setDeletedUsers(deleted);
-    setAllDeletedUsers(deleted);
   }, [data]);
 
   const handleSort = (column, sortDirection) => {
@@ -137,7 +133,7 @@ const UserList = () => {
             color="primary"
             onclick={() => {
               setIsALLData(true);
-              setIsActiveUser(true);
+              setIsActiveUser(false);
               setIsDeleteUser(false);
             }}
             stats={data.length}
@@ -184,7 +180,6 @@ const UserList = () => {
         setRowsPerPage={setRowsPerPage}
         currentPage={currentPage}
         setRoleId={setRoleId}
-
         setSelectedRows={setSelectedRows}
         onSort={handleSort}
         setCurrentPage={setCurrentPage}
@@ -192,10 +187,9 @@ const UserList = () => {
         setSearchValue={setSearchValue}
         serverSideColumns={userListColumns}
         deleteOject={deleteUser}
-
         title={getTitle()}
         BtnTitle={"اضافه کردن کاربر"}
-        BtnIcon={<User/>}
+        BtnIcon={<User />}
       />
     </div>
   );

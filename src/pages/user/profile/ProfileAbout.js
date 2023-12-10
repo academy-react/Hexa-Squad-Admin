@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Card, CardBody, CardText, Row, Badge } from 'reactstrap'
-import GregorianToSolar from '../../../../utility/GregorianToSolar/GregorianToSolar'
+// import GregorianToSolar from '../../../../utility/GregorianToSolar/GregorianToSolar'
 
 const ProfileAbout = ({ data }) => {
 

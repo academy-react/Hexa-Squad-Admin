@@ -1,9 +1,9 @@
 // ** React Imports
 import { useRef, Fragment, useState, useEffect, memo, forwardRef } from "react";
-import Select from 'react-select'
+import Select from "react-select";
 
 // ** Table Columns
-import { serverSideColumns } from "../../../../@core/components/tableServerSide/data";
+// import { serverSideColumns } from "../../../../@core/components/tableServerSide/data";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
@@ -19,7 +19,6 @@ import DataTable from "react-data-table-component";
 
 // Side Bar Input
 import Sidebar from "../list/Sidebar";
-
 
 // ** Reactstrap Imports
 import {
@@ -58,25 +57,31 @@ const DataTableServerSide = ({
   deleteOject,
   setSelectedRows,
 }) => {
-
   // Function to toggle sidebar // Add User Toggle
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Select Role
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
+  const [currentRole, setCurrentRole] = useState({
+    value: "",
+    label: "Select Role",
+  });
   const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Administrator' },
-    { value: 'author', label: 'Teacher' },
-    { value: 'editor', label: 'Student' },
-    { value: 'maintainer', label: 'CourseAssistance' },
-    { value: 'subscriber', label: 'EmployeeAdmin' }
-  ]
+    { value: "", label: "Select Role" },
+    { value: "admin", label: "Administrator" },
+    { value: "author", label: "Teacher" },
+    { value: "editor", label: "Student" },
+    { value: "maintainer", label: "CourseAssistance" },
+    { value: "subscriber", label: "EmployeeAdmin" },
+  ];
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   const searchRef = useRef();
   const [isChecked, setIsChecked] = useState(false);
+  const [itemOffset, setItemOffset] = useState(0);
+  const endOffset = itemOffset + rowsPerPage;
+  const currentItems = data.slice(itemOffset, endOffset);
+  console.log(currentItems);
   console.log(data);
   // ** Function to handle filter
   const handleFilter = (e) => {
@@ -104,6 +109,8 @@ const DataTableServerSide = ({
   // ** Function to handle Pagination and get data
   const handlePagination = (page) => {
     setCurrentPage(page.selected + 1);
+    const newOffset = (page.selected * rowsPerPage) % data.length;
+    setItemOffset(newOffset);
   };
 
   // ** Function to handle per page
@@ -142,26 +149,26 @@ const DataTableServerSide = ({
   };
 
   // ** Table data to render
-  const dataToRender = () => {
-    const filters = {
-      role: currentRole.value,
-      q: searchValue,
-    };
+  // const dataToRender = () => {
+  //   const filters = {
+  //     role: currentRole.value,
+  //     q: searchValue,
+  //   };
 
-    const isFiltered =
-      searchValue &&
-      Object.keys(filters).some(function (k) {
-        return filters[k].length > 0;
-      });
+  //   const isFiltered =
+  //     searchValue &&
+  //     Object.keys(filters).some(function (k) {
+  //       return filters[k].length > 0;
+  //     });
 
-    if (data.length > 0) {
-      return data;
-    } else if (data.length === 0 && isFiltered) {
-      return [];
-    } else {
-      return allData.slice(0, rowsPerPage);
-    }
-  };
+  //   if (data.length > 0) {
+  //     return data;
+  //   } else if (data.length === 0 && isFiltered) {
+  //     return [];
+  //   } else {
+  //     return allData.slice(0, rowsPerPage);
+  //   }
+  // };
 
   return (
     <Fragment>
@@ -169,14 +176,14 @@ const DataTableServerSide = ({
         <CardHeader className="border-bottom">
           <CardTitle tag="h4">{title}</CardTitle>
           <CardTitle tag="h4">
-              <Button
-                color="primary"
-                className="d-flex gap-1 align-items-center"
-                onClick={toggleSidebar}
-              >
-                {BtnTitle}
-                {BtnIcon}
-              </Button>
+            <Button
+              color="primary"
+              className="d-flex gap-1 align-items-center"
+              onClick={toggleSidebar}
+            >
+              {BtnTitle}
+              {BtnIcon}
+            </Button>
           </CardTitle>
         </CardHeader>
         <Row className="mx-0 mt-1 mb-50">
@@ -203,16 +210,16 @@ const DataTableServerSide = ({
             </div>
           </Col>
           <Col sm="4">
-              <div className="d-flex gap-1 align-items-center">
-              <Label for='role-select'>نقش کاربر</Label>
+            <div className="d-flex gap-1 align-items-center">
+              <Label for="role-select">نقش کاربر</Label>
               <Select
                 isClearable={false}
                 value={currentRole}
                 options={roleOptions}
-                className='react-select'
-                classNamePrefix='select'
-                onChange={data => {
-                  setCurrentRole(data)
+                className="react-select"
+                classNamePrefix="select"
+                onChange={(data) => {
+                  setCurrentRole(data);
                   // dispatch(
                   //   getData({
                   //     sort,
@@ -226,8 +233,8 @@ const DataTableServerSide = ({
                   // )
                 }}
               />
-              </div>
-            </Col>
+            </div>
+          </Col>
           <Col
             className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
             sm="2"
@@ -264,7 +271,7 @@ const DataTableServerSide = ({
           </Col>
         </Row>
         <div className="react-dataTable position-relative">
-          {dataToRender() == 0 ? (
+          {currentItems.length == 0 ? (
             <div style={{ background: "#fff" }} className="py-3 text-center">
               لیست مد نظر شما خالی است
             </div>
@@ -279,7 +286,7 @@ const DataTableServerSide = ({
               onSort={onSort}
               sortIcon={<ChevronDown size={10} />}
               paginationComponent={CustomPagination}
-              data={dataToRender()}
+              data={currentItems}
               paginationDefaultPage={currentPage + 1}
               selectableRowsComponent={BootstrapCheckbox}
               onSelectedRowsChange={onSelectedCheckbox}

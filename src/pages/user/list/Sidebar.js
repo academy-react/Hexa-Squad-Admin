@@ -19,7 +19,7 @@ import { Button, Label, FormText, Form, Input } from 'reactstrap'
 // ** Store & Actions
 // import { addUser } from '../store'
 import { useDispatch } from 'react-redux'
-import instance from '../../../../utility/interceptor'
+import instance from '../../../utility/interceptor'
 
 const defaultValues = {
   firstName: '',
@@ -53,6 +53,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   // Create User API
   const AddNewUser = async (value) => {
+    value.preventDefault()
     const obj = {
       lastName: value.lastName,
       firstName: value.firstName,
@@ -96,6 +97,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   // ** Function to handle form submit
   const onSubmit = data => {
+    data.preventDefault()
     setData(data)
     if (checkIsValid(data)) {
       // toggleSidebar()
@@ -149,7 +151,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       toggleSidebar={toggleSidebar}
       onClosed={handleSidebarClosed}
     >
-      <Form onSubmit={(value) => AddNewUser(value)}>
+      <Form method='post' onSubmit={(value) => AddNewUser(value)}>
         <div className='mb-2'>
           <Label className='form-label' for='firstName'>
              <span className='text-danger'>*</span>{" "}نام

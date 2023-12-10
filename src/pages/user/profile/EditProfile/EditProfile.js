@@ -3,11 +3,15 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FileText, Phone } from "react-feather";
 
-import instance from "../../../../../utility/interceptor";
-import Wizard from "../../../../../@core/components/wizard";
+// import instance from "../../../../../utility/interceptor";
+
+// import Wizard from "../../../../../@core/components/wizard";
 import AddUserInfo from "./steps/AddUserInfo";
 import AddUserConnection from "./steps/AddUserConnection";
-import BreadCrumbs from "../../../../../@core/components/breadcrumbs";
+// import BreadCrumbs from "../../../../../@core/components/breadcrumbs";
+import instance from "../../../../utility/interceptor";
+import Wizard from "../../../../@core/components/wizard";
+import BreadCrumbs from "../../../../@core/components/breadcrumbs";
 
 const EditProfile = () => {  
 

@@ -51,10 +51,14 @@ const DataTableServerSide = ({
   onSort,
   deleteOject,
   setSelectedRows,
+  trashTitle,
+  btn,
 }) => {
   const searchRef = useRef();
   const [isChecked, setIsChecked] = useState(false);
-  console.log(data);
+  const [itemOffset, setItemOffset] = useState(0);
+  const endOffset = itemOffset + rowsPerPage;
+  const currentItems = data?.slice(itemOffset, endOffset);
   // ** Function to handle filter
   const handleFilter = (e) => {
     const value = e.target.value;
@@ -70,7 +74,6 @@ const DataTableServerSide = ({
   };
 
   const onSelectedCheckbox = (value) => {
-    console.log(value);
     setSelectedRows(value.selectedRows);
     if (value.selectedCount > 0) {
       setIsChecked(true);
@@ -81,79 +84,47 @@ const DataTableServerSide = ({
   // ** Function to handle Pagination and get data
   const handlePagination = (page) => {
     setCurrentPage(page.selected + 1);
+    const newOffset = (page.selected * rowsPerPage) % data.length;
+    setItemOffset(newOffset);
   };
 
   // ** Function to handle per page
   const handlePerPage = (e) => {
     setRowsPerPage(parseInt(e.target.value));
   };
-  console.log(data);
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data.length / rowsPerPage);
+
     return (
       <ReactPaginate
         previousLabel={""}
         nextLabel={""}
-        breakLabel="..."
-        pageCount={Math.ceil(count) || 1}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={2}
         activeClassName="active"
+        pageCount={Math.ceil(count) || 1}
         forcePage={currentPage !== 0 ? currentPage - 1 : 0}
         onPageChange={(page) => handlePagination(page)}
-        pageClassName="page-item"
-        breakClassName="page-item"
-        nextLinkClassName="page-link"
-        pageLinkClassName="page-link"
-        breakLinkClassName="page-link"
-        previousLinkClassName="page-link"
-        nextClassName="page-item next-item"
-        previousClassName="page-item prev-item"
+        pageClassName={"page-item"}
+        nextLinkClassName={"page-link"}
+        nextClassName={"page-item next"}
+        previousClassName={"page-item prev"}
+        previousLinkClassName={"page-link"}
+        pageLinkClassName={"page-link"}
         containerClassName={
-          "pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1"
+          "pagination react-paginate justify-content-end my-2 pe-1"
         }
       />
     );
   };
 
   // ** Table data to render
-  const dataToRender = () => {
-    const filters = {
-      q: searchValue,
-    };
-
-    const isFiltered =
-      searchValue &&
-      Object.keys(filters).some(function (k) {
-        return filters[k].length > 0;
-      });
-
-    if (data.length > 0) {
-      return data;
-    } else if (data.length === 0 && isFiltered) {
-      return [];
-    } else {
-      return allData.slice(0, rowsPerPage);
-    }
-  };
 
   return (
     <Fragment>
       <Card>
         <CardHeader className="border-bottom">
           <CardTitle tag="h4">{title}</CardTitle>
-          <CardTitle tag="h4">
-            <Link to={BtnLink}>
-              <Button
-                color="primary"
-                className="d-flex gap-1 align-items-center"
-              >
-                {BtnTitle}
-                {BtnIcon}
-              </Button>
-            </Link>
-          </CardTitle>
+          <CardTitle tag="h4">{btn}</CardTitle>
         </CardHeader>
         <Row className="mx-0 mt-1 mb-50">
           <Col sm="6">
@@ -183,7 +154,7 @@ const DataTableServerSide = ({
             <Row>
               <Col
                 className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-                xs='4'
+                xs="4"
               >
                 {isChecked ? (
                   <Button
@@ -193,7 +164,7 @@ const DataTableServerSide = ({
                     onClick={deleteOject}
                   >
                     <Trash size={18} />
-                    حذف دوره
+                    {trashTitle}
                   </Button>
                 ) : (
                   ""
@@ -218,29 +189,31 @@ const DataTableServerSide = ({
             </Row>
           </Col>
         </Row>
-        <div className="react-dataTable position-relative">
-          {dataToRender() == 0 ? (
-            <div className="py-3 text-center">
-              لیست مد نظر شما خالی است
-            </div>
-          ) : (
-            <DataTable
-              noHeader
-              pagination
-              paginationServer
-              selectableRows
-              className="react-dataTable"
-              columns={serverSideColumns}
-              onSort={onSort}
-              sortIcon={<ChevronDown size={10} />}
-              paginationComponent={CustomPagination}
-              data={dataToRender()}
-              paginationDefaultPage={currentPage + 1}
-              selectableRowsComponent={BootstrapCheckbox}
-              onSelectedRowsChange={onSelectedCheckbox}
-            />
-          )}
-        </div>
+        <Card className=" overflow-hidden">
+          <div className="react-dataTable position-relative">
+            {currentItems?.length == 0 ? (
+              <div className="py-3 text-center">لیست مد نظر شما خالی است</div>
+            ) : (
+              <DataTable
+                noHeader
+                pagination
+                paginationServer
+                selectableRows
+                sortServer
+                responsive
+                className="react-dataTable"
+                columns={serverSideColumns}
+                onSort={onSort}
+                sortIcon={<ChevronDown size={10} />}
+                paginationComponent={CustomPagination}
+                data={currentItems}
+                paginationDefaultPage={currentPage + 1}
+                selectableRowsComponent={BootstrapCheckbox}
+                onSelectedRowsChange={onSelectedCheckbox}
+              />
+            )}
+          </div>
+        </Card>
       </Card>
     </Fragment>
   );

@@ -16,10 +16,11 @@ import { getUserData } from "../../utility/Utils";
 import TeacherCourses from "../../pages/TeacherCourses";
 import NewsList from "../../pages/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
-import Profile from "../../views/apps/user/profile/index";
-import EditProfile from "../../views/apps/user/profile/EditProfile/EditProfile";
+// import  from "../../views/apps/user/profile/index";
+import Profile from '../../pages/user/profile';
+import EditProfile from "../../pages/user/profile/EditProfile/EditProfile";
 
-import NewsDetails from "../../pages/News/NewsDetails"
+import NewsDetails from "../../pages/News/NewsDetails";
 import UpdateCourse from "../../pages/UpdateCourse/UpdateCourse";
 import DetailCourse from "../../pages/DetailCourse/DetailCourse";
 import AddNews from "../../pages/News/AddNews"
@@ -27,6 +28,8 @@ import EditBlog from "../../pages/News/EditBlog/EditBlog"
 
 
 
+import Courses from "../../pages/Courses";
+import ReserveUsers from "../../pages/ReserveUsers";
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -47,8 +50,8 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 
-const UserList = lazy(() => import("../../views/apps/user/list/UserList"));
-const AdminList = lazy(() => import("../../views/apps/user/list/AdminList"));
+const UserList = lazy(() => import("../../pages/user/list/UserList"));
+const AdminList = lazy(() => import("../../pages/user/list/AdminList"));
 
 // ** Merge Routes
 const Routes = [
@@ -62,10 +65,15 @@ const Routes = [
     element: <Home />,
   },
   {
-    path: "/TeacherCourses",
+    path: "/Course/TeacherCourses",
     element: <TeacherCourses />,
   },
+  {
+    path: "/Course/Courses",
+    element: <Courses />,
+  },
   { path: "/Course/create", element: <CreateCourse /> },
+  { path: "/reserveUsers", element: <ReserveUsers /> },
   {
     path: "/Course/edit",
     element: <UpdateCourse />,
@@ -110,16 +118,12 @@ const Routes = [
   {
     element: <Profile />,
     path: "/user/userInfo",
-    children: [
-      { path: "/user/userInfo/:id", element: <Profile /> },
-    ],
+    children: [{ path: "/user/userInfo/:id", element: <Profile /> }],
   },
   {
     element: <EditProfile />,
     path: "/user/userInfoEdit",
-    children: [
-      { path: "/user/userInfoEdit/:id", element: <EditProfile /> },
-    ],
+    children: [{ path: "/user/userInfoEdit/:id", element: <EditProfile /> }],
   },
   {
     element: <AdminList />,
@@ -146,14 +150,12 @@ const Routes = [
     ]
   },
   {
-    element:  <NewsDetails/>,
+    element: <NewsDetails />,
     path: "/NewsDetails",
     children: [
       {path: "/NewsDetails/:id", element:<NewsDetails/>}
     ]
-    
   },
-
 ];
 
 const getRouteMeta = (route) => {
