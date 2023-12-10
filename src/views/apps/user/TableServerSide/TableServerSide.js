@@ -19,7 +19,7 @@ import DataTable from "react-data-table-component";
 
 // Side Bar Input
 import Sidebar from "../list/Sidebar";
-
+import AddUSer from "../list/AddUser";
 
 // ** Reactstrap Imports
 import {
