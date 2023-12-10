@@ -259,7 +259,7 @@ return (
                   height='110'
                 />
                 <div>
-                  <small className='text-muted'>Required image resolution 800x400, image size 10mb.</small>
+                  <small className='text-muted'></small>
                   <div className='d-inline-block'>
                     <div className='mb-0'>
                       <Input

@@ -23,7 +23,7 @@ const AddNewsPhoto = ({
   return (
     <Fragment>
       <CardHeader className="my-2 mb-4">
-        <h2>ویرایش راه ها ارتباطی کاربر </h2>
+        <h2>ویرایش جزییات اخبار </h2>
       </CardHeader>
       <Formik
         initialValues={{

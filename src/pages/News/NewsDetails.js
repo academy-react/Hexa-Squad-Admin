@@ -141,7 +141,7 @@ fetchNewsData()
                 <Col sm='12'>
                   <Card className='mb-3'>
                   
-                    <CardImg src={data.currentImageAddress == null ? pic : data.currentImageAddress} className='h-25 ' top />
+                    <CardImg src={data.currentImageAddress == null ? pic : data.currentImageAddress}  style={{height:'420px'}} top />
                     <CardBody>
                       <CardTitle tag='h4'>{data.title}</CardTitle>
                       <div className='d-flex'>
