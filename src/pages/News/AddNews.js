@@ -105,7 +105,14 @@ const BlogEdit = () => {
 
   return (
     <div className='blog-edit-wrapper'>
-      <Breadcrumbs title='ایجاد خبر' data={[{ title: 'Pages' }, { title: 'Blog' }, { title: 'Edit' }]} />
+      <Breadcrumbs
+        title={" ایجاد خبر جدید"}
+        data={[
+          { title: "لیست اخبار", link: "/NewsList" },
+          { title: "ویرایش اطلاعات اخبار", link: "/AddNews"}
+        ]}
+      />
+        
      
       <Formik
         initialValues={{
