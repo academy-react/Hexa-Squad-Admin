@@ -161,7 +161,9 @@ fetchNewsData()
                       </div>
                       {/* <div className='my-1 py-25'>{renderTags()}</div> */}
                       <div
-                      className='my-1 py-25 lh-lg fs-5 '
+                      
+                      className='my-1 py-25 fs-5 '
+                      style={{lineHeight:'2.5em'}}
                         dangerouslySetInnerHTML={{
                           __html: data.describe
                         }}
