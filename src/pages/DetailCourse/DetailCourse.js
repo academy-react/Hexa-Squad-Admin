@@ -16,7 +16,7 @@ import UserInfoCard from "./CourseInfoCard";
 
 // ** Styles
 import "@styles/react/apps/app-course-detail.scss";
-import instance from "../../utility/interceptor";
+import GetCourseDetail from "../../utility/api/GetData/GetCourseGroups copy/GetCourseDetail";
 
 const DetailCourse = () => {
   const { id } = useParams();
@@ -26,7 +26,7 @@ const DetailCourse = () => {
   const getDetail = async () => {
     console.log("ssssssss");
     try {
-      const detail = await instance.get("/Course/" + id);
+      const detail = await GetCourseDetail(id);
       setDetail(detail);
       console.log("detail", detail);
     } catch (error) {}

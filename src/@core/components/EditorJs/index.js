@@ -13,8 +13,9 @@ import Quote from "@editorjs/quote";
 import ImageTool from "@editorjs/image";
 import NestedList from "@editorjs/nested-list";
 import { Button } from "reactstrap";
+import toast from "react-hot-toast";
 
-const EditorJsComponent = ({ setDescribe }) => {
+const EditorJsComponent = ({ setDescribe, defaultData }) => {
   const [editorState, setEditorState] = useState();
   useEffect(() => {
     const editor = new EditorJS({
@@ -61,6 +62,7 @@ const EditorJsComponent = ({ setDescribe }) => {
           },
         },
       },
+      data: defaultData ? defaultData : null,
     });
     console.log("editor", editor);
     setEditorState(editor);
@@ -77,6 +79,7 @@ const EditorJsComponent = ({ setDescribe }) => {
           editorState
             .save()
             .then((outputData) => {
+              toast.success("توضیحات با موفیقت ذخیره شد");
               console.log("outputData", outputData);
               setDescribe(outputData);
             })

@@ -1,11 +1,14 @@
 import toast from "react-hot-toast";
 import instance from "../../../interceptor";
 
-const DeleteCourseComment = async (id, to) => {
+const DeleteCourseReserve = async (id, to) => {
   try {
-    const result = await instance.delete(
-      "/Course/DeleteCourseComment?CourseCommandId=" + id
-    );
+    const result = await instance.delete("/CourseReserve", {
+      data: { id: id },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     console.log(result);
     if (result.success) {
       toast.success(result.message);
@@ -13,11 +16,11 @@ const DeleteCourseComment = async (id, to) => {
         window.location = to;
       }, 700);
     } else {
-      toast.error(result.message);
+      toast.error(result.errors[0]);
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-export default DeleteCourseComment;
+export default DeleteCourseReserve;

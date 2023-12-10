@@ -9,7 +9,7 @@ import DeleteCourse from "../utility/api/DeleteData";
 import BreadCrumbs from "../@core/components/breadcrumbs";
 import CreateCourse from "../@core/components/modals/CreateCourse";
 
-const TeacherCourses = () => {
+const Courses = () => {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -53,11 +53,11 @@ const TeacherCourses = () => {
   };
   const getTitle = () => {
     if (isALLData) {
-      return "همه دوره های شما";
+      return "همه دوره ها";
     } else if (isActiveData) {
-      return "دوره های فعال شما";
+      return "دوره ها";
     } else if (isDeletedData) {
-      return "دوره های حذف شده شما";
+      return "دوره ها حذف شده";
     } else if (isCurrentData) {
       return "دوره های در حال برگذاری";
     }
@@ -73,11 +73,11 @@ const TeacherCourses = () => {
     };
     try {
       console.log(coursesParams);
-      const courses = await instance.get("/Course/TeacherCourseList", {
+      const courses = await instance.get("/Course/CourseList", {
         params: coursesParams,
       });
-      setData(courses.teacherCourseDtos);
-      setAllData(courses.teacherCourseDtos);
+      setData(courses.courseDtos);
+      setAllData(courses.courseDtos);
     } catch (error) {
       console.log(error);
     }
@@ -92,21 +92,21 @@ const TeacherCourses = () => {
 
   useEffect(() => {
     getTeacherCourses();
-  }, [currentPage, searchValue, 1000, sort, sortColumn]);
+  }, [currentPage, searchValue, sort, sortColumn]);
   useEffect(() => {
     let active =
-      data.length !== 0 &&
-      data.filter((course) => {
+      data?.length !== 0 &&
+      data?.filter((course) => {
         return course.isActive === true;
       });
     let deleted =
-      data.length !== 0 &&
-      data.filter((course) => {
+      data?.length !== 0 &&
+      data?.filter((course) => {
         return course.isdelete === true;
       });
     let itsStatus =
-      data.length !== 0 &&
-      data.filter((course) => {
+      data?.length !== 0 &&
+      data?.filter((course) => {
         return course.statusName === "درحال برگذاری";
       });
     setActiveCourses(active);
@@ -126,10 +126,8 @@ const TeacherCourses = () => {
   return (
     <div>
       <BreadCrumbs
-        title={"لیست دوره های استاد"}
-        data={[
-          { title: "لیست دوره های استاد", link: "/Course/TeacherCourses" },
-        ]}
+        title={"لیست دوره ها"}
+        data={[{ title: "لیست دوره ها", link: "/Course/Courses" }]}
       />
       <Row>
         <Col lg="3" sm="6">
@@ -145,8 +143,8 @@ const TeacherCourses = () => {
               setIsCurrentData(false);
               setIsDeletedData(false);
             }}
-            stats={<h3> {data.length}</h3>}
-            statTitle="همه دوره های شما"
+            stats={<h3> {data?.length}</h3>}
+            statTitle="همه دوره ها "
           />
         </Col>
         <Col lg="3" sm="6">
@@ -162,8 +160,8 @@ const TeacherCourses = () => {
               setIsCurrentData(false);
               setIsDeletedData(false);
             }}
-            stats={<h3> {activeCourses.length}</h3>}
-            statTitle="دوره های فعال شما"
+            stats={<h3> {activeCourses?.length}</h3>}
+            statTitle="دوره های فعال "
           />
         </Col>
         <Col lg="3" sm="6">
@@ -179,7 +177,7 @@ const TeacherCourses = () => {
               setIsCurrentData(false);
               setIsDeletedData(true);
             }}
-            stats={<h3> {deletedCourses.length}</h3>}
+            stats={<h3> {deletedCourses?.length}</h3>}
             statTitle="دوره های حذف شده"
           />
         </Col>
@@ -196,7 +194,7 @@ const TeacherCourses = () => {
               setIsCurrentData(true);
               setIsDeletedData(false);
             }}
-            stats={<h3> {currentCourses.length}</h3>}
+            stats={<h3> {currentCourses?.length}</h3>}
             statTitle="دوره های در حال برگذاری"
           />
         </Col>
@@ -222,4 +220,4 @@ const TeacherCourses = () => {
   );
 };
 
-export default TeacherCourses;
+export default Courses;
