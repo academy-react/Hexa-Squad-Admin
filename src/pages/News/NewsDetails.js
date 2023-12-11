@@ -141,7 +141,7 @@ fetchNewsData()
                 <Col sm='12'>
                   <Card className='mb-3'>
                   
-                    <CardImg src={data.currentImageAddress == null ? pic : data.currentImageAddress} className='h-25 ' top />
+                    <CardImg src={data.currentImageAddress == null ? pic : data.currentImageAddress}  style={{height:'420px'}} top />
                     <CardBody>
                       <CardTitle tag='h4'>{data.title}</CardTitle>
                       <div className='d-flex'>
@@ -161,7 +161,9 @@ fetchNewsData()
                       </div>
                       {/* <div className='my-1 py-25'>{renderTags()}</div> */}
                       <div
-                      className='my-1 py-25 lh-lg fs-5 '
+                      
+                      className='my-1 py-25 fs-5 '
+                      style={{lineHeight:'2.5em'}}
                         dangerouslySetInnerHTML={{
                           __html: data.describe
                         }}
@@ -223,7 +225,7 @@ fetchNewsData()
                           </DropdownMenu>
                           
                         </UncontrolledDropdown> */}
-                     <Link to={'/EditBlog'}><Button.Ripple color='primary'>ویرایش</Button.Ripple></Link>
+                     <Link to={"/EditBlog/" + data.id}><Button.Ripple color='primary'>ویرایش</Button.Ripple></Link>
                       </div>
                     </CardBody>
                     

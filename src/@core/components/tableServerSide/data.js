@@ -386,15 +386,10 @@ export const NewsListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-2">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Link to={"/NewsDetails/" + row.id}>
-              {" "}
-              <Eye color="blue" className="cursor-pointer" />
-            </Link>
-            <Link to={"/EditBlog"}>
-              {" "}
-              <Edit className="cursor-pointer" />
-            </Link>
-            {row.isdelete ? (
+          <Link to={'/NewsDetails/'+row.id}> <Eye color="blue" className="cursor-pointer" /></Link>
+
+          <Link to={"/EditBlog/" + row.id}> <Edit className="cursor-pointer" /></Link>
+            {/* {row.isdelete ? (
               <div
                 className="cursor-pointer"
                 onClick={() => {
@@ -413,7 +408,7 @@ export const NewsListColumns = [
                   DeleteCourse(row.courseId, "/TeacherCourses", true);
                 }}
               />
-            )}
+            )} */}
           </span>
         </div>
       </div>

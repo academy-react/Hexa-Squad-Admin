@@ -90,6 +90,12 @@ export default [
         icon: <List size={20} />,
         navLink: "/NewsList",
       },
+      {
+        id: "NewsList",
+        title: " ایجاد خبر جدید",
+        icon: <List size={20} />,
+        navLink: "/AddNews",
+      },
     ],
   },
 ];

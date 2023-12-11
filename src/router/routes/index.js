@@ -34,7 +34,7 @@ import NewsDetails from "../../pages/News/NewsDetails";
 import UpdateCourse from "../../pages/UpdateCourse/UpdateCourse";
 import DetailCourse from "../../pages/DetailCourse/DetailCourse";
 import AddNews from "../../pages/News/AddNews"
-import EditBlog from "../../pages/News/EditBlog"
+import EditBlog from "../../pages/News/EditBlog/EditBlog"
 
 
 
@@ -156,11 +156,12 @@ const Routes = [
     ]
   },
   {
+  
     element:<EditBlog/>,
     path: "/EditBlog",
-    // children: [
-    //   {path: "/EditBlog/:id", element:<NewsDetails/>}
-    // ]
+    children: [
+      {path: "/EditBlog/:id", element:<EditBlog/>}
+    ]
   },
   {
     element: <NewsDetails />,
