@@ -1,7 +1,7 @@
 // ** React Imports
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
-import DeleteUser from '../../../utility/api/DeleteData/DeleteUser';
+import {handleDeleteUser} from '../../../utility/api/DeleteData/DeleteUser';
 import ActiveUser from '../../../utility/api/PutData/ActiveUser';
 
 // ** Icons Imports
@@ -9,6 +9,8 @@ import { AlignJustify } from 'react-feather'
 
 // ** Reactstrap Imports
 import { Card, CardImg, Collapse, Navbar, Nav, NavItem, NavLink, Button } from 'reactstrap'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import profileBg from "../../../assets/images/pages/pages/profile-bg.jpg";
 import userIcon from "../../../assets/images/pages/pages/userIcon2.jpg";
@@ -20,7 +22,7 @@ const ProfileHeader = ({ data }) => {
   const toggle = () => setIsOpen(!isOpen)
 
   // const [userActive, setUserActive] = useState(data.active)
-  
+
   return (
     <Card className='profile-header mb-2'>
       <CardImg src={profileBg} alt='User Profile Image' top />
@@ -50,11 +52,17 @@ const ProfileHeader = ({ data }) => {
 
               {data.active === true 
                 ? 
-                  <Button color='danger' onClick={() => DeleteUser(data.id)}>
+                  <Button 
+                    color='danger' 
+                    onClick={() => handleDeleteUser(
+                      data.id, 
+                      "/user/userInfo/" + data.id
+                    )}
+                  >
                     <span className='fw-bold d-none d-md-block'>حذف کردن کاربر</span>
                   </Button>   
                 :  
-                  <Button color='primary' onClick={() => ActiveUser(data.id)}>
+                  <Button color='primary' onClick={() => ActiveUser(data.id, "/user/userInfo/" + data.id)}>
                     <span className='fw-bold d-none d-md-block'>فعال کردن کاربر</span>
                   </Button>         
               }

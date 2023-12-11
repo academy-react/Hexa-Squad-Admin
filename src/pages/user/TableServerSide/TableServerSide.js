@@ -57,23 +57,24 @@ const DataTableServerSide = ({
   onSort,
   deleteOject,
   setSelectedRows,
+  btn
 }) => {
   // Function to toggle sidebar // Add User Toggle
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Select Role
-  const [currentRole, setCurrentRole] = useState({
-    value: "",
-    label: "Select Role",
-  });
-  const roleOptions = [
-    { value: "", label: "Select Role" },
-    { value: "admin", label: "Administrator" },
-    { value: "author", label: "Teacher" },
-    { value: "editor", label: "Student" },
-    { value: "maintainer", label: "CourseAssistance" },
-    { value: "subscriber", label: "EmployeeAdmin" },
-  ];
+  // const [currentRole, setCurrentRole] = useState({
+  //   value: "",
+  //   label: "Select Role",
+  // });
+  // const roleOptions = [
+  //   { value: "", label: "Select Role" },
+  //   { value: "admin", label: "Administrator" },
+  //   { value: "author", label: "Teacher" },
+  //   { value: "editor", label: "Student" },
+  //   { value: "maintainer", label: "CourseAssistance" },
+  //   { value: "subscriber", label: "EmployeeAdmin" },
+  // ];
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -176,7 +177,8 @@ const DataTableServerSide = ({
       <Card>
         <CardHeader className="border-bottom">
           <CardTitle tag="h4">{title}</CardTitle>
-          <CardTitle tag="h4">
+          <CardTitle tag="h4">{btn}</CardTitle>
+          {/* <CardTitle tag="h4">
             <Button
               color="primary"
               className="d-flex gap-1 align-items-center"
@@ -185,7 +187,7 @@ const DataTableServerSide = ({
               {BtnTitle}
               {BtnIcon}
             </Button>
-          </CardTitle>
+          </CardTitle> */}
         </CardHeader>
         <Row className="mx-0 mt-1 mb-50">
           <Col sm="2">
@@ -210,35 +212,9 @@ const DataTableServerSide = ({
               </Input>
             </div>
           </Col>
-          <Col sm="4">
-            <div className="d-flex gap-1 align-items-center">
-              <Label for="role-select">نقش کاربر</Label>
-              <Select
-                isClearable={false}
-                value={currentRole}
-                options={roleOptions}
-                className="react-select"
-                classNamePrefix="select"
-                onChange={(data) => {
-                  setCurrentRole(data);
-                  // dispatch(
-                  //   getData({
-                  //     sort,
-                  //     sortColumn,
-                  //     q: searchTerm,
-                  //     role: data.value,
-                  //     page: currentPage,
-                  //     perPage: rowsPerPage,
-                  //     status: currentStatus.value,
-                  //   })
-                  // )
-                }}
-              />
-            </div>
-          </Col>
           <Col
             className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-            sm="2"
+            sm="4"
           >
             {isChecked ? (
               <Button
@@ -256,7 +232,7 @@ const DataTableServerSide = ({
           </Col>
           <Col
             className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-            sm="4"
+            sm="6"
           >
             <Label className="me-1" for="search-input">
               جستجو
@@ -295,7 +271,7 @@ const DataTableServerSide = ({
           )}
         </div>
       </Card>
-      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </Fragment>
   );
 };

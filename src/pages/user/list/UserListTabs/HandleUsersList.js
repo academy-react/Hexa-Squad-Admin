@@ -1,22 +1,29 @@
 import { Fragment, useEffect, useState } from "react";
 import { User, Trash2 } from "react-feather";
 import { Col, Row } from "reactstrap";
-import TableServerSide from "../TableServerSide/TableServerSide";
-import { userListColumns } from "../../../@core/components/tableServerSide/data";
-import StatsHorizontal from "../../../@core/components/StatsHorizontal";
-import instance from "../../../utility/interceptor";
-import {handleDeleteUser} from "../../../utility/api/DeleteData/DeleteUser";
-import BreadCrumbs from "../../../@core/components/breadcrumbs";
-import AddUSer from "./AddUser";
+import TableServerSide from "../../TableServerSide/TableServerSide";
+import { userListColumns } from "../../../../@core/components/tableServerSide/data";
+import StatsHorizontal from "../../../../@core/components/StatsHorizontal";
+import instance from "../../../../utility/interceptor";
+import {handleDeleteUser} from "../../../../utility/api/DeleteData/DeleteUser";
+import BreadCrumbs from "../../../../@core/components/breadcrumbs";
+import AddUSer from "../AddUser";
 
-const UserList = () => {
+const HandleUsersList = ({
+    role,
+    activeUserCount,
+    deletedUserCount,
+    activeStatTitle,
+    deletedStatTitle,
+    addUserBtn
+}) => {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [sort, setSort] = useState("DESC");
   const [sortColumn, setSortColumn] = useState("InsertDate");
   const [currentPage, setCurrentPage] = useState(1);
-  const [roleId, setRoleId] = useState(3);
+  const [roleId, setRoleId] = useState(role);
   const [isActiveUser, setIsActiveUser] = useState(true);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
   const [isALLData, setIsALLData] = useState(true);
@@ -48,9 +55,9 @@ const UserList = () => {
   };
   const getTitle = () => {
     if (isActiveUser) {
-      return "تعداد کاربران فعال شما: "+activeUsers.length;
+      return activeUserCount+activeUsers.length;
     } else if (isDeleteUser) {
-      return "تعداد کاربران حذف شده: "+deletedUsers.length;
+      return deletedUserCount+deletedUsers.length;
     }
   };
 
@@ -144,7 +151,7 @@ const UserList = () => {
               setIsDeleteUser(false);
             }}
             // stats={activeUsers.length}
-            statTitle="کاربران فعال شما"
+            statTitle={activeStatTitle}
           />
         </Col>
         <Col lg="3" sm="6">
@@ -160,7 +167,7 @@ const UserList = () => {
               setIsDeleteUser(true);
             }}
             // stats={deletedUsers.length}
-            statTitle={"کاربران حذف شده"}
+            statTitle={deletedStatTitle}
           />
         </Col>
       </Row>
@@ -181,17 +188,10 @@ const UserList = () => {
         title={getTitle()}
         // BtnTitle={"اضافه کردن کاربر"}
         // BtnIcon={<User />}
-        btn={
-          <AddUSer 
-            BtnTitle={"اضافه کردن کاربر"} 
-            modalHeader={"افزودن کاربر جدید"}
-            isStudent={true}
-            isTeacher={false}
-          />
-        }
+        btn={addUserBtn}
       />
     </div>
   );
 };
 
-export default UserList;
+export default HandleUsersList;

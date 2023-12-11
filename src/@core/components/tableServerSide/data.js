@@ -1,5 +1,6 @@
 import {
   Badge,
+  Button,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
@@ -27,7 +28,7 @@ import Avatar from "../avatar";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar";
 import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
-import DeleteUser from "../../../utility/api/DeleteData/DeleteUser";
+import {handleDeleteUser} from "../../../utility/api/DeleteData/DeleteUser";
 import ActiveUser from "../../../utility/api/PutData/ActiveUser";
 import DeleteCourseReserve from "../../../utility/api/DeleteData/DeleteCourseReserve/DeleteCourseReserve";
 import AcceptCourseReserves from "../../../utility/api/PostData/AcceptCourseReserve/AcceptCourseResever";
@@ -275,30 +276,57 @@ export const userListColumns = [
     minWidth: "150px",
     selector: (row) => row.active,
     cell: (row) => (
-      <div className="d-flex align-items-center">
-        <div className="user-info text-truncate ms-1">
-          <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Link to={"/user/userInfo/" + row.id}>
-              <Eye className="text-muted cursor-pointer" />
-            </Link>
-            <Link to={"/user/userInfoEdit/" + row.id}>
-              <Edit className="text-primary cursor-pointer" />
-            </Link>
-
-            {row.active === "True" ? (
-              <UserMinus
-                className="text-danger cursor-pointer"
-                onClick={() => DeleteUser(row.id)}
-              />
-            ) : (
-              <UserCheck
-                className="text-primary cursor-pointer"
-                onClick={() => ActiveUser(row.id)}
-              />
-            )}
-            {/* <Trash2 className="text-danger cursor-pointer" /> */}
-          </span>
-        </div>
+      <div className="column-action d-flex">
+        <UncontrolledDropdown>
+          <DropdownToggle tag="div" className="btn btn-sm">
+            <MoreVertical size={14} className="cursor-pointer" />
+          </DropdownToggle>
+          <DropdownMenu style={{ zIndex: 100 }}>
+            <DropdownItem
+              tag={Link}
+              className="w-100"
+              to={"/user/userInfo/" + row.id}
+            >
+              <FileText size={14} className="me-50" />
+              <span className="align-middle">جزئیات</span>
+            </DropdownItem>
+            <DropdownItem
+              tag={Link}
+              to={"/user/userInfoEdit/" + row.id}
+              className="w-100"
+            >
+              <Archive size={14} className="me-50" />
+              <span className="align-middle">ویرایش</span>
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+        {row.active === "True" ? (
+          // <UserMinus
+          //   className="text-danger cursor-pointer ms-1"
+          //   color="danger"
+          //   onClick={() => handleDeleteUser(row.id, "/user")}
+          // />
+          <Button 
+            onClick={() => handleDeleteUser(row.id, "/user")} 
+            size="sm" 
+            color="danger"
+          >
+            حذف
+          </Button>
+        ) : (
+          // <UserCheck
+          //   className="text-primary cursor-pointer"
+          //   color="primary"
+          //   onClick={() => ActiveUser(row.id, "/user")}
+          // />
+          <Button 
+            onClick={() => ActiveUser(row.id, "/user")}
+            size="sm" 
+            color="primary"
+          >
+            فعال
+          </Button>
+        )}    
       </div>
     ),
   },

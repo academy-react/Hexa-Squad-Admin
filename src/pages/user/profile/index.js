@@ -61,8 +61,8 @@ const Profile = () => {
       <BreadCrumbs
         title={"اطلاعات کاربر"}
         data={[
-          { title: "لیست کاربران", link: "/user/userList" },
-          { title: "اطلاعات کاربر", link: "/user/userInfo"+urlParam.id }
+          { title: "لیست کاربران", link: "/user" },
+          { title: "اطلاعات کاربر", link: "/user/userInfo/"+urlParam.id }
         ]}
       />
       {data !== null ? (

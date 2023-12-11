@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import instance from "../../interceptor";
 
-const ActiveUser = async (id) => {
+const ActiveUser = async (id, to) => {
   const obj = {
     userId: id,
   };
@@ -13,7 +13,7 @@ const ActiveUser = async (id) => {
         success: "عملیات با موفقیت انجام شد",
       }
     );
-    if (activedUser.success) {
+    if (activedUser.success === true) {
       setTimeout(() => {
         window.location = to;
       }, 600);

@@ -16,6 +16,12 @@ export default [
     navLink: "/home",
   },
   {
+    id: "user",
+    title: "کاربران",
+    icon: <User size={20} />,
+    navLink: "/userList"
+  },
+  {
     id: "Course",
     title: "دوره ها",
     icon: <List size={20} />,
@@ -47,7 +53,6 @@ export default [
       },
     ],
   },
-
   {
     id: "users",
     title: "کاربران",
@@ -57,20 +62,20 @@ export default [
         id: "usersList",
         title: "لیست کاربران",
         icon: <List size={12} />,
-        navLink: "/user/userList",
+        navLink: "/user",
       },
       {
         id: "adminList",
         title: "لیست مدیران",
         icon: <List size={12} />,
-        navLink: "/user/adminList",
+        navLink: "/adminList",
       },
-      // {
-      //   id: "view",
-      //   title: "View",
-      //   icon: <Circle size={12} />,
-      //   navLink: "/apps/user/view",
-      // },
+      {
+        id: "teacherList",
+        title: "لیست استادان",
+        icon: <List size={12} />,
+        navLink: "/teacherList",
+      },
     ],
   },
   {
