@@ -57,7 +57,8 @@ const DataTableServerSide = ({
   onSort,
   deleteOject,
   setSelectedRows,
-  btn
+  btn,
+  totalCount
 }) => {
   // Function to toggle sidebar // Add User Toggle
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -82,7 +83,7 @@ const DataTableServerSide = ({
   const [isChecked, setIsChecked] = useState(false);
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + rowsPerPage;
-  const currentItems = data?.slice(itemOffset, endOffset);
+  const currentItems = data && data?.slice(itemOffset, endOffset);
   console.log("currentItems",currentItems);
   console.log("data",data);
   // ** Function to handle filter
@@ -248,9 +249,9 @@ const DataTableServerSide = ({
           </Col>
         </Row>
         <div className="react-dataTable position-relative">
-          {currentItems?.length == 0 ? (
+          {currentItems?.length == 0 || totalCount == 0 ? (
             <div style={{ background: "#fff" }} className="py-3 text-center">
-              لیست مد نظر شما خالی است
+              لیست مد نظر شما خالی است!
             </div>
           ) : (
             <DataTable

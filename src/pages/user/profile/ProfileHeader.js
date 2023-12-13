@@ -44,7 +44,7 @@ const ProfileHeader = ({ data }) => {
           </Button>
           <Collapse isOpen={isOpen} navbar>
             <div className='profile-tabs d-flex justify-content-end flex-wrap mt-1 mt-md-0'>
-              <Link to={"/user/userInfoEdit/" + data.id}>
+              <Link to={"/userList/userInfoEdit/" + data.id}>
                 <Button color='primary' className='mx-2'>
                   <span className='fw-bold d-none d-md-block'>ویرایش اطلاعات</span>
                 </Button>
@@ -56,13 +56,13 @@ const ProfileHeader = ({ data }) => {
                     color='danger' 
                     onClick={() => handleDeleteUser(
                       data.id, 
-                      "/user/userInfo/" + data.id
+                      "/userList/userInfo/" + data.id
                     )}
                   >
                     <span className='fw-bold d-none d-md-block'>حذف کردن کاربر</span>
                   </Button>   
                 :  
-                  <Button color='primary' onClick={() => ActiveUser(data.id, "/user/userInfo/" + data.id)}>
+                  <Button color='primary' onClick={() => ActiveUser(data.id, "/userList/userInfo/" + data.id)}>
                     <span className='fw-bold d-none d-md-block'>فعال کردن کاربر</span>
                   </Button>         
               }

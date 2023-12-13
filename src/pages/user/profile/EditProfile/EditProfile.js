@@ -117,8 +117,8 @@ const EditProfile = () => {
       <BreadCrumbs
         title={"ویرایش اطلاعات کاربر"}
         data={[
-          { title: "لیست کاربران", link: "/user" },
-          { title: "ویرایش اطلاعات کاربر", link: "/user/userList/"+urlParam.id }
+          { title: "لیست کاربران", link: "/userList" },
+          { title: "ویرایش اطلاعات کاربر", link: "/userList/userInfoEdit/"+urlParam.id }
         ]}
       />
       <div className="modern-horizontal-wizard">

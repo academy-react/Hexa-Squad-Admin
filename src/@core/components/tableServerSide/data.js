@@ -23,6 +23,7 @@ import {
   Archive,
   FileText,
   X,
+  UserPlus,
 } from "react-feather";
 import Avatar from "../avatar";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar";
@@ -37,6 +38,9 @@ import DataImage from "../DataImage/DataImage";
 import UserImage from "../UserImage/UserImage";
 import Reservers from "../modals/Reservers";
 import SeparationPrice from "../../../utility/SeparationPrice/SeparationPrice";
+import AddUserRole from "../../../utility/api/PostData/AddUserRole/AddUserRole";
+import AddUserRoleModal from "../../../pages/user/list/AddUserRoleModal";
+import UserRoleModal from "../../../pages/user/list/UserRoleModal";
 
 export const serverSideColumns = [
   {
@@ -218,16 +222,15 @@ export const userListColumns = [
     sortable: true,
     name: "نام ",
     minWidth: "250px",
-
-    // selector: (row) => row.title,
     cell: (row) => (
       <div className="d-flex align-items-center">
         {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
         <div className="user-info text-truncate ms-1">
-          <span className="d-block fw-bold text-truncate">
-            {row.fname} {row.lname}{" "}
-          </span>
-          {/* <small>{row.typeName}</small> */}
+          <Link to={`/userList/userInfo/${row.id}`}>
+            <span className="d-block fw-bold text-truncate">
+              {row.fname} {row.lname}{" "}
+            </span>
+          </Link>
         </div>
       </div>
     ),
@@ -254,7 +257,8 @@ export const userListColumns = [
   {
     sortable: false,
     name: "وضعیت ",
-    minWidth: "100px",
+    minWidth: "50px",
+    with: "70px",
     selector: (row) => row.active,
     cell: (row) => (
       <div className="d-flex align-items-center">
@@ -273,7 +277,7 @@ export const userListColumns = [
   {
     sortable: false,
     name: "مدیریت",
-    minWidth: "150px",
+    minWidth: "250px",
     selector: (row) => row.active,
     cell: (row) => (
       <div className="column-action d-flex">
@@ -285,29 +289,41 @@ export const userListColumns = [
             <DropdownItem
               tag={Link}
               className="w-100"
-              to={"/user/userInfo/" + row.id}
+              to={"/userList/userInfo/" + row.id}
             >
               <FileText size={14} className="me-50" />
               <span className="align-middle">جزئیات</span>
             </DropdownItem>
             <DropdownItem
               tag={Link}
-              to={"/user/userInfoEdit/" + row.id}
+              to={"/userList/userInfoEdit/" + row.id}
               className="w-100"
             >
               <Archive size={14} className="me-50" />
               <span className="align-middle">ویرایش</span>
             </DropdownItem>
+            {/* <DropdownItem
+              // tag={}
+              // to={"/userList/userInfoEdit/" + row.id}
+              className="w-100"
+              // onClick={AddUserRole(row.id)}
+            >
+              <AddUserRoleModal userId={row.id} />
+              <UserPlus size={14} className="me-50" />
+              <span className="align-middle">دسترسی</span>
+            </DropdownItem> */}
           </DropdownMenu>
         </UncontrolledDropdown>
+        <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-2">
         {row.active === "True" ? (
           // <UserMinus
           //   className="text-danger cursor-pointer ms-1"
           //   color="danger"
-          //   onClick={() => handleDeleteUser(row.id, "/user")}
+          //   onClick={() => handleDeleteUser(row.id, "/userList")}
           // />
           <Button 
-            onClick={() => handleDeleteUser(row.id, "/user")} 
+            onClick={() => handleDeleteUser(row.id, "/userList")} 
             size="sm" 
             color="danger"
           >
@@ -317,16 +333,20 @@ export const userListColumns = [
           // <UserCheck
           //   className="text-primary cursor-pointer"
           //   color="primary"
-          //   onClick={() => ActiveUser(row.id, "/user")}
+          //   onClick={() => ActiveUser(row.id, "/userList")}
           // />
           <Button 
-            onClick={() => ActiveUser(row.id, "/user")}
+            onClick={() => ActiveUser(row.id, "/userList")}
             size="sm" 
             color="primary"
           >
             فعال
           </Button>
         )}    
+        <UserRoleModal userId={row.id} isStudent={row.isStudent} isTeacher={row.isTeacher} userRoles={row.userRoles} />
+        {/* <AddUserRoleModal userId={row.id} /> */}
+        </div>
+        </div>
       </div>
     ),
   },
@@ -448,7 +468,7 @@ export const reserveColumns = [
     minWidth: "107px",
     selector: (row) => row.id,
     cell: (row) => (
-      <Link to={`/user/userInfo/${row.studentId}`}>{`${row.studentName}`}</Link>
+      <Link to={`/userList/userInfo/${row.studentId}`}>{`${row.studentName}`}</Link>
     ),
   },
   {
@@ -530,7 +550,7 @@ export const reservesColumns = [
     minWidth: "107px",
     selector: (row) => row.id,
     cell: (row) => (
-      <Link to={`/user/userInfo/${row.studentId}`} className="d-flex gap-1">
+      <Link to={`/userList/userInfo/${row.studentId}`} className="d-flex gap-1">
         <UserImage id={row.studentId} />
         {`${row.studentName}`}
       </Link>

@@ -53,31 +53,31 @@ export default [
       },
     ],
   },
-  {
-    id: "users",
-    title: "کاربران",
-    icon: <User size={20} />,
-    children: [
-      {
-        id: "usersList",
-        title: "لیست کاربران",
-        icon: <List size={12} />,
-        navLink: "/user",
-      },
-      {
-        id: "adminList",
-        title: "لیست مدیران",
-        icon: <List size={12} />,
-        navLink: "/adminList",
-      },
-      {
-        id: "teacherList",
-        title: "لیست استادان",
-        icon: <List size={12} />,
-        navLink: "/teacherList",
-      },
-    ],
-  },
+  // {
+  //   id: "users",
+  //   title: "کاربران",
+  //   icon: <User size={20} />,
+  //   children: [
+  //     {
+  //       id: "usersList",
+  //       title: "لیست کاربران",
+  //       icon: <List size={12} />,
+  //       navLink: "/user",
+  //     },
+  //     {
+  //       id: "adminList",
+  //       title: "لیست مدیران",
+  //       icon: <List size={12} />,
+  //       navLink: "/adminList",
+  //     },
+  //     {
+  //       id: "teacherList",
+  //       title: "لیست استادان",
+  //       icon: <List size={12} />,
+  //       navLink: "/teacherList",
+  //     },
+  //   ],
+  // },
   {
     id: "News",
     title: " اخبار",

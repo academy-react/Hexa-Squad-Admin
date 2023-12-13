@@ -35,6 +35,8 @@ const HandleUsersList = ({
   const [allActiveUsers, setAllActiveUsers] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
+  const [totalCount, setTotalCount] = useState()
+
   const getData = () => {
     if (isALLData) {
       return data;
@@ -55,9 +57,9 @@ const HandleUsersList = ({
   };
   const getTitle = () => {
     if (isActiveUser) {
-      return activeUserCount+activeUsers.length;
+      return activeUserCount+totalCount;
     } else if (isDeleteUser) {
-      return deletedUserCount+deletedUsers.length;
+      return deletedUserCount+totalCount;
     }
   };
 
@@ -78,6 +80,7 @@ const HandleUsersList = ({
       });
       setData(result.listUser);
       setAllData(result.listUser);
+      setTotalCount(result.totalCount)
     } catch (error) {
       console.log(error);
     }
@@ -103,24 +106,25 @@ const HandleUsersList = ({
   const handleSort = (column, sortDirection) => {
     setSort(sortDirection.toUpperCase());
     setSortColumn(column.sortField);
-    console.log("sortField", column.sortField);
-    console.log("sortDirection", sortDirection);
   };
 
   // Delete User
   const deleteUser = () => {
-    console.log("selectedRows", selectedRows);
     selectedRows.map((user) => {
-      handleDeleteUser(user.id, "/user");
+      handleDeleteUser(user.id, "/userList");
     });
   };
 
+  // Add User Role
+  // const userRole = () => {
+  //   console.log("selectedRows", selectedRows);
+  //   selectedRows.map((user) => {
+  //     AddUserRole(user.id, "/userList");
+  //   });
+  // };
+
   return (
     <div>
-      {/* <BreadCrumbs
-        title={"لیست کاربران هگزا اسکواد"}
-        data={[{ title: "لیست کاربران", link: "/user" }]}
-      /> */}
       <Row>
         {/* <Col lg="3" sm="6">
           <StatsHorizontal
@@ -189,6 +193,7 @@ const HandleUsersList = ({
         // BtnTitle={"اضافه کردن کاربر"}
         // BtnIcon={<User />}
         btn={addUserBtn}
+        totalCount={totalCount}
       />
     </div>
   );

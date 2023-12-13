@@ -121,19 +121,19 @@ const Routes = [
     element: <User />,
     path: "/userList",
   },
-  {
-    path: "/user",
-    element: <UserList />
-  },
+  // {
+  //   path: "/user",
+  //   element: <UserList />
+  // },
   {
     element: <Profile />,
-    path: "/user/userInfo",
-    children: [{ path: "/user/userInfo/:id", element: <Profile /> }],
+    path: "/userList/userInfo",
+    children: [{ path: "/userList/userInfo/:id", element: <Profile /> }],
   },
   {
     element: <EditProfile />,
-    path: "/user/userInfoEdit",
-    children: [{ path: "/user/userInfoEdit/:id", element: <EditProfile /> }],
+    path: "/userList/userInfoEdit",
+    children: [{ path: "/userList/userInfoEdit/:id", element: <EditProfile /> }],
   },
   {
     element: <AdminList />,

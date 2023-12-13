@@ -13,7 +13,7 @@ import { AddNewsValidation } from '../../../utility/validation/AddNewsValidation
 // ** Styles
 import "@styles/react/pages/modal-create-app.scss";
 
-const AddUSer = ({ BtnTitle, modalHeader, isStudent, isTeacher }) => {
+const AddUSer = ({ BtnTitle, modalHeader, isStudent, isTeacher, roleAccess }) => {
 
   // Function to handle checkbox change
   const [student, setStudent] = useState(false);
@@ -150,7 +150,8 @@ const AddUSer = ({ BtnTitle, modalHeader, isStudent, isTeacher }) => {
                 />
                 <ErrorMessage name="phoneNumber" className="position-absolute text-danger" component={'span'}/>
               </div>
-              {/* <div className='mb-2 position-relative'>
+              {roleAccess ? (
+              <div className='mb-2 position-relative'>
                 <Label className='form-label' for='isStudent'>
                   سطح دسترسی کاربر 
                 </Label>
@@ -179,7 +180,8 @@ const AddUSer = ({ BtnTitle, modalHeader, isStudent, isTeacher }) => {
                   </div>
                 </div> 
                 <ErrorMessage name="isTeacher" className="position-absolute text-danger" component={'span'}/>
-              </div> */}
+              </div>
+              ) : ""}
               <Button type='submit' className='btn btn-primary me-1 mt-2' color='primary'>
                 ثبت اطلاعات
               </Button>
