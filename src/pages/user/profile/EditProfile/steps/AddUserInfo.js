@@ -3,9 +3,8 @@ import FormikInput from "../../../../../@core/components/FormikInput";
 import { Form, Formik } from "formik";
 import { Fragment, useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight } from "react-feather";
-// import PickerRange from "../../../../../../@core/components/PickerRange";
-import DatePicker from "react-multi-date-picker";
-// import { jalali_to_gregorian } from "../../../../../../utility/jalaliToGregorian";
+import PersianDatePicker from "../../../../../@core/components/DatePicker/PersianDatePicker";
+import { jalali_to_gregorian } from "../../../../../utility/jalaliToGregorian";
 
 const AddUserInfo = ({
   stepper,
@@ -17,8 +16,7 @@ const AddUserInfo = ({
   setBirthDay,
   userInfo
 }) => {
-  const [dateRange, setDateRange] = useState("");
-  const [picker, setPicker] = useState(new Date());
+  const [datePicker, setDatePicker] = useState("");
   const putUserInfo = (values) => {
     setFirstName(values.fName);
     setLastName(values.lName);
@@ -27,15 +25,16 @@ const AddUserInfo = ({
     setNationalCode(values.nationalCode);
     setBirthDay(values.birthDay);
   };
-//   useEffect(() => {
-//         setPicker(
-//         jalali_to_gregorian(
-//             picker[0].year,
-//             picker[0].month,
-//             picker[0].day
-//         )
-//       );
-//   }, [picker]);
+  useEffect(() => {
+    datePicker && 
+    setBirthDay(
+        jalali_to_gregorian(
+          datePicker.year,
+          datePicker.month,
+          datePicker.day
+        )
+      );
+  }, [datePicker]);
   return (
     <Fragment>
       <CardHeader className="my-2 mb-4">
@@ -48,6 +47,7 @@ const AddUserInfo = ({
           userAbout: userInfo.userAbout,
           homeAdderess: userInfo.homeAdderess,
           nationalCode: userInfo.nationalCode,
+          // birthDay: userInfo.birthDay
         }}
         enableReinitialize={true}
         onSubmit={(e) => {
@@ -81,7 +81,7 @@ const AddUserInfo = ({
                 <FormikInput
                     name={"nationalCode"}
                     placeholder={"کدملی کاربر را وارد کنید"}
-                    type={"number"}
+                    type={"text"}
                     label={"کدملی:"}
                     addClass={"col-md-4"}
                 />
@@ -103,7 +103,7 @@ const AddUserInfo = ({
                 />
                 <div className="col-sm-4 d-flex flex-column gap-1 ">
                   <label>تاریخ تولد :</label>
-                  <DatePicker setPicker={setPicker} picker={picker} />
+                  <PersianDatePicker setDatePicker={setDatePicker} userInfo={userInfo} />
                 </div>
               </Row>
             </CardBody>

@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 // ** Third Party Components
@@ -16,6 +16,7 @@ import { Row, Col, Button } from "reactstrap";
 // import ProfilePoll from './ProfilePolls'
 import ProfileAbout from "./ProfileAbout";
 import ProfileConnection from "./ProfileConnection";
+import SupportTracker from "./SupportTracker";
 // import ProfilePosts from './ProfilePosts'
 import ProfileHeader from "./ProfileHeader";
 // import ProfileTwitterFeeds from './ProfileTwitterFeeds'
@@ -28,7 +29,15 @@ import "@styles/react/pages/page-profile.scss";
 import BreadCrumbs from "../../../@core/components/breadcrumbs";
 // import BreadCrumbs from "../../../../@core/components/breadcrumbs";
 
+// ** Context
+import { ThemeColors } from '@src/utility/context/ThemeColors'
+
+
 const Profile = () => {
+
+  // ** Context
+  const { colors } = useContext(ThemeColors)
+
   // ** States
   const [data, setData] = useState([]);
   const [block, setBlock] = useState(false);
@@ -61,8 +70,8 @@ const Profile = () => {
       <BreadCrumbs
         title={"اطلاعات کاربر"}
         data={[
-          { title: "لیست کاربران", link: "/user/userList" },
-          { title: "اطلاعات کاربر", link: "/user/userInfo"+urlParam.id }
+          { title: "لیست کاربران", link: "/userList" },
+          { title: "اطلاعات کاربر", link: "/userList/userInfo/"+urlParam.id }
         ]}
       />
       {data !== null ? (
@@ -80,22 +89,24 @@ const Profile = () => {
                 xs={{ order: 2 }}
               >
                 <ProfileAbout data={data} />
-                <ProfileConnection data={data} />
+                {/* <ProfileConnection data={data} /> */}
                 {/* <ProfileSuggestedPages data={data.suggestedPages} /> */}
                 {/* <ProfileTwitterFeeds data={data.twitterFeeds} /> */}
               </Col>
               <Col
-                lg={{ size: 6, order: 2 }}
+                lg={{ size: 3, order: 2 }}
                 sm={{ size: 12 }}
                 xs={{ order: 1 }}
               >
                 {/* <ProfilePosts data={data.post} /> */}
+                <ProfileConnection data={data} />
               </Col>
               <Col
-                lg={{ size: 3, order: 3 }}
+                lg={{ size: 6, order: 3 }}
                 sm={{ size: 12 }}
                 xs={{ order: 3 }}
               >
+                <SupportTracker data={data} primary={colors.primary.main} danger={colors.danger.main} />
                 {/* <ProfileLatestPhotos data={data.latestPhotos} /> */}
                 {/* <ProfileFriendsSuggestions data={data.suggestions} /> */}
                 {/* <ProfilePoll data={data.polls} /> */}

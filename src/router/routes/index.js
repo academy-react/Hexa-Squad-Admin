@@ -13,10 +13,20 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
+
+// import Pages
+import Login from "../../pages/Login";
+import Home from "../../pages/Home";
+import Error from "../../pages/Error";
+
 import TeacherCourses from "../../pages/TeacherCourses";
 import NewsList from "../../pages/News/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 // import  from "../../views/apps/user/profile/index";
+import User from "../../pages/user/list/UserListTabs/Users";
+import UserList from "../../pages/user/list/UserList";
+import AdminList from "../../pages/user/list/AdminList";
+import TeacherList from "../../pages/user/list/TeacherList";
 import Profile from '../../pages/user/profile';
 import EditProfile from "../../pages/user/profile/EditProfile/EditProfile";
 
@@ -42,16 +52,13 @@ const TemplateTitle = "%s -  Admin Panel";
 // ** Default Route
 const DefaultRoute = "/home";
 
-const Home = lazy(() => import("../../pages/Home"));
-const SecondPage = lazy(() => import("../../pages/SecondPage"));
-const Login = lazy(() => import("../../pages/Login"));
-const Register = lazy(() => import("../../pages/Register"));
-const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
-const Error = lazy(() => import("../../pages/Error"));
-const Sample = lazy(() => import("../../pages/Sample"));
-
-const UserList = lazy(() => import("../../pages/user/list/UserList"));
-const AdminList = lazy(() => import("../../pages/user/list/AdminList"));
+// const Home = lazy(() => import("../../pages/Home"));
+// const SecondPage = lazy(() => import("../../pages/SecondPage"));
+// const Login = lazy(() => import("../../pages/Login"));
+// const Register = lazy(() => import("../../pages/Register"));
+// const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
+// const Error = lazy(() => import("../../pages/Error"));
+// const Sample = lazy(() => import("../../pages/Sample"));
 
 // ** Merge Routes
 const Routes = [
@@ -79,10 +86,10 @@ const Routes = [
     element: <UpdateCourse />,
     children: [{ path: "/Course/edit/:id", element: <UpdateCourse /> }],
   },
-  {
-    path: "/user",
-    children: [{ path: "/user/:id" }],
-  },
+  // {
+  //   path: "/user",
+  //   children: [{ path: "/user/:id" }],
+  // },
   {
     path: "/Course/detail",
     element: <DetailCourse />,
@@ -110,24 +117,31 @@ const Routes = [
       layout: "blank",
     },
   },
-
   {
-    element: <UserList />,
-    path: "/user/userList",
+    element: <User />,
+    path: "/userList",
   },
+  // {
+  //   path: "/user",
+  //   element: <UserList />
+  // },
   {
     element: <Profile />,
-    path: "/user/userInfo",
-    children: [{ path: "/user/userInfo/:id", element: <Profile /> }],
+    path: "/userList/userInfo",
+    children: [{ path: "/userList/userInfo/:id", element: <Profile /> }],
   },
   {
     element: <EditProfile />,
-    path: "/user/userInfoEdit",
-    children: [{ path: "/user/userInfoEdit/:id", element: <EditProfile /> }],
+    path: "/userList/userInfoEdit",
+    children: [{ path: "/userList/userInfoEdit/:id", element: <EditProfile /> }],
   },
   {
     element: <AdminList />,
-    path: "/user/adminList",
+    path: "/adminList",
+  },
+  {
+    element: <TeacherList />,
+    path: "/teacherList",
   },
 
   {

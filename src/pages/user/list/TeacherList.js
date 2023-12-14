@@ -9,14 +9,14 @@ import {handleDeleteUser} from "../../../utility/api/DeleteData/DeleteUser";
 import BreadCrumbs from "../../../@core/components/breadcrumbs";
 import AddUSer from "./AddUser";
 
-const UserList = () => {
+const TeacherList = () => {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [sort, setSort] = useState("DESC");
   const [sortColumn, setSortColumn] = useState("InsertDate");
   const [currentPage, setCurrentPage] = useState(1);
-  const [roleId, setRoleId] = useState(3);
+  const [roleId, setRoleId] = useState(2);
   const [isActiveUser, setIsActiveUser] = useState(true);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
   const [isALLData, setIsALLData] = useState(true);
@@ -48,9 +48,9 @@ const UserList = () => {
   };
   const getTitle = () => {
     if (isActiveUser) {
-      return "تعداد کاربران فعال شما: "+activeUsers.length;
+      return "تعداد استادان فعال شما: "+activeUsers.length;
     } else if (isDeleteUser) {
-      return "تعداد کاربران حذف شده: "+deletedUsers.length;
+      return "تعداد استادان حذف شده: "+deletedUsers.length;
     }
   };
 
@@ -104,16 +104,16 @@ const UserList = () => {
   const deleteUser = () => {
     console.log("selectedRows", selectedRows);
     selectedRows.map((user) => {
-      handleDeleteUser(user.id, "/user");
+      handleDeleteUser(user.id, "/teacherList");
     });
   };
 
   return (
     <div>
-      {/* <BreadCrumbs
-        title={"لیست کاربران هگزا اسکواد"}
-        data={[{ title: "لیست کاربران", link: "/user" }]}
-      /> */}
+      <BreadCrumbs
+        title={"لیست استادان هگزا اسکواد"}
+        data={[{ title: "لیست استادان", link: "/teacherList" }]}
+      />
       <Row>
         {/* <Col lg="3" sm="6">
           <StatsHorizontal
@@ -128,7 +128,7 @@ const UserList = () => {
               setIsDeleteUser(false);
             }}
             stats={data.length}
-            statTitle="همه ی کاربران شما"
+            statTitle="همه ی استادان شما"
           />
         </Col> */}
         <Col lg="3" sm="6">
@@ -144,7 +144,7 @@ const UserList = () => {
               setIsDeleteUser(false);
             }}
             // stats={activeUsers.length}
-            statTitle="کاربران فعال شما"
+            statTitle="استادان فعال شما"
           />
         </Col>
         <Col lg="3" sm="6">
@@ -160,7 +160,7 @@ const UserList = () => {
               setIsDeleteUser(true);
             }}
             // stats={deletedUsers.length}
-            statTitle={"کاربران حذف شده"}
+            statTitle={"استادان حذف شده"}
           />
         </Col>
       </Row>
@@ -179,14 +179,14 @@ const UserList = () => {
         serverSideColumns={userListColumns}
         deleteOject={deleteUser}
         title={getTitle()}
-        // BtnTitle={"اضافه کردن کاربر"}
+        // BtnTitle={"اضافه کردن استاد"}
         // BtnIcon={<User />}
         btn={
           <AddUSer 
-            BtnTitle={"اضافه کردن کاربر"} 
-            modalHeader={"افزودن کاربر جدید"}
-            isStudent={true}
-            isTeacher={false}
+            BtnTitle={"اضافه کردن استاد"} 
+            modalHeader={"افزودن استاد جدید"}
+            isStudent={false}
+            isTeacher={true}
           />
         }
       />
@@ -194,4 +194,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default TeacherList;

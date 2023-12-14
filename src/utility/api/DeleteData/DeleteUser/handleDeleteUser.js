@@ -1,24 +1,6 @@
-import toast from "react-hot-toast";
-import instance from "../../interceptor";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
-const DeleteUser = async (id, to) => {
-  const obj = {
-    userId: id,
-  };
-  try {
-    const deletedUser = await instance.delete("/User/DeleteUser", { data: obj })
-    if (deletedUser.success) {
-      setTimeout(() => {
-        window.location = to;
-      }, 600);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-// export default DeleteUser;
+import DeleteUser from "./DeleteUser";
 
 const MySwal = withReactContent(Swal);
 export const handleDeleteUser = (id, to) => {
@@ -35,8 +17,8 @@ export const handleDeleteUser = (id, to) => {
     buttonsStyling: false,
   }).then(async (result) => {
     if (result.value) {
-      const deleteCourse = await DeleteUser(id, to);
-      deleteCourse.success &&
+      const deleteUser = await DeleteUser(id, to);
+      deleteUser.success &&
         MySwal.fire({
           icon: "success",
           title: "موفقیت آمیز !",
@@ -57,4 +39,3 @@ export const handleDeleteUser = (id, to) => {
     }
   });
 };
-export default handleDeleteUser;
