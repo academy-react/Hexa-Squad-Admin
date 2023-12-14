@@ -1,5 +1,6 @@
 import {
   Badge,
+  Button,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
@@ -36,7 +37,7 @@ import DataImage from "../DataImage/DataImage";
 import UserImage from "../UserImage/UserImage";
 import Reservers from "../modals/Reservers";
 import SeparationPrice from "../../../utility/SeparationPrice/SeparationPrice";
-
+import ActiveNews from "../../../utility/api/PutData/ActiveNews";
 export const serverSideColumns = [
   {
     sortable: false,
@@ -306,7 +307,7 @@ export const userListColumns = [
 
 export const NewsListColumns = [
   {
-    sortable: true,
+    // sortable: true,
     name: "نام بلاگ",
     minWidth: "280px",
     // selector: (row) => row.title,
@@ -323,21 +324,20 @@ export const NewsListColumns = [
   {
     sortable: true,
     name: "دسته بندی",
-    minWidth: "150px",
+    minWidth: "100px",
     selector: (row) => row.newsCatregoryName,
   },
-  {
-    sortable: true,
-    name: " نویسنده",
-    minWidth: "300px",
-    selector: (row) => row.addUserFullName,
-  },
+  // {
+  //   sortable: true,
+  //   name: " نویسنده",
+  //   minWidth: "300px",
+  //   selector: (row) => row.addUserFullName,
+  // },
 
   {
     sortable: true,
     name: " اخرین اپدیت ",
-
-    minWidth: "150px",
+    minWidth: "100px",
     selector: (row) => GregorianToSolar(row.updateDate),
   },
 
@@ -345,8 +345,38 @@ export const NewsListColumns = [
     sortable: true,
     name: "  تعداد بازدید",
 
-    minWidth: "120px",
+    minWidth: "100px",
     selector: (row) => row.currentView,
+  },
+  {
+    sortable: false,
+    name: "وضعیت ",
+    minWidth: "100px",
+    selector: (row) => row.isActive,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate">
+            {row.isActive === true ? (
+              <Button
+                color="danger"
+                onClick={() => ActiveNews("false", row.id)}
+              >
+                غیرفعال{" "}
+              </Button>
+            ) : (
+              <Button
+                color="success"
+                onClick={() => ActiveNews("true", row.id)}
+              >
+                {" "}
+                فعال{" "}
+              </Button>
+            )}
+          </span>
+        </div>
+      </div>
+    ),
   },
 
   {
@@ -358,9 +388,16 @@ export const NewsListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-2">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-          <Link to={'/NewsDetails/'+row.id}> <Eye color="blue" className="cursor-pointer" /></Link>
+            <Link to={"/NewsDetails/" + row.id}>
+              {" "}
+              <Eye color="blue" className="cursor-pointer" />
+            </Link>
 
-          <Link to={"/EditBlog/" + row.id}> <Edit className="cursor-pointer" /></Link>
+            <Link to={"/EditBlog/" + row.id}>
+              {" "}
+              <Edit className="cursor-pointer" />
+            </Link>
+
             {/* {row.isdelete ? (
               <div
                 className="cursor-pointer"

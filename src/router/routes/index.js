@@ -14,7 +14,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 import { isObjEmpty } from "@utils";
 import { getUserData } from "../../utility/Utils";
 import TeacherCourses from "../../pages/TeacherCourses";
-import NewsList from "../../pages/NewsList";
+import NewsList from "../../pages/News/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 // import  from "../../views/apps/user/profile/index";
 import Profile from '../../pages/user/profile';

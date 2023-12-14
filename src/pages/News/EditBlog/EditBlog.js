@@ -34,6 +34,7 @@ const EditProfile = () => {
   const [googleTitle, setGoogleTitle] = useState()
   const [googleDescribe, setGoogleDescribe] = useState()
   const [currentImageAddress, setCurrentImageAddress] = useState()
+  const [currentImageAddressTumb, setCurrentImageAddressTumb] = useState()
   const [image, setImage] = useState()
  
   const ref = useRef(null);
@@ -51,14 +52,16 @@ const EditProfile = () => {
       Active:true,
       GoogleTitle: googleTitle,  // 2
       GoogleDescribe: googleDescribe, // 2
-      CurrentImageAddress: currentImageAddress, // 2
-      Image: image,  // 2
+      CurrentImageAddress: files[0], // 2
+      CurrentImageAddressTumb:files[0] , //2
+      Image: files[0]  // 2
       
     };
     try {
       const result = await instance.put("/News/UpdateNews", obj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      
       if (result.success) {
         toast.success(result.message);
       } else {
@@ -100,6 +103,7 @@ const EditProfile = () => {
           setGoogleTitle={setGoogleTitle}
           setGoogleDescribe={setGoogleDescribe}
           setCurrentImageAddress={setCurrentImageAddress}
+          setCurrentImageAddressTumb={setCurrentImageAddressTumb}
           setImage={setImage}
           newsInfo={newsInfo}
           onSubmit={updateNewsInfo}
