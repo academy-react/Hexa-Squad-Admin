@@ -12,27 +12,23 @@ import InvoiceList from "./InvoiceList";
 import Detail from "./Detail";
 import Describe from "./Describe";
 import CourseComments from "./CourseComments";
+// import Settings from "./Settings";
 
 const UserTabs = ({ active, toggleTab, detail }) => {
+  console.log(detail);
   return (
     <Fragment>
       <Nav pills className="mb-2">
         <NavItem>
           <NavLink active={active === "1"} onClick={() => toggleTab("1")}>
-            <Activity className="font-medium-3 me-50" />
-            <span className="fw-bold">جزئیات</span>
+            <Bell className="font-medium-3 me-50" />
+            <span className="fw-bold">توضیحات دوره</span>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={active === "3"} onClick={() => toggleTab("3")}>
             <Bookmark className="font-medium-3 me-50" />
             <span className="fw-bold">رزرو کننده ها</span>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink active={active === "4"} onClick={() => toggleTab("4")}>
-            <Bell className="font-medium-3 me-50" />
-            <span className="fw-bold">توضیحات دوره</span>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -43,16 +39,14 @@ const UserTabs = ({ active, toggleTab, detail }) => {
         </NavItem>
       </Nav>
       <TabContent activeTab={active}>
-        <TabPane tabId="1">
-          <Detail />
-        </TabPane>
         <TabPane tabId="2">
           <CourseComments detail={detail} />
         </TabPane>
         <TabPane tabId="3">
           <InvoiceList detail={detail} />
         </TabPane>
-        <TabPane tabId="4">
+        <TabPane tabId="1">
+          <Detail detail={detail} />
           <Describe describe={detail.describe} />
         </TabPane>
       </TabContent>

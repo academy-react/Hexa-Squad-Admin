@@ -35,8 +35,8 @@ export const handleDeleteUser = (id, to) => {
     buttonsStyling: false,
   }).then(async (result) => {
     if (result.value) {
-      const deleteCourse = await DeleteUser(id, to);
-      deleteCourse.success &&
+      const deletedUser = await DeleteUser(id, to);
+      deletedUser.success &&
         MySwal.fire({
           icon: "success",
           title: "موفقیت آمیز !",
@@ -48,7 +48,7 @@ export const handleDeleteUser = (id, to) => {
     } else if (result.dismiss === MySwal.DismissReason.cancel) {
       MySwal.fire({
         title: "کاربر حذف نشد",
-        text: "حذف کامنت لغو شد :)",
+        text: "حذف کاربر لغو شد :)",
         icon: "error",
         customClass: {
           confirmButton: "btn btn-success",

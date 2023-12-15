@@ -81,7 +81,41 @@ const EditorJsComponent = ({ setDescribe, defaultData }) => {
             .then((outputData) => {
               toast.success("توضیحات با موفیقت ذخیره شد");
               console.log("outputData", outputData);
-              setDescribe(outputData);
+              const data = {
+                time: 1702560648026,
+                blocks: [
+                  {
+                    id: "aRRRV0egri",
+                    type: "paragraph",
+                    data: {
+                      text: "jjjnlkl/jncl",
+                    },
+                  },
+                  {
+                    id: "1bFuvy9qy1",
+                    type: "paragraph",
+                    data: {
+                      text: "kscoijcsklcsscikoioskc",
+                    },
+                  },
+                  {
+                    id: "F9uaFMMgQU",
+                    type: "paragraph",
+                    data: {
+                      text: "spciojcspkcuiioki<br>",
+                    },
+                  },
+                  {
+                    id: "m9a3QgNglX",
+                    type: "paragraph",
+                    data: {
+                      text: "pkojisc",
+                    },
+                  },
+                ],
+                version: "2.28.2",
+              };
+              setDescribe(JSON.stringify(data));
             })
             .catch((error) => {
               console.log(error);

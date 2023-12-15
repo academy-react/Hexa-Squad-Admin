@@ -72,7 +72,6 @@ const TeacherCourses = () => {
       SortType: sortColumn,
     };
     try {
-      console.log(coursesParams);
       const courses = await instance.get("/Course/TeacherCourseList", {
         params: coursesParams,
       });

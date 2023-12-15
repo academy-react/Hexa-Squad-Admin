@@ -30,7 +30,7 @@ import React from "react";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar";
 import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
-import { handleDeleteUser } from "../../../utility/api/DeleteData/DeleteUser";
+import { handleDeleteUser } from "../../../utility/api/DeleteData/DeleteUser/handleDeleteUser";
 import ActiveUser from "../../../utility/api/PutData/ActiveUser";
 import DeleteCourseReserve from "../../../utility/api/DeleteData/DeleteCourseReserve/DeleteCourseReserve";
 import AcceptCourseReserves from "../../../utility/api/PostData/AcceptCourseReserve/AcceptCourseResever";
@@ -53,6 +53,7 @@ export const serverSideColumns = [
     selector: (row) => row.title,
     cell: (row) => (
       <div
+        data-tag="allowRowEvents"
         className="d-flex align-items-center "
         style={{
           whiteSpace: "nowrap",
@@ -87,7 +88,8 @@ export const serverSideColumns = [
     name: "قیمت دوره",
     sortField: "Cost",
     minWidth: "130px",
-    selector: (row) => SeparationPrice(row.cost),
+    selector: (row) => row.cost,
+    cell: (row) => <span>{SeparationPrice(row.cost) + " تومان"}</span>,
   },
   {
     sortable: true,
@@ -118,13 +120,14 @@ export const serverSideColumns = [
               <Badge
                 color="light-success"
                 className="cursor-pointer"
-                onClick={() => {
-                  activeAndDeActiveCourse(
-                    row.courseId,
-                    "/Course/Courses",
-                    false
-                  );
-                }}
+                // onClick={() => {
+                //   activeAndDeActiveCourse(
+                //     row.courseId,
+                //     "/Course/Courses",
+                //     false
+                //   );
+                // }}
+                onClick={console.log("Disable")}
               >
                 فعال
               </Badge>
@@ -205,9 +208,8 @@ export const serverSideColumns = [
             </DropdownItem>
             <DropdownItem
               tag={Link}
-              to={"/Course/edit/" + row.courseId}
               className="w-100"
-              onClick={(e) => e.preventDefault()}
+              to={"/Course/edit/" + row.courseId}
             >
               <Archive size={14} className="me-50" />
               <span className="align-middle">ویرایش</span>
@@ -317,42 +319,32 @@ export const userListColumns = [
           </DropdownMenu>
         </UncontrolledDropdown>
         <div className="d-flex align-items-center">
-          <div className="user-info text-truncate ms-2">
-            {row.active === "True" ? (
-              // <UserMinus
-              //   className="text-danger cursor-pointer ms-1"
-              //   color="danger"
-              //   onClick={() => handleDeleteUser(row.id, "/userList")}
-              // />
-              <Button
-                onClick={() => handleDeleteUser(row.id, "/userList")}
-                size="sm"
-                color="danger"
-              >
-                حذف
-              </Button>
-            ) : (
-              // <UserCheck
-              //   className="text-primary cursor-pointer"
-              //   color="primary"
-              //   onClick={() => ActiveUser(row.id, "/userList")}
-              // />
-              <Button
-                onClick={() => ActiveUser(row.id, "/userList")}
-                size="sm"
-                color="primary"
-              >
-                فعال
-              </Button>
-            )}
-            <UserRoleModal
-              userId={row.id}
-              isStudent={row.isStudent}
-              isTeacher={row.isTeacher}
-              userRoles={row.userRoles}
-            />
-            {/* <AddUserRoleModal userId={row.id} /> */}
-          </div>
+        <div className="user-info text-truncate ms-2">
+        {row.active === "True" ? (
+          <Button 
+            onClick={() => handleDeleteUser(row.id, "/userList")} 
+            size="sm" 
+            color="danger"
+          >
+            حذف
+          </Button>
+        ) : (
+          <Button 
+            onClick={() => ActiveUser(row.id, "/userList")}
+            size="sm" 
+            color="primary"
+          >
+            فعال
+          </Button>
+        )}    
+        <UserRoleModal 
+          userId={row.id} 
+          isStudent={row.isStudent} 
+          isTeacher={row.isTeacher} 
+          userRoles={row.userRoles} 
+        />
+        {/* <AddUserRoleModal userId={row.id} /> */}
+        </div>
         </div>
       </div>
     ),

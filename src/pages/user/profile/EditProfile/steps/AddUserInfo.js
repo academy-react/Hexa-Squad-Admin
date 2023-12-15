@@ -14,7 +14,7 @@ const AddUserInfo = ({
   setHomeAdderess,
   setNationalCode,
   setBirthDay,
-  userInfo
+  userInfo,
 }) => {
   const [datePicker, setDatePicker] = useState("");
   const putUserInfo = (values) => {
@@ -23,16 +23,12 @@ const AddUserInfo = ({
     setUserAbout(values.userAbout);
     setHomeAdderess(values.homeAdderess);
     setNationalCode(values.nationalCode);
-    setBirthDay(values.birthDay);
+    // setBirthDay(values.birthDay);
   };
   useEffect(() => {
-    datePicker && 
-    setBirthDay(
-        jalali_to_gregorian(
-          datePicker.year,
-          datePicker.month,
-          datePicker.day
-        )
+    datePicker &&
+      setBirthDay(
+        jalali_to_gregorian(datePicker.year, datePicker.month, datePicker.day)
       );
   }, [datePicker]);
   return (
@@ -51,11 +47,10 @@ const AddUserInfo = ({
         }}
         enableReinitialize={true}
         onSubmit={(e) => {
-            putUserInfo(e);
+          putUserInfo(e);
         }}
       >
         {(form) => {
-
           setFirstName(form.values.fName);
           setLastName(form.values.lName);
           setUserAbout(form.values.userAbout);
@@ -79,11 +74,11 @@ const AddUserInfo = ({
                   type={"text"}
                 />
                 <FormikInput
-                    name={"nationalCode"}
-                    placeholder={"کدملی کاربر را وارد کنید"}
-                    type={"text"}
-                    label={"کدملی:"}
-                    addClass={"col-md-4"}
+                  name={"nationalCode"}
+                  placeholder={"کدملی کاربر را وارد کنید"}
+                  type={"text"}
+                  label={"کدملی:"}
+                  addClass={"col-md-4"}
                 />
               </Row>
               <Row>
@@ -103,7 +98,10 @@ const AddUserInfo = ({
                 />
                 <div className="col-sm-4 d-flex flex-column gap-1 ">
                   <label>تاریخ تولد :</label>
-                  <PersianDatePicker setDatePicker={setDatePicker} userInfo={userInfo} />
+                  <PersianDatePicker
+                    setDatePicker={setDatePicker}
+                    userInfo={userInfo}
+                  />
                 </div>
               </Row>
             </CardBody>

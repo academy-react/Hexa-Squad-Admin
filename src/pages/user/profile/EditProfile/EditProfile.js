@@ -13,8 +13,7 @@ import instance from "../../../../utility/interceptor";
 import Wizard from "../../../../@core/components/wizard";
 import BreadCrumbs from "../../../../@core/components/breadcrumbs";
 
-const EditProfile = () => {  
-
+const EditProfile = () => {
   // get profile info
   const urlParam = useParams();
   const [userInfo, setUserInfo] = useState([]);
@@ -31,16 +30,16 @@ const EditProfile = () => {
     GetUserInfo();
   }, []);
 
-  const [firstName, setFirstName] = useState()
-  const [lastName, setLastName] = useState()
-  const [email, setEmail] = useState()
-  const [phoneNumber, setPhoneNumber] = useState()
-  const [userAbout, setUserAbout] = useState()
-  const [linkdin, setLinkdin] = useState()
-  const [telegram, setTelegram] = useState()
-  const [homeAdderess, setHomeAdderess] = useState()
-  const [nationalCode, setNationalCode] = useState()
-  const [birthDay, setBirthDay] = useState()
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [userAbout, setUserAbout] = useState();
+  const [linkdin, setLinkdin] = useState();
+  const [telegram, setTelegram] = useState();
+  const [homeAdderess, setHomeAdderess] = useState();
+  const [nationalCode, setNationalCode] = useState();
+  const [birthDay, setBirthDay] = useState();
   const ref = useRef(null);
 
   const [stepper, setStepper] = useState(null);
@@ -49,15 +48,15 @@ const EditProfile = () => {
     const obj = {
       id: urlParam.id,
       fName: firstName, // 1
-      lName: lastName,  // 1
-      gmail: email,  // 2
+      lName: lastName, // 1
+      gmail: email, // 2
       phoneNumber: phoneNumber, // 2
       userAbout: userAbout, // 1
       linkdinProfile: linkdin, // 2
-      telegramLink: telegram,  // 2
+      telegramLink: telegram, // 2
       homeAdderess: homeAdderess, // 1
       nationalCode: nationalCode, // 1
-      birthDay: birthDay,  // 1
+      birthDay: birthDay, // 1
     };
     try {
       const result = await instance.put("/User/UpdateUser", obj);
@@ -66,11 +65,11 @@ const EditProfile = () => {
       } else {
         toast.error(result.errors[0]);
       }
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }
-    console.log(obj);
+    // console.log(obj);
   };
   const steps = [
     {
@@ -118,7 +117,10 @@ const EditProfile = () => {
         title={"ویرایش اطلاعات کاربر"}
         data={[
           { title: "لیست کاربران", link: "/userList" },
-          { title: "ویرایش اطلاعات کاربر", link: "/userList/userInfoEdit/"+urlParam.id }
+          {
+            title: "ویرایش اطلاعات کاربر",
+            link: "/userList/userInfoEdit/" + urlParam.id,
+          },
         ]}
       />
       <div className="modern-horizontal-wizard">

@@ -19,11 +19,13 @@ const AddUSer = ({ BtnTitle, modalHeader, isStudent, isTeacher, roleAccess }) =>
   const [student, setStudent] = useState(false);
   const handleStudentCheckbox = () => {
     setStudent(!student);
+    console.log("student=",student)
   };
 
   const [teacher, setTeacher] = useState(false);
   const handleTeacherCheckbox = () => {
     setTeacher(!teacher);
+    console.log("teacher=",teacher)
   };
 
   // ** States
@@ -37,8 +39,8 @@ const AddUSer = ({ BtnTitle, modalHeader, isStudent, isTeacher, roleAccess }) =>
       gmail: value.gmail,
       password: value.password,
       phoneNumber: value.phoneNumber,
-      isStudent: isStudent,
-      isTeacher: isTeacher
+      isStudent: roleAccess ? student : isStudent,
+      isTeacher: roleAccess ? teacher : isTeacher,
     }
     try{
       const result = await instance.post("/User/CreateUser", obj);

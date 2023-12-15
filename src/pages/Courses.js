@@ -72,7 +72,6 @@ const Courses = () => {
       SortType: sortColumn,
     };
     try {
-      console.log(coursesParams);
       const courses = await instance.get("/Course/CourseList", {
         params: coursesParams,
       });
@@ -84,7 +83,6 @@ const Courses = () => {
   };
 
   const deleteCourse = () => {
-    console.log("selectedRows", selectedRows);
     selectedRows.map((course) => {
       DeleteCourse(course.courseId, "/TeacherCourses", true);
     });
@@ -143,7 +141,7 @@ const Courses = () => {
               setIsCurrentData(false);
               setIsDeletedData(false);
             }}
-            stats={<h3> {data?.length}</h3>}
+            stats={<p> {data?.length}</p>}
             statTitle="همه دوره ها "
           />
         </Col>
@@ -160,7 +158,7 @@ const Courses = () => {
               setIsCurrentData(false);
               setIsDeletedData(false);
             }}
-            stats={<h3> {activeCourses?.length}</h3>}
+            stats={<p> {activeCourses?.length}</p>}
             statTitle="دوره های فعال "
           />
         </Col>
@@ -177,7 +175,7 @@ const Courses = () => {
               setIsCurrentData(false);
               setIsDeletedData(true);
             }}
-            stats={<h3> {deletedCourses?.length}</h3>}
+            stats={<p> {deletedCourses?.length}</p>}
             statTitle="دوره های حذف شده"
           />
         </Col>
@@ -194,13 +192,13 @@ const Courses = () => {
               setIsCurrentData(true);
               setIsDeletedData(false);
             }}
-            stats={<h3> {currentCourses?.length}</h3>}
+            stats={<p> {currentCourses?.length}</p>}
             statTitle="دوره های در حال برگذاری"
           />
         </Col>
       </Row>
       <TableServerSide
-        allData={getAllData()}
+        // allData={getAllData()}
         data={getData()}
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
@@ -213,7 +211,7 @@ const Courses = () => {
         setSearchValue={setSearchValue}
         serverSideColumns={serverSideColumns}
         title={getTitle()}
-        btn={<CreateCourse/>}
+        btn={<CreateCourse />}
         trashTitle={"حذف دوره"}
       />
     </div>

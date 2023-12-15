@@ -46,15 +46,15 @@ const HandleUsersList = ({
       return deletedUsers;
     }
   };
-  const getAllData = () => {
-    if (isALLData) {
-      return allData;
-    } else if (isActiveUser) {
-      return allActiveUsers;
-    } else if (isDeleteUser) {
-      return allDeletedUsers;
-    }
-  };
+  // const getAllData = () => {
+  //   if (isALLData) {
+  //     return allData;
+  //   } else if (isActiveUser) {
+  //     return allActiveUsers;
+  //   } else if (isDeleteUser) {
+  //     return allDeletedUsers;
+  //   }
+  // };
   const getTitle = () => {
     if (isActiveUser) {
       return activeUserCount+totalCount;
@@ -176,7 +176,7 @@ const HandleUsersList = ({
         </Col>
       </Row>
       <TableServerSide
-        allData={getAllData()}
+        // allData={getAllData()}
         data={getData()}
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
