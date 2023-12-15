@@ -1,7 +1,7 @@
 // ** Reducers Imports
 import layout from "./layout";
 import navbar from "./navbar";
-
-const rootReducer = { navbar, layout };
+import setCurrentItems from "./setCourseCurrent";
+const rootReducer = { navbar, layout, setCurrentItems };
 
 export default rootReducer;

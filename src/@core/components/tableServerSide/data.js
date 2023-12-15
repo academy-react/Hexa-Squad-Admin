@@ -52,6 +52,7 @@ export const serverSideColumns = [
     selector: (row) => row.title,
     cell: (row) => (
       <div
+        data-tag="allowRowEvents"
         className="d-flex align-items-center "
         style={{
           whiteSpace: "nowrap",
@@ -86,7 +87,8 @@ export const serverSideColumns = [
     name: "قیمت دوره",
     sortField: "Cost",
     minWidth: "130px",
-    selector: (row) => SeparationPrice(row.cost),
+    selector: (row) => row.cost,
+    cell: (row) => <span>{SeparationPrice(row.cost) + " تومان"}</span>,
   },
   {
     sortable: true,
@@ -117,13 +119,14 @@ export const serverSideColumns = [
               <Badge
                 color="light-success"
                 className="cursor-pointer"
-                onClick={() => {
-                  activeAndDeActiveCourse(
-                    row.courseId,
-                    "/Course/Courses",
-                    false
-                  );
-                }}
+                // onClick={() => {
+                //   activeAndDeActiveCourse(
+                //     row.courseId,
+                //     "/Course/Courses",
+                //     false
+                //   );
+                // }}
+                onClick={console.log("Disable")}
               >
                 فعال
               </Badge>
@@ -204,9 +207,8 @@ export const serverSideColumns = [
             </DropdownItem>
             <DropdownItem
               tag={Link}
-              to={"/Course/edit/" + row.courseId}
               className="w-100"
-              onClick={(e) => e.preventDefault()}
+              to={"/Course/edit/" + row.courseId}
             >
               <Archive size={14} className="me-50" />
               <span className="align-middle">ویرایش</span>

@@ -21,6 +21,7 @@ const activeAndDeActiveCourse = async (id, to, active) => {
       }, 600);
     }
     console.log(deletedCourse);
+    return deletedCourse;
   } catch (error) {
     console.log(error);
   }

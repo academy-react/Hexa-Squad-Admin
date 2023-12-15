@@ -110,7 +110,7 @@ const ReserveUsers = () => {
               setIsNotAcceptData(false);
             }}
             stats={<h3> {data?.length}</h3>}
-            statTitle="همه دوره های شما"
+            statTitle="همه رزرو ها"
           />
         </Col>
         <Col lg="4" sm="12">

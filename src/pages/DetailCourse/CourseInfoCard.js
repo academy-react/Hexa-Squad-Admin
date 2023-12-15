@@ -36,21 +36,24 @@ import { Link } from "react-router-dom";
 import GetTeacher from "../../utility/api/GetData/GetTeacher";
 import DeleteCourse from "../../utility/api/DeleteData";
 import GetCourseGroups from "../../utility/api/GetData/GetCourseGroups/GetCourseGroups";
+import toast from "react-hot-toast";
+import activeAndDeActiveCourse from "../../utility/api/PutData/activeAndDeActiveCourse";
+import SeparationPrice from "../../utility/SeparationPrice/SeparationPrice";
 
 const MySwal = withReactContent(Swal);
 
 const UserInfoCard = ({ detail }) => {
   const [teacherDetails, setTeacherDetails] = useState();
   const [courseGroup, setCourseGroup] = useState();
+  const [isActive, setIsActive] = useState();
   const [teches, setTeches] = useState([]);
-  console.log(courseGroup, "courseGroup");
   // ** render user img
   const renderUserImg = () => {
     if (detail.imageAddress) {
       return (
         <img
-          height="110"
-          width="110"
+          height="210"
+          width="210"
           alt="user-avatar"
           src={detail.imageAddress}
           className="img-fluid rounded mt-3 mb-2"
@@ -127,16 +130,26 @@ const UserInfoCard = ({ detail }) => {
     console.log(data);
     setCourseGroup(data);
   };
+  const reverseActiveStatus = async () => {
+    const data = await activeAndDeActiveCourse(
+      detail.courseId,
+      "/Course/detail/" + detail.courseId,
+      !isActive
+    );
+    console.log(data);
+    data.success && setIsActive(!isActive);
+  };
   console.log(courseGroup);
   useEffect(() => {
     detail.teacherId && getTeacherDetails();
     detail.teacherId && getCourseGroups();
     detail.courseTeches && setTeches(detail.courseTeches);
+    detail.isActive && setIsActive(detail.isActive);
   }, [detail.teacherId]);
 
   return (
     <Fragment>
-      <Card>
+      <Card style={{ width: "110%" }}>
         <CardBody>
           <div className="user-avatar-section">
             <div className="d-flex align-items-center flex-column">
@@ -159,8 +172,8 @@ const UserInfoCard = ({ detail }) => {
                 <UserCheck className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">{detail.courseUserTotal}</h4>
-                <small>دانشجو های دوره</small>
+                <h4 className="mb-0">{SeparationPrice(detail.cost)} تومان</h4>
+                <small>قیمت دوره</small>
               </div>
             </div>
             <div className="d-flex align-items-start">
@@ -244,10 +257,30 @@ const UserInfoCard = ({ detail }) => {
               </ul>
             ) : null}
           </div>
-          <div className="d-flex justify-content-center pt-2">
+          <div className="d-flex justify-content-center pt-2 text-nowrap">
             <Link to={"/course/edit/" + detail.courseId}>
               <Button color="primary">ویرایش دوره</Button>
             </Link>
+            {isActive ? (
+              <Button
+                className="ms-1"
+                color="warning"
+                outline
+                onClick={reverseActiveStatus}
+              >
+                غیر فعال کردن دوره
+              </Button>
+            ) : (
+              <Button
+                className="ms-1"
+                color="success"
+                outline
+                onClick={reverseActiveStatus}
+              >
+                فعال کردن دوره
+              </Button>
+            )}
+
             <Button
               className="ms-1"
               color="danger"

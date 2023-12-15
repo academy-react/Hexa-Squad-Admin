@@ -1,16 +1,25 @@
 import { Button, Card, CardHeader } from "reactstrap";
-import EditorJsComponent from "../../EditorJs";
 import { Fragment } from "react";
 import { ArrowLeft } from "react-feather";
+import EditorJsComponent from "../../EditorJs";
 
 const AddCourseDescribe = ({ setDescribe, stepper, onSubmit }) => {
   return (
-    <Fragment>
-      <div className="col-8 mx-auto block ">
+    <div
+      className="d-flex flex-column justify-content-between"
+    >
+      <div>
         <CardHeader className="mt-2  mb-4">
           <h2>توضیحات دوره را وارد کنید</h2>
         </CardHeader>
         <EditorJsComponent setDescribe={setDescribe} />
+        {/* <textarea
+          className="form-control"
+          placeholder="توضیحات دوره"
+          onChange={(v) => {
+            setDescribe(v.target.value);
+          }}
+        /> */}
       </div>
       <div className="d-flex justify-content-between">
         <Button
@@ -30,7 +39,7 @@ const AddCourseDescribe = ({ setDescribe, stepper, onSubmit }) => {
           ساختن دوره
         </Button>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

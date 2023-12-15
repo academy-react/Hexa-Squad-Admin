@@ -30,6 +30,7 @@
     th,
     td {
       padding: $table-cell-padding-y-sm $table-cell-padding-x-sm;
+
       &:first-child {
         padding-left: 0.75rem;
       }
@@ -46,6 +47,7 @@
   thead:not(.table-dark) th,
   tfoot:not(.table-dark) th {
     background-color: $table-head-bg;
+    background-color: transparent;
   }
 }
 // table inside card, don't need margin bottom

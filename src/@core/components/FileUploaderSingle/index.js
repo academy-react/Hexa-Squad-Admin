@@ -16,7 +16,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { FileText, X, DownloadCloud } from "react-feather";
 
-const FileUploaderSingle = ({ setFiles, files, Title }) => {
+const FileUploaderSingle = ({ setFiles, files, Title, image }) => {
   // ** State
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -40,12 +40,6 @@ const FileUploaderSingle = ({ setFiles, files, Title }) => {
     } else {
       return <FileText size="28" />;
     }
-  };
-
-  const handleRemoveFile = (file) => {
-    const uploadedFiles = files;
-    const filtered = uploadedFiles.filter((i) => i.name !== file.name);
-    setFiles([...filtered]);
   };
 
   const renderFileSize = (size) => {
@@ -83,18 +77,23 @@ const FileUploaderSingle = ({ setFiles, files, Title }) => {
         <div {...getRootProps({ className: "dropzone" })}>
           <input {...getInputProps()} />
           <div className="d-flex align-items-center justify-content-center flex-column">
-            <DownloadCloud size={64} />
-            <h5>برای {Title} کلیک کنید یا فایل را به اینجا بکشید</h5>
+            {image ? (
+              <img
+                style={{ width: "200px" }}
+                alt="user-avatar"
+                src={image}
+                className="img-fluid rounded mb-2"
+              />
+            ) : (
+              <DownloadCloud size={64} />
+            )}
+            <h5>برای وارد کردن {Title} کلیک کنید یا فایل را به اینجا بکشید</h5>
             <p className="text-secondary">
-              فایل را به اینجا بکشید یا کلیک کنید بر روی{" "}
-              <a href="/" onClick={(e) => e.preventDefault()}>
-                مرورگر
-              </a>{" "}
-              دستگاه شما
+              فایل را به اینجا بکشید یا کلیک کنید{" "}
             </p>
           </div>
         </div>
-        {files.length ? (
+        {files ? (
           <Fragment>
             <ListGroup className="my-2">{fileList(0)}</ListGroup>
             <div className="d-flex justify-content-end">
