@@ -93,7 +93,7 @@ const FileUploaderSingle = ({ setFiles, files, Title, image }) => {
             </p>
           </div>
         </div>
-        {files ? (
+        {files && files.length > 0 ? (
           <Fragment>
             <ListGroup className="my-2">{fileList(0)}</ListGroup>
             <div className="d-flex justify-content-end">

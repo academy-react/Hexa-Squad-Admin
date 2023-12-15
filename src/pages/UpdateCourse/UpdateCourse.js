@@ -211,8 +211,8 @@ const UpdateCourse = () => {
       EndTime: endDate || values.StartTime,
       GoogleSchema: values.MiniDescribe,
       GoogleTitle: values.Title,
-      TumbImageAddress: (files && files[0]) || values.ImageAddress,
-      ImageAddress: (files && files[0]) || values.ImageAddress,
+      TumbImageAddress: (files && files[0]) || image,
+      ImageAddress: (files && files[0]) || image,
     };
     try {
       const result = await instance.put("/Course", obj, {
