@@ -6,7 +6,15 @@ import instance from "../../utility/interceptor";
 import StatsHorizontal from "../../@core/components/StatsHorizontal";
 import { Link } from "react-router-dom";
 import { Button, Row, Col } from "reactstrap";
-import { User, BookOpen, Cpu, GitBranch, Trash, Trash2 } from "react-feather";
+import {
+  User,
+  BookOpen,
+  PlusSquare,
+  Cpu,
+  GitBranch,
+  Trash,
+  Trash2,
+} from "react-feather";
 import BreadCrumbs from "../../@core/components/breadcrumbs";
 
 const NewsList = () => {
@@ -21,7 +29,8 @@ const NewsList = () => {
   const Btn = () => (
     <Link to={"/AddNews"}>
       <Button color="primary" className="d-flex gap-1 align-items-center">
-        {"اضافه کردن بلاگ"}
+        {"اضافه کردن خبر جدید"}
+        <PlusSquare />
       </Button>
     </Link>
   );
@@ -40,7 +49,13 @@ const NewsList = () => {
     RowsOfPage: 1000,
     Query: searchValue,
   };
-
+  const getTitle = () => {
+    if (activeTab) {
+      return "لیست اخبار فعال";
+    } else {
+      return "لیست اخبار غیرفعال";
+    }
+  };
   const getNewsList = async () => {
     try {
       const News = await instance.get("/News/AdminNewsFilterList", {
@@ -151,7 +166,7 @@ const NewsList = () => {
             color="success"
             onclick={handleDisableFilter}
             stats={disableNewsCount}
-            statTitle="اخبار غیرفعال "
+            statTitle="اخبار غیرفعال"
           />
         </Col>
       </Row>
@@ -168,7 +183,7 @@ const NewsList = () => {
         setSelectedRows={setSelectedRows}
         serverSideColumns={NewsListColumns}
         // title={"اخبار شما"}
-        // title={getTitle()}
+        title={getTitle()}
         btn={<Btn />}
       />
     </Fragment>

@@ -1,32 +1,43 @@
 // ** Reactstrap Imports
-import { Badge, Card, CardHeader, Progress, Row } from "reactstrap";
+import {
+  Badge,
+  Card,
+  CardHeader,
+  Progress,
+  Row,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Alert,
+  Input,
+} from "reactstrap";
 
 // ** Third Party Components
-import { CheckCircle, ChevronDown, Trash, X, XCircle } from "react-feather";
+import {
+  CheckCircle,
+  ChevronDown,
+  Trash,
+  X,
+  XCircle,
+  Mail,
+} from "react-feather";
 import DataTable from "react-data-table-component";
-
+import FormikInput from "../../@core/components/FormikInput";
+import { Form, Formik } from "formik";
 // ** Custom Components
 import Avatar from "@components/avatar";
-import instance from '../../utility/interceptor'
-// ** Label Images
-// import xdLabel from "@src/assets/images/icons/brands/xd-label.png";
-// import vueLabel from "@src/assets/images/icons/brands/vue-label.png";
-// import htmlLabel from "@src/assets/images/icons/brands/html-label.png";
-// import reactLabel from "@src/assets/images/icons/brands/react-label.png";
-// import sketchLabel from "@src/assets/images/icons/brands/sketch-label.png";
-
+import instance from "../../utility/interceptor";
+import replyNewsComment from "../../utility/api/GetData/GetNewsReplyComment/replyNewsComment";
 // ** Styles
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-import { useEffect, useState } from "react";
-import GetCourseComments from "../../utility/api/GetData/GetCourseComments";
+import { Fragment, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import AcceptComment from "../../utility/api/PostData/AcceptComment";
-import RejectComment from "../../utility/api/PostData/RejectComment";
-import DeleteCourseComment from "../../utility/api/DeleteData/DeleteCourseComment";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useParams } from 'react-router-dom'
-
+import { useParams } from "react-router-dom";
+import AddReply from "../../utility/api/PostData/AddNewsReply/AddNewsReply";
 const MySwal = withReactContent(Swal);
 export const handleSuspendedClick = (id) => {
   return MySwal.fire({
@@ -43,10 +54,7 @@ export const handleSuspendedClick = (id) => {
     buttonsStyling: false,
   }).then(async (result) => {
     if (result.value) {
-      const deleteCourse = await DeleteCourseComment(
-        id,
-        "/Course/detail/" 
-      );
+      const deleteCourse = await DeleteCourseComment(id, "/Course/detail/");
       console.log(deleteCourse);
       MySwal.fire({
         icon: "success",
@@ -68,149 +76,146 @@ export const handleSuspendedClick = (id) => {
     }
   });
 };
+
 export const columns = [
   {
     sortable: true,
     minWidth: "200px",
-    name: "عنوان نظر",
+    name: "اکانت",
     selector: (row) => row.title,
     cell: (row) => {
       return (
         <div className="d-flex justify-content-left align-items-center">
           <div className="avatar-wrapper">
             <Avatar
-              className="me-1"
-              img={row.pictureAddress}
-              alt={row.title}
+              className="me-1 bg-primary opacity-50"
+              alt={row.autor}
+              // img={row.pictureAddress}
               imgWidth="32"
-            />
+            ></Avatar>
           </div>
           <div className="d-flex flex-column">
-            <span className="text-truncate fw-bolder">{row.title}</span>
-            <small className="text-muted">{row.subtitle}</small>
+            <span className="text-truncate fw-bolder">
+              {row.autor ? row.autor : "نام کاربر"}
+            </span>
+            {/* <small className="text-muted">{row.subtitle}</small> */}
           </div>
         </div>
       );
     },
   },
   {
+    name: " متن کامنت",
+    selector: (row) => row.title,
+  },
+  {
     name: "تعداد لایک ها",
     selector: (row) => row.likeCount,
   },
+
   {
-    name: "وضعیت تایید",
+    name: " دسترسی",
     minWidth: "150px",
-    selector: (row) => row.progress,
+    // selector: (row) => row.progress,
     sortable: true,
     cell: (row) => {
+      const [centeredModal, setCenteredModal] = useState(false);
       return (
-        <Badge
-          className="text-capitalize"
-          color={row.accept ? "light-success" : "light-warning"}
-        >
-          {row.accept ? "تایید شده" : "تایید نشده"}
-        </Badge>
-      );
-    },
-  },
-  {
-    name: "انجام عملیات",
-    minWidth: "325px",
-    cell: (row) => {
-      return (
-        <Row className="col-12  px-0">
-          {row.accept ? (
-            <div
-              className=" d-flex gap-1 cursor-pointer col-6 px-0"
-              style={{ color: "#ff4949" }}
-              onClick={() => {
-                // RejectComment(row.id, "/Course/detail/");
-              }}
-            >
-              <XCircle color="#ff4949" className="px-0" />
-              <span className="mr-1">لغو نظر</span>
-            </div>
-          ) : (
-            <div
-              className=" d-flex  gap-1 cursor-pointer  col-6 px-0"
-              style={{ color: "#28c76f" }}
-              onClick={() => {
-                // AcceptComment(row.id, "/Course/detail/");
-              }}
-            >
-              <CheckCircle color="#28c76f" className="px-0" />
-              <span className="mr-1">تایید نظر</span>
-            </div>
-          )}
-          <Row
-            className="cursor-pointer col-4 px-0"
-            style={{ color: "#ff4949" }}
-            onClick={() => {
-              // DeleteCourseComment(row.id, "/Course/detail/" + row.courseId);
-              handleSuspendedClick(row.id);
-            }}
+        <div className="vertically-centered-modal">
+          <Button
+            color="primary"
+            outline
+            onClick={() => setCenteredModal(!centeredModal)}
           >
-            <Trash color="#ff4949" size="20" />
-          </Row>
-        </Row>
+            مشاهده{" "}
+          </Button>
+          <Modal
+            isOpen={centeredModal}
+            toggle={() => setCenteredModal(!centeredModal)}
+            className="modal-dialog-centered"
+          >
+            <ModalHeader toggle={() => setCenteredModal(!centeredModal)}>
+              <h6 className="my-1"> عنوان : {row.title}</h6>
+            </ModalHeader>
+            <ModalBody>
+              <h6> متن پیام : {row.describe}</h6>
+            </ModalBody>
+            <ModalBody className={"me-2"}>
+              <Input
+                name={"describe"}
+                placeholder={"ریپلای را وارد کنید"}
+                label={"googleDescribe:"}
+                className={"fs-6"}
+                type={"text"}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                color="primary"
+                // onClick={() => AddReply(row.newsId, row.id, describe)}
+              >
+                ارسال
+              </Button>{" "}
+            </ModalFooter>
+          </Modal>
+        </div>
       );
     },
   },
+  // {
+  //   name: " دسترسی",
+  //   minWidth: "150px",
+  //   // selector: (row) => row.progress,
+  //   sortable: true,
+  //   cell: (row) => {
+  //     return (
+  //       <Fragment>
+  //         <Button
+  //           color="primary"
+  //           outline
+  //           // onClick={() => replyNewsComment(row.id)}
+  //         >
+  //           la{" "}
+  //         </Button>
+  //         {/* <div className="bg-danger">{replyNewsComment(row.id)}</div> */}
+  //       </Fragment>
+  //     );
+  //   },
+  // },
 ];
 
 const NewsComments = ({ NewsId }) => {
   const [comments, setComments] = useState([]);
   // const [currentPage, setCurrentPage] = useState(1);
   const [itemOffset, setItemOffset] = useState(0);
-  const countInPage = 5;
+  const countInPage = 8;
   const endOffset = itemOffset + countInPage;
   const currentItems = comments.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(comments.length / countInPage);
 
-  // const NewsParams = {
-  //   NewsId: NewsId,
-
-  // };
-  // const getComments = async () => {
-  //   // const result = await GetCourseComments(detail.courseId);
-  //   // console.log("getComments result : ", result);
-  //   // setComments(result);
-       
-  //   try {
-  //     const News = await instance.get(`/News/GetAdminNewsComments?NewsId=`, {
-  //       params: NewsParams,
-  //   });
-  //     setComments(News);
-  //     console.log(News)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //  getComments();
-  // }, []);
-  const NewsParams = useParams()
-const fetchNewsData= async() => {
-   
-      try {
-        const News = await instance.get(`/News/${NewsParams.id}`);
-        setComments(News.commentDtos);
-        console.log(News)
-      } catch (error) {
-        console.log(error);
-      }
+  const NewsParams = useParams();
+  const fetchNewsData = async () => {
+    try {
+      const News = await instance.get(
+        `/News/GetAdminNewsComments?NewsId=${NewsParams.id}`
+      );
+      // const comments = News;
+      setComments(News);
+      console.log(News);
+    } catch (error) {
+      console.log(error);
     }
-useEffect(() => {
-fetchNewsData()
-}, [])
-    
+  };
+  useEffect(() => {
+    fetchNewsData();
+  }, []);
 
   const handlePagination = (page) => {
     const newOffset = (page.selected * countInPage) % comments.length;
     setItemOffset(newOffset);
     // setCurrentPage(page.selected + 1);
   };
+
   const CustomPagination = () => {
     // const count = Math.ceil(detail.length / 5);
     return (
@@ -241,7 +246,11 @@ fetchNewsData()
   };
   return (
     <Card>
-      <CardHeader tag="h4">نظرات کاربران</CardHeader>
+      <CardHeader tag="h4">
+        <h4 className="d-flex gap-1 align-items-center">
+          <Mail></Mail> نظرات کاربران
+        </h4>
+      </CardHeader>
       <div className="react-dataTable user-view-account-projects">
         <DataTable
           noHeader

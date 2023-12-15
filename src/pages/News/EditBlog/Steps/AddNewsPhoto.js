@@ -1,9 +1,11 @@
-import { Button, CardBody, CardHeader, Row } from "reactstrap";
+import { Button, CardBody, CardHeader, Row, Col } from "reactstrap";
 // import FormikInput from "../../../../../../@core/components/FormikInput";
 import FormikInput from "../../.././../@core/components/FormikInput";
+import FileUploaderSingle from "../../.././../@core/components/FileUploaderSingle";
 import { Form, Formik } from "formik";
 import { Fragment, useState } from "react";
 import { ArrowLeft } from "react-feather";
+import pic from "../../../../assets/images/icons/piic.jpg";
 
 const AddNewsPhoto = ({
   stepper,
@@ -14,6 +16,9 @@ const AddNewsPhoto = ({
   setImage,
   newsInfo,
   onSubmit,
+  files,
+  setFiles,
+  currentImage,
 }) => {
   const putNewsInfo = (values) => {
     setGoogleTitle(values.GoogleTitle);
@@ -69,16 +74,32 @@ const AddNewsPhoto = ({
                   type={"text"}
                 />
               </Row>
-              <Row>
-                <FormikInput
+              <Row className="my-3">
+                {/* <FormikInput
                   name={"Image"}
                   placeholder={" تصویر جدید را وارد کنید"}
                   type={"file"}
                   label={"تصویر جدید:"}
                   addClass={"col-md-4"}
                   onChange={(e) => console.log("image=",e.target.files)}
-                />
+                /> */}
+                <Col sm="2">
+                  <h6>تصویر فعلی</h6>
+                  <img
+                    src={currentImage ? currentImage : pic}
+                    className="w-100  rounded"
+                  ></img>
+                </Col>
+                <Col sm="10">
+                  <FileUploaderSingle
+                    name={"Image"}
+                    files={files}
+                    Title={"عکس خبر"}
+                    setFiles={setFiles}
+                  />
+                </Col>
               </Row>
+              {/* <Row></Row> */}
             </CardBody>
           );
         }}

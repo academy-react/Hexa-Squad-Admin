@@ -11,6 +11,7 @@ import { EditorState, ContentState } from "draft-js";
 import { useParams } from "react-router-dom";
 // ** Custom Components
 import Avatar from "@components/avatar";
+import FileUploaderSingle from "../../@core/components/FileUploaderSingle";
 import Breadcrumbs from "@components/breadcrumbs";
 import toast from "react-hot-toast";
 // ** Utils
@@ -49,6 +50,7 @@ const BlogEdit = () => {
 
   const urlParam = useParams();
   const [newsInfo, setNewsInfo] = useState([]);
+  const [files, setFiles] = useState([]);
 
   const addNews = async () => {
     const obj = {
@@ -60,7 +62,7 @@ const BlogEdit = () => {
       NewsCatregoryId: newsCatregoryId,
       GoogleTitle: googleTitle,
       GoogleDescribe: googleDescribe,
-      Image: image,
+      Image: files[0],
     };
     try {
       const response = await instance.post("/News/CreateNews", obj, {
@@ -88,13 +90,13 @@ const BlogEdit = () => {
     // setCurrentImageAddress(values.CurrentImageAddress);
     setImage(values.Image);
   };
-  console.log("imageeeee=", image);
+  // console.log("imageeeee=", image);
 
-  const onSubmit = (e) => {
-    const files = e.target.files;
-    setImage(files);
-    console.log("imageeeee=", files);
-  };
+  // const onSubmit = (e) => {
+  //   const files = e.target.files;
+  //   setImage(files);
+  //   console.log("imageeeee=", files);
+  // };
 
   return (
     <div className="blog-edit-wrapper">
@@ -220,44 +222,25 @@ const BlogEdit = () => {
                               as={"textarea"}
                             />
                           </Col>
-                          {/* <Col sm='12' className='mb-2'>
-            <Label className='form-label'>Content</Label>
-            <Editor editorState={content} onEditorStateChange={data => setContent(data)} />
-          </Col> */}
 
                           <Col className="mb-2" sm="12">
-                            <div className="border rounded p-2">
-                              <h4 className="mb-1">تصویر بلاگ</h4>
-                              <div className="d-flex flex-column flex-md-row">
-                                <img
-                                  className="rounded me-2 mb-1 mb-md-0"
-                                  src={pic}
-                                  alt="featured img"
-                                  width="170"
-                                  height="110"
-                                />
-                                <div>
-                                  <small className="text-muted"></small>
-                                  <div className="d-inline-block">
-                                    <div className="mb-0">
-                                      <Input
+                            <div className="border rounded p-2 cursor-pointer">
+                              <h4 className="mb-1 ">تصویر بلاگ</h4>
+                              {/* <div className="d-flex flex-column flex-md-row"> */}
+                              <small className="text-muted"></small>
+
+                              {/* <Input
                                         type="file"
                                         name={"image"}
                                         onChange={onSubmit}
                                         // id={'currentImageAddress'}
-                                      />
-                                      {/* <FormikInput
-                          name={"currentImageAddress"}
-                          
-                          type={"file"}
-                          // addClass={"col-md-4"}
-                          // onChange={onChange}
-                          
-                      /> */}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                                      /> */}
+                              <FileUploaderSingle
+                                name={"Image"}
+                                files={files}
+                                Title={"عکس خبر"}
+                                setFiles={setFiles}
+                              />
                             </div>
                           </Col>
                           <Col className="mt-50">

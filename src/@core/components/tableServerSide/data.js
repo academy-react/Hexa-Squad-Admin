@@ -26,6 +26,7 @@ import {
   UserPlus,
 } from "react-feather";
 import Avatar from "../avatar";
+import React from "react";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar";
 import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
@@ -362,12 +363,12 @@ export const NewsListColumns = [
   {
     // sortable: true,
     name: "نام بلاگ",
-    minWidth: "280px",
+    minWidth: "340px",
     // selector: (row) => row.title,
     cell: (row) => (
       <div className="d-flex align-items-center">
         {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
-        <div className="user-info text-truncate ms-1">
+        <div className="user-info text-truncate">
           <span className="d-block fw-bold text-truncate">{row.title}</span>
           {/* <small>{row.typeName}</small> */}
         </div>
@@ -375,29 +376,22 @@ export const NewsListColumns = [
     ),
   },
   {
-    sortable: true,
+    // sortable: true,
     name: "دسته بندی",
     minWidth: "100px",
     selector: (row) => row.newsCatregoryName,
   },
-  // {
-  //   sortable: true,
-  //   name: " نویسنده",
-  //   minWidth: "300px",
-  //   selector: (row) => row.addUserFullName,
-  // },
 
   {
-    sortable: true,
+    // sortable: true,
     name: " اخرین اپدیت ",
     minWidth: "100px",
     selector: (row) => GregorianToSolar(row.updateDate),
   },
 
   {
-    sortable: true,
-    name: "  تعداد بازدید",
-
+    // sortable: true,
+    name: "تعداد بازدید",
     minWidth: "100px",
     selector: (row) => row.currentView,
   },
@@ -411,20 +405,9 @@ export const NewsListColumns = [
         <div className="user-info text-truncate ms-1">
           <span className="d-block fw-bold text-truncate">
             {row.isActive === true ? (
-              <Button
-                color="danger"
-                onClick={() => ActiveNews("false", row.id)}
-              >
-                غیرفعال{" "}
-              </Button>
+              <Badge color="light-success">فعال </Badge>
             ) : (
-              <Button
-                color="success"
-                onClick={() => ActiveNews("true", row.id)}
-              >
-                {" "}
-                فعال{" "}
-              </Button>
+              <Badge color="light-danger"> غیرفعال </Badge>
             )}
           </span>
         </div>
@@ -442,15 +425,52 @@ export const NewsListColumns = [
         <div className="user-info text-truncate ms-2">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
             <Link to={"/NewsDetails/" + row.id}>
-              {" "}
-              <Eye color="blue" className="cursor-pointer" />
+              {row.isActive === true ? (
+                <Eye color="blue" className="cursor-pointer" />
+              ) : (
+                ""
+              )}{" "}
             </Link>
 
             <Link to={"/EditBlog/" + row.id}>
               {" "}
-              <Edit className="cursor-pointer" />
+              {row.isActive === true ? (
+                <Edit className="cursor-pointer" />
+              ) : (
+                ""
+              )}{" "}
             </Link>
-
+            {row.isActive === true ? (
+              <React.Fragment>
+                <XCircle
+                  color="red"
+                  className="cursor-pointer"
+                  id="UnControlledExample"
+                  onClick={() => ActiveNews("false", row.id)}
+                ></XCircle>
+                <UncontrolledTooltip
+                  placement="top"
+                  target="UnControlledExample"
+                >
+                  غیرفعال
+                </UncontrolledTooltip>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <CheckCircle
+                  color="lightGreen"
+                  className="cursor-pointer"
+                  id="UnControlledExample"
+                  onClick={() => ActiveNews("true", row.id)}
+                ></CheckCircle>
+                <UncontrolledTooltip
+                  placement="top"
+                  target="UnControlledExample"
+                >
+                  فعال سازی
+                </UncontrolledTooltip>
+              </React.Fragment>
+            )}
             {/* {row.isdelete ? (
               <div
                 className="cursor-pointer"
@@ -476,12 +496,6 @@ export const NewsListColumns = [
       </div>
     ),
   },
-  // {
-  //   sortable: true,
-  //   name: "Salary",
-  //   minWidth: "150px",
-  //   selector: (row) => row.salary,
-  // },}
 ];
 
 export const reserveColumns = [

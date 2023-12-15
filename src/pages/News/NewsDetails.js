@@ -62,6 +62,7 @@ const BlogDetails = () => {
   const fetchNewsData = async () => {
     try {
       const News = await instance.get(`/News/${NewsParams.id}`);
+
       setData(News.detailsNewsDto);
       console.log(News);
     } catch (error) {
@@ -129,8 +130,10 @@ const BlogDetails = () => {
     <Fragment>
       <Breadcrumbs
         title="جزئیات اخبار"
-        
-        data={[{ title: "لیست اخبار", link: "/NewsList" },{title:"جزییات خبر"}]}
+        data={[
+          { title: "لیست اخبار", link: "/NewsList" },
+          { title: "جزییات خبر" },
+        ]}
       />
       <div className="blog-wrapper">
         <div className="content-detached content-left">
@@ -200,21 +203,6 @@ const BlogDetails = () => {
                       <hr className="my-2" />
                       <div className="d-flex align-items-center justify-content-between">
                         <div className="d-flex align-items-center">
-                          <div className="d-flex align-items-center me-1">
-                            <a
-                              className="me-50"
-                              href="/"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              <MessageSquare
-                                size={21}
-                                className="text-body align-middle"
-                              />
-                            </a>
-                            <a href="/" onClick={(e) => e.preventDefault()}>
-                              {/* <div className='text-body align-middle'>{kFormatter(data.blog.comments)}</div> */}
-                            </a>
-                          </div>
                           {/* <div className='d-flex align-items-center'> */}
                           {/* <a className='me-50' href='/' onClick={e => e.preventDefault()}> */}
 
@@ -256,10 +244,10 @@ const BlogDetails = () => {
                     </CardBody>
                   </Card>
                 </Col>
-                <Col sm="12" id="blogComment">
-                  {/* <h6 className='section-label'>Comment</h6>
+                {/* <Col sm="12" id="blogComment"> */}
+                {/* <h6 className='section-label'>Comment</h6>
                   {renderComments()} */}
-                </Col>
+                {/* </Col> */}
                 {/* <Col sm='12'>
                   <h6 className='section-label'>Leave a Comment</h6>
                   <Card>

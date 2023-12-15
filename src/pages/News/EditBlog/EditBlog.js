@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FileText, Phone } from "react-feather";
 
-import Wizard from "../../../@core/components/wizard/index"
+import Wizard from "../../../@core/components/wizard/index";
 import AddNewsInfo from "./Steps/AddNewsInfo";
 import AddNewsPhoto from "./Steps/AddNewsPhoto";
 import BreadCrumbs from "../../../@core/components/breadcrumbs";
-import instance from '../../../utility/interceptor'
-const EditProfile = () => {  
-
+import instance from "../../../utility/interceptor";
+const EditProfile = () => {
   // get profile info
   const urlParam = useParams();
   const [newsInfo, setNewsInfo] = useState([]);
@@ -22,21 +21,23 @@ const EditProfile = () => {
       console.log(error);
     }
   };
+  console.log(newsInfo.currentImageAddress);
   useEffect(() => {
     GetNewsInfo();
   }, []);
 
-  const [title, setTitle] = useState()
-  const [describe, setDescribe] = useState()
-  const [miniDescribe, setMiniDescribe] = useState()
-  const [keyword, setKeyword] = useState()
-  const [newsCatregoryId, setNewsCatregoryId] = useState()
-  const [googleTitle, setGoogleTitle] = useState()
-  const [googleDescribe, setGoogleDescribe] = useState()
-  const [currentImageAddress, setCurrentImageAddress] = useState()
-  const [currentImageAddressTumb, setCurrentImageAddressTumb] = useState()
-  const [image, setImage] = useState()
- 
+  const [title, setTitle] = useState();
+  const [describe, setDescribe] = useState();
+  const [miniDescribe, setMiniDescribe] = useState();
+  const [keyword, setKeyword] = useState();
+  const [newsCatregoryId, setNewsCatregoryId] = useState();
+  const [googleTitle, setGoogleTitle] = useState();
+  const [googleDescribe, setGoogleDescribe] = useState();
+  const [currentImageAddress, setCurrentImageAddress] = useState();
+  const [currentImageAddressTumb, setCurrentImageAddressTumb] = useState();
+  const [image, setImage] = useState();
+  const [files, setFiles] = useState([]);
+
   const ref = useRef(null);
 
   const [stepper, setStepper] = useState(null);
@@ -44,24 +45,23 @@ const EditProfile = () => {
   const updateNewsInfo = async () => {
     const obj = {
       id: urlParam.id,
-      Title: title, // 1 
+      Title: title, // 1
       Describe: describe, // 1
-      MiniDescribe: miniDescribe,  // 1  
+      MiniDescribe: miniDescribe, // 1
       Keyword: keyword, // 1
       NewsCatregoryId: newsCatregoryId, // 1
-      Active:true,
-      GoogleTitle: googleTitle,  // 2
+      Active: true,
+      GoogleTitle: googleTitle, // 2
       GoogleDescribe: googleDescribe, // 2
       CurrentImageAddress: files[0], // 2
-      CurrentImageAddressTumb:files[0] , //2
-      Image: files[0]  // 2
-      
+      CurrentImageAddressTumb: files[0], //2
+      Image: files[0], // 2
     };
     try {
       const result = await instance.put("/News/UpdateNews", obj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      
+
       if (result.success) {
         toast.success(result.message);
       } else {
@@ -105,7 +105,10 @@ const EditProfile = () => {
           setCurrentImageAddress={setCurrentImageAddress}
           setCurrentImageAddressTumb={setCurrentImageAddressTumb}
           setImage={setImage}
+          currentImage={newsInfo.currentImageAddress}
           newsInfo={newsInfo}
+          files={files}
+          setFiles={setFiles}
           onSubmit={updateNewsInfo}
           type="wizard-modern"
         />
@@ -119,7 +122,7 @@ const EditProfile = () => {
         title={" ویرایش توضیحات بلاگ"}
         data={[
           { title: "لیست اخبار", link: "/NewsList" },
-          { title: "ویرایش اطلاعات اخبار", link: "/EditBlog/"+urlParam.id }
+          { title: "ویرایش اطلاعات اخبار", link: "/EditBlog/" + urlParam.id },
         ]}
       />
       <div className="modern-horizontal-wizard">
