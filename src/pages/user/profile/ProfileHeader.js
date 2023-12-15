@@ -14,6 +14,7 @@ import withReactContent from "sweetalert2-react-content";
 
 import profileBg from "../../../assets/images/pages/pages/profile-bg.jpg";
 import userIcon from "../../../assets/images/pages/pages/userIcon2.jpg";
+import UserRoleModal from '../list/UserRoleModal';
 
 const ProfileHeader = ({ data }) => {
   // ** States
@@ -31,9 +32,13 @@ const ProfileHeader = ({ data }) => {
           <div className='profile-img'>
             <img className='rounded img-fluid' src={data.currentPictureAddress === "Not-set" ? userIcon : data.currentPictureAddress } alt='Card image' />
           </div>
-          <div className='profile-title ms-3'>
-            <h2 className='text-white'>{data.fName+" "+data.lName}</h2>
-            {/* <p className='text-white'>{data.designation}</p> */}
+          <div className='profile-title ms-3 d-flex flex-row gap-2'>
+            <h2 className='text-white'>
+              {data.fName === null ? "کاربر"  : data.fName }
+            </h2>
+            <h2 className='text-white'>
+              {data.lName === null ? "هگزا اسکواد": data.lName}
+            </h2>
           </div>
         </div>
       </div>
@@ -45,15 +50,23 @@ const ProfileHeader = ({ data }) => {
           <Collapse isOpen={isOpen} navbar>
             <div className='profile-tabs d-flex justify-content-end flex-wrap mt-1 mt-md-0'>
               <Link to={"/userList/userInfoEdit/" + data.id}>
-                <Button color='primary' className='mx-2'>
+                <Button color='primary' className=''>
                   <span className='fw-bold d-none d-md-block'>ویرایش اطلاعات</span>
                 </Button>
               </Link>
+
+              {/* <UserRoleModal 
+                userId={data.id} 
+                // isStudent={row.isStudent} 
+                // isTeacher={row.isTeacher} 
+                userRoles={data.roles} 
+              /> */}
 
               {data.active === true 
                 ? 
                   <Button 
                     color='danger' 
+                    className='mx-2'
                     onClick={() => handleDeleteUser(
                       data.id, 
                       "/userList/userInfo/" + data.id
@@ -62,7 +75,11 @@ const ProfileHeader = ({ data }) => {
                     <span className='fw-bold d-none d-md-block'>حذف کردن کاربر</span>
                   </Button>   
                 :  
-                  <Button color='primary' onClick={() => ActiveUser(data.id, "/userList/userInfo/" + data.id)}>
+                  <Button 
+                    color='primary' 
+                    className='mx-2'
+                    onClick={() => ActiveUser(data.id, "/userList/userInfo/" + data.id)}
+                  >
                     <span className='fw-bold d-none d-md-block'>فعال کردن کاربر</span>
                   </Button>         
               }
@@ -74,4 +91,4 @@ const ProfileHeader = ({ data }) => {
   )
 }
 
-export default ProfileHeader
+export default ProfileHeader;

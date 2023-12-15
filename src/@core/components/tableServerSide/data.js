@@ -29,7 +29,7 @@ import Avatar from "../avatar";
 import GregorianToSolar from "../../../utility/GregorianToSolar/GregorianToSolar";
 import DeleteCourse from "../../../utility/api/DeleteData";
 import activeAndDeActiveCourse from "../../../utility/api/PutData/activeAndDeActiveCourse";
-import {handleDeleteUser} from "../../../utility/api/DeleteData/DeleteUser";
+import { handleDeleteUser } from "../../../utility/api/DeleteData/DeleteUser/handleDeleteUser";
 import ActiveUser from "../../../utility/api/PutData/ActiveUser";
 import DeleteCourseReserve from "../../../utility/api/DeleteData/DeleteCourseReserve/DeleteCourseReserve";
 import AcceptCourseReserves from "../../../utility/api/PostData/AcceptCourseReserve/AcceptCourseResever";
@@ -317,11 +317,6 @@ export const userListColumns = [
         <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-2">
         {row.active === "True" ? (
-          // <UserMinus
-          //   className="text-danger cursor-pointer ms-1"
-          //   color="danger"
-          //   onClick={() => handleDeleteUser(row.id, "/userList")}
-          // />
           <Button 
             onClick={() => handleDeleteUser(row.id, "/userList")} 
             size="sm" 
@@ -330,11 +325,6 @@ export const userListColumns = [
             حذف
           </Button>
         ) : (
-          // <UserCheck
-          //   className="text-primary cursor-pointer"
-          //   color="primary"
-          //   onClick={() => ActiveUser(row.id, "/userList")}
-          // />
           <Button 
             onClick={() => ActiveUser(row.id, "/userList")}
             size="sm" 
@@ -343,7 +333,12 @@ export const userListColumns = [
             فعال
           </Button>
         )}    
-        <UserRoleModal userId={row.id} isStudent={row.isStudent} isTeacher={row.isTeacher} userRoles={row.userRoles} />
+        <UserRoleModal 
+          userId={row.id} 
+          isStudent={row.isStudent} 
+          isTeacher={row.isTeacher} 
+          userRoles={row.userRoles} 
+        />
         {/* <AddUserRoleModal userId={row.id} /> */}
         </div>
         </div>

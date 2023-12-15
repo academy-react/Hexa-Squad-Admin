@@ -66,11 +66,11 @@ const EditProfile = () => {
       } else {
         toast.error(result.errors[0]);
       }
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }
-    console.log(obj);
+    // console.log(obj);
   };
   const steps = [
     {
