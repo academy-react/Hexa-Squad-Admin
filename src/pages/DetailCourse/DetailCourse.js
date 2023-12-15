@@ -50,8 +50,16 @@ const DetailCourse = () => {
           <UserInfoCard detail={detail} />
           {/* <PlanCard />  */}
         </Col>
-        <Col xl="8" lg="7" xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-          <UserTabs active={active} detail={detail} toggleTab={toggleTab} />
+        <Col
+          xl="8"
+          lg="7"
+          className="d-flex justify-content-end"
+          xs={{ order: 0 }}
+          md={{ order: 1, size: 7 }}
+        >
+          <div style={{ width: "95%" }}>
+            <UserTabs active={active} detail={detail} toggleTab={toggleTab} />
+          </div>
         </Col>
       </Row>
     </div>

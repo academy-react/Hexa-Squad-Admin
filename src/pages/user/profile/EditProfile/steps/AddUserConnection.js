@@ -48,14 +48,14 @@ const AddUserConnection = ({
                   name={"gmail"}
                   placeholder={"ایمیل کاربر را وارد کنید"}
                   label={"ایمیل:"}
-                  addClass={"col-md-4"}
+                  addClass={"col-md-6"}
                   type={"text"}
                 />
                 <FormikInput
                   name={"phoneNumber"}
                   placeholder={"شماره موبایل کاربر را وارد کنید"}
                   label={"شماره موبایل:"}
-                  addClass={"col-md-4"}
+                  addClass={"col-md-6"}
                   type={"number"}
                 />
               </Row>
@@ -65,14 +65,14 @@ const AddUserConnection = ({
                     placeholder={"لینکدین کاربر را وارد کنید"}
                     type={"text"}
                     label={"لینکدین:"}
-                    addClass={"col-md-4"}
+                    addClass={"col-md-6"}
                 />
                 <FormikInput
                     name={"telegramLink"}
                     placeholder={"تلگرام کاربر را وارد کنید"}
                     type={"text"}
                     label={"تلگرام:"}
-                    addClass={"col-md-4"}
+                    addClass={"col-md-6"}
                 />
               </Row>
             </CardBody>

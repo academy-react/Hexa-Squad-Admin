@@ -29,20 +29,14 @@ import {
   AlignCenter,
   Image,
 } from "react-feather";
-
-// ** Steps
-import DetailsStep from "./create-course-steps/AddImage";
-import BillingStep from "./create-course-steps/AddCourseDescribe";
-import DatabaseStep from "./create-course-steps/AddProperties";
-import FrameworkStep from "./create-course-steps/AddCourseInfo";
-
 // ** Styles
 import "@styles/react/pages/modal-create-app.scss";
 import instance from "../../../utility/interceptor";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import CreateCourse from "../createCourseWizard";
 
-const CreateCourse = () => {
+const CreateCourseModal = () => {
   // ** Ref
   const ref = useRef(null);
   const [title, setTitle] = useState();
@@ -101,77 +95,6 @@ const CreateCourse = () => {
     }
     console.log(obj);
   };
-  const steps = [
-    {
-      id: "course-image",
-      title: "اضافه کردن عکس دوره",
-      subtitle: "تصویر دوره را وارد کنید .",
-      icon: <Image size={18} />,
-      content: (
-        <DetailsStep
-          stepper={stepper}
-          files={files}
-          setFiles={setFiles}
-          type="wizard-modern"
-        />
-      ),
-    },
-    {
-      id: "course-info",
-      title: "اطلاعات دوره",
-      subtitle: "اضافه کردن اطلاعات دوره .",
-      icon: <FileText size={18} />,
-      content: (
-        <FrameworkStep
-          setStartDate={setStartDate}
-          setEndDate={setEndDate}
-          setCost={setCost}
-          setSessionNumber={setSessionNumber}
-          setCapacity={setCapacity}
-          setMiniDescribe={setMiniDescribe}
-          setTitle={setTitle}
-          cost={cost}
-          sessionNumber={sessionNumber}
-          capacity={capacity}
-          miniDescribe={miniDescribe}
-          title={title}
-          stepper={stepper}
-          type="wizard-modern"
-        />
-      ),
-    },
-    {
-      id: "step-address",
-      title: "ویژگی های دوره",
-      subtitle: "ویژگی های دوره را وارد کنید",
-      icon: <Edit size={18} />,
-      content: (
-        <DatabaseStep
-          setTypeNameId={setTypeNameId}
-          setLevelNameId={setLevelNameId}
-          setClassRoomNameId={setClassRoomNameId}
-          setTeacherNameId={setTeacherNameId}
-          setTermNameId={setTermNameId}
-          stepper={stepper}
-          type="wizard-modern"
-        />
-      ),
-    },
-    {
-      id: "course-describe",
-      title: "توضیحات دوره",
-      subtitle: "توضیحات دوره را وارد کنید",
-      icon: <AlignCenter size={18} />,
-      content: (
-        <BillingStep
-          onSubmit={postCourse}
-          setDescribe={setDescribe}
-          stepper={stepper}
-          type="wizard-modern"
-        />
-      ),
-    },
-  ];
 
   return (
     <Fragment>
@@ -200,20 +123,11 @@ const CreateCourse = () => {
           <Link to={"/Course/create"} className="text-center d-block">
             رفتن به صفحه ایجاد دوره
           </Link>
-          <Wizard
-            ref={ref}
-            steps={steps}
-            type="vertical"
-            headerClassName="border-0"
-            options={{ linear: false }}
-            instance={(el) => setStepper(el)}
-            contentClassName="shadow-none"
-            className="bg-transparent create-app-wizard shadow-none"
-          />
+          <CreateCourse type={"vertical"} isModal={true} />
         </ModalBody>
       </Modal>
     </Fragment>
   );
 };
 
-export default CreateCourse;
+export default CreateCourseModal;

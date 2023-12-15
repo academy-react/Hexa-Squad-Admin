@@ -20,7 +20,7 @@ import Home from "../../pages/Home";
 import Error from "../../pages/Error";
 
 import TeacherCourses from "../../pages/TeacherCourses";
-import NewsList from "../../pages/NewsList";
+import NewsList from "../../pages/News/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
 // import  from "../../views/apps/user/profile/index";
 import User from "../../pages/user/list/UserListTabs/Users";

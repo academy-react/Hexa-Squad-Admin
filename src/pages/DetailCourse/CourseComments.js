@@ -138,12 +138,12 @@ export const handleSuspendedClick = (id, courseId) => {
 export const columns = [
   {
     sortable: true,
-    minWidth: "200px",
+    width: "150px",
     name: "عنوان نظر",
     selector: (row) => row.title,
     cell: (row) => {
       return (
-        <div className="d-flex justify-content-left align-items-center">
+        <div className="d-flex justify-content-left align-items-center text-nowrap overflow-hidden text-ellipsis  ">
           <div className="avatar-wrapper">
             <Avatar
               className="me-1"
@@ -152,7 +152,7 @@ export const columns = [
               imgWidth="32"
             />
           </div>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column ">
             <span className="text-truncate fw-bolder">{row.title}</span>
             <small className="text-muted">{row.subtitle}</small>
           </div>
@@ -161,12 +161,13 @@ export const columns = [
     },
   },
   {
-    name: "تعداد لایک ها",
+    name: "تعداد لایک ",
+    width: "100px",
     selector: (row) => row.likeCount,
   },
   {
     name: "وضعیت تایید",
-    minWidth: "150px",
+    minWidth: "40px",
     selector: (row) => row.progress,
     sortable: true,
     cell: (row) => {
@@ -182,7 +183,7 @@ export const columns = [
   },
   {
     name: "انجام عملیات",
-    minWidth: "325px",
+    width: "220px",
     cell: (row) => {
       return (
         <Row className="col-12  px-0">
@@ -238,11 +239,9 @@ const CourseComments = ({ detail }) => {
         item.id,
         "/Course/detail/" + item.courseId
       );
-      console.log(deleteCourse);
     });
   };
   const filterSearch = (values) => {
-    console.log("All data", allComments);
     let filteredData = allComments.filter((item) => {
       return item.title.indexOf(values) != -1;
     });
@@ -251,7 +250,6 @@ const CourseComments = ({ detail }) => {
 
   const getComments = async () => {
     const result = await GetCourseComments(detail.courseId);
-    console.log("getComments result : ", result);
     setComments(result);
     setAllComments(result);
   };

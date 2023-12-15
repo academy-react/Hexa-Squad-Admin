@@ -1,62 +1,32 @@
 // ** Reactstrap Imports
 import { Card, CardTitle, CardBody } from "reactstrap";
 import EditorJsComponent from "../../@core/components/EditorJs";
+import { useEffect, useState } from "react";
 const Describe = ({ describe }) => {
-  console.log("describe", describe);
-  // const describe = {
-  //   time: 1702117159454,
-  //   blocks: [
-  //     {
-  //       id: "abfxGolqM6",
-  //       type: "paragraph",
-  //       data: {
-  //         text: "asccjnklsmclkc",
-  //       },
-  //     },
-  //     {
-  //       id: "ClJyMmsk7q",
-  //       type: "paragraph",
-  //       data: {
-  //         text: "cslokl;cc,;lccslc,",
-  //       },
-  //     },
-  //     {
-  //       id: "5BQwHIGTRD",
-  //       type: "heckList",
-  //       data: {
-  //         items: [
-  //           {
-  //             text: "scscc",
-  //             checked: true,
-  //           },
-  //         ],
-  //       },
-  //     },
-  //     {
-  //       id: "85e7RiNW9l",
-  //       type: "warning",
-  //       data: {
-  //         title: "ssss",
-  //         message: "ssssssss",
-  //       },
-  //     },
-  //   ],
-  //   version: "2.28.2",
-  // };
+  const [Describe, setDescribe] = useState();
+  useEffect(() => {
+    if (describe) {
+      console.log("describe", describe);
+      if (describe.includes("blocks", "{", "}")) {
+        const newDescribe = JSON.parse(describe);
+        setDescribe(newDescribe);
+        console.log("describe json", describe);
+      } else {
+        setDescribe(describe);
+      }
+    }
+  }, [describe]);
 
   return (
-    <Card className="min-h-70">
+    <Card>
       <CardBody>
         <CardTitle className="mb-50" tag="h4">
           توضیحات دوره
         </CardTitle>
-        <p className="mb-0">
-          برای تغییر دادن توضیحات دوره روی بخش مورد نظر دوبار کلیک کنید
-        </p>
-        {typeof describe === "object" && describe !== null ? (
-          <EditorJsComponent defaultData={describe} />
+        {typeof Describe === "object" && Describe !== null ? (
+          <EditorJsComponent defaultData={Describe} />
         ) : (
-          <textarea className="form-control" defaultValue={describe}></textarea>
+          <p>{Describe}</p>
         )}
       </CardBody>
     </Card>

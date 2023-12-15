@@ -9,7 +9,6 @@ const DataImage = ({ courseId }) => {
     const data = await GetCourseDetail(courseId);
     setImage(data.imageAddress);
     setImageName(data.title);
-    console.log(data);
   };
   useEffect(() => {
     getData();

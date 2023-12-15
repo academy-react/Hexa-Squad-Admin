@@ -2,7 +2,8 @@
 import { useRef, Fragment, useState, useEffect, memo, forwardRef } from "react";
 
 // ** Table Columns
-import { serverSideColumns } from "./data";
+// import { serverSideColumns } from "./data";
+import { serverSideColumns } from "../../@core/components/tableServerSide/data";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
@@ -34,7 +35,7 @@ const BootstrapCheckbox = forwardRef((props, ref) => (
     <Input type="checkbox" ref={ref} {...props} />
   </div>
 ));
-const DataTableServerSide = ({
+const NewsTable = ({
   serverSideColumns,
   title,
   setRowsPerPage,
@@ -58,8 +59,7 @@ const DataTableServerSide = ({
   const [isChecked, setIsChecked] = useState(false);
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + rowsPerPage;
-  const [currentItems, setCurrentItems] = useState();
-
+  const currentItems = data?.slice(itemOffset, endOffset);
   // ** Function to handle filter
   const handleFilter = (e) => {
     const value = e.target.value;
@@ -93,11 +93,6 @@ const DataTableServerSide = ({
   const handlePerPage = (e) => {
     setRowsPerPage(parseInt(e.target.value));
   };
-
-  useEffect(() => {
-    data && setCurrentItems(data.slice(itemOffset, endOffset));
-  }, [data]);
-
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data.length / rowsPerPage);
@@ -130,7 +125,7 @@ const DataTableServerSide = ({
       <Card>
         <CardHeader className="border-bottom">
           <CardTitle tag="h4">{title}</CardTitle>
-          {btn && <CardTitle tag="h4">{btn}</CardTitle>}
+          <CardTitle tag="h4">{btn}</CardTitle>
         </CardHeader>
         <Row className="mx-0 mt-1 mb-50">
           <Col sm="6">
@@ -204,15 +199,11 @@ const DataTableServerSide = ({
                 noHeader
                 pagination
                 paginationServer
-                selectableRows
+                // selectableRows
                 sortServer
                 responsive
                 className="react-dataTable"
                 columns={serverSideColumns}
-                onRowClicked={(row, event) => {
-                  console.log("row", row);
-                  console.log("event", event);
-                }}
                 onSort={onSort}
                 sortIcon={<ChevronDown size={10} />}
                 paginationComponent={CustomPagination}
@@ -229,4 +220,4 @@ const DataTableServerSide = ({
   );
 };
 
-export default memo(DataTableServerSide);
+export default memo(NewsTable);

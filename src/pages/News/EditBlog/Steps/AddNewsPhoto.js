@@ -10,15 +10,22 @@ const AddNewsPhoto = ({
   setGoogleTitle,
   setGoogleDescribe,
   setCurrentImageAddress,
+  setCurrentImageAddressTumb,
   setImage,
   newsInfo,
-  onSubmit
+  onSubmit,
 }) => {
   const putNewsInfo = (values) => {
     setGoogleTitle(values.GoogleTitle);
     setGoogleDescribe(values.GoogleDescribe);
     setCurrentImageAddress(values.CurrentImageAddress);
+    // setCurrentImageAddressTumb(values.CurrentImageAddressTumb);
     setImage(values.Image);
+  };
+  const onChange = (e) => {
+    const files = e.target.files;
+    setImage(files);
+    console.log("imageeeee=", files);
   };
   return (
     <Fragment>
@@ -30,18 +37,20 @@ const AddNewsPhoto = ({
           googleTitle: newsInfo.googleTitle,
           googleDescribe: newsInfo.googleDescribe,
           currentImageAddress: newsInfo.currentImageAddress,
-          
+          currentImageAddressTumb: newsInfo.currentImageAddressTumb,
+          Image: newsInfo.Image,
         }}
         enableReinitialize={true}
         onSubmit={(e) => {
-            putNewsInfo(e);
+          putNewsInfo(e);
         }}
       >
         {(form) => {
           setGoogleTitle(form.values.googleTitle);
           setGoogleDescribe(form.values.googleDescribe);
           setCurrentImageAddress(form.values.currentImageAddress);
-          
+          setCurrentImageAddressTumb(form.values.currentImageAddressTumb);
+          setImage(form.values.Image);
           return (
             <CardBody className="cursor-pointer">
               <Row className="my-1">
@@ -62,17 +71,17 @@ const AddNewsPhoto = ({
               </Row>
               <Row>
                 <FormikInput
-                    name={"currentImageAddress"}
-                    placeholder={" تصویر جدید را وارد کنید"}
-                    type={"file"}
-                    label={"تصویر جدید:"}
-                    addClass={"col-md-4"}
+                  name={"Image"}
+                  placeholder={" تصویر جدید را وارد کنید"}
+                  type={"file"}
+                  label={"تصویر جدید:"}
+                  addClass={"col-md-4"}
+                  onChange={(e) => console.log("image=",e.target.files)}
                 />
               </Row>
             </CardBody>
           );
         }}
-      
       </Formik>
 
       <div className="d-flex my-2 justify-content-between">

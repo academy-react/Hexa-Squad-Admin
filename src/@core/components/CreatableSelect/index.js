@@ -2,18 +2,24 @@ import { Fragment } from "react";
 import CreatableSelect from "react-select/creatable";
 import { Label } from "reactstrap";
 
-const CreatableSelectComponent = ({onChange,options,children}) => {
-    
+const CreatableSelectComponent = ({
+  onChange,
+  options,
+  children,
+  defaultValue,
+}) => {
   return (
     <Fragment>
-      <Label className="form-label m-0">{children} </Label>
+      <Label className="form-label m-0 my-1">{children} </Label>
       <CreatableSelect
+        // defaultValue={defaultValue}
+        defaultInputValue={defaultValue}
         options={options}
-        placeholder='لطفا انتخاب کنید'
-        className="react-select z-3 position-relative"
+        placeholder="لطفا انتخاب کنید"
+        className="react-select "
         classNamePrefix="select"
         onChange={(e) => {
-            onChange(e.value);
+          onChange(e.value);
         }}
       />
     </Fragment>

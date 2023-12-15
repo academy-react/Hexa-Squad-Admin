@@ -38,6 +38,7 @@ import DataImage from "../DataImage/DataImage";
 import UserImage from "../UserImage/UserImage";
 import Reservers from "../modals/Reservers";
 import SeparationPrice from "../../../utility/SeparationPrice/SeparationPrice";
+import ActiveNews from "../../../utility/api/PutData/ActiveNews";
 import AddUserRole from "../../../utility/api/PostData/AddUserRole/AddUserRole";
 import AddUserRoleModal from "../../../pages/user/list/AddUserRoleModal";
 import UserRoleModal from "../../../pages/user/list/UserRoleModal";
@@ -51,6 +52,7 @@ export const serverSideColumns = [
     selector: (row) => row.title,
     cell: (row) => (
       <div
+        data-tag="allowRowEvents"
         className="d-flex align-items-center "
         style={{
           whiteSpace: "nowrap",
@@ -85,7 +87,8 @@ export const serverSideColumns = [
     name: "قیمت دوره",
     sortField: "Cost",
     minWidth: "130px",
-    selector: (row) => SeparationPrice(row.cost),
+    selector: (row) => row.cost,
+    cell: (row) => <span>{SeparationPrice(row.cost) + " تومان"}</span>,
   },
   {
     sortable: true,
@@ -116,13 +119,14 @@ export const serverSideColumns = [
               <Badge
                 color="light-success"
                 className="cursor-pointer"
-                onClick={() => {
-                  activeAndDeActiveCourse(
-                    row.courseId,
-                    "/Course/Courses",
-                    false
-                  );
-                }}
+                // onClick={() => {
+                //   activeAndDeActiveCourse(
+                //     row.courseId,
+                //     "/Course/Courses",
+                //     false
+                //   );
+                // }}
+                onClick={console.log("Disable")}
               >
                 فعال
               </Badge>
@@ -203,9 +207,8 @@ export const serverSideColumns = [
             </DropdownItem>
             <DropdownItem
               tag={Link}
-              to={"/Course/edit/" + row.courseId}
               className="w-100"
-              onClick={(e) => e.preventDefault()}
+              to={"/Course/edit/" + row.courseId}
             >
               <Archive size={14} className="me-50" />
               <span className="align-middle">ویرایش</span>
@@ -349,7 +352,7 @@ export const userListColumns = [
 
 export const NewsListColumns = [
   {
-    sortable: true,
+    // sortable: true,
     name: "نام بلاگ",
     minWidth: "280px",
     // selector: (row) => row.title,
@@ -366,21 +369,20 @@ export const NewsListColumns = [
   {
     sortable: true,
     name: "دسته بندی",
-    minWidth: "150px",
+    minWidth: "100px",
     selector: (row) => row.newsCatregoryName,
   },
-  {
-    sortable: true,
-    name: " نویسنده",
-    minWidth: "300px",
-    selector: (row) => row.addUserFullName,
-  },
+  // {
+  //   sortable: true,
+  //   name: " نویسنده",
+  //   minWidth: "300px",
+  //   selector: (row) => row.addUserFullName,
+  // },
 
   {
     sortable: true,
     name: " اخرین اپدیت ",
-
-    minWidth: "150px",
+    minWidth: "100px",
     selector: (row) => GregorianToSolar(row.updateDate),
   },
 
@@ -388,8 +390,38 @@ export const NewsListColumns = [
     sortable: true,
     name: "  تعداد بازدید",
 
-    minWidth: "120px",
+    minWidth: "100px",
     selector: (row) => row.currentView,
+  },
+  {
+    sortable: false,
+    name: "وضعیت ",
+    minWidth: "100px",
+    selector: (row) => row.isActive,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate">
+            {row.isActive === true ? (
+              <Button
+                color="danger"
+                onClick={() => ActiveNews("false", row.id)}
+              >
+                غیرفعال{" "}
+              </Button>
+            ) : (
+              <Button
+                color="success"
+                onClick={() => ActiveNews("true", row.id)}
+              >
+                {" "}
+                فعال{" "}
+              </Button>
+            )}
+          </span>
+        </div>
+      </div>
+    ),
   },
 
   {
@@ -401,9 +433,16 @@ export const NewsListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-2">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-          <Link to={'/NewsDetails/'+row.id}> <Eye color="blue" className="cursor-pointer" /></Link>
+            <Link to={"/NewsDetails/" + row.id}>
+              {" "}
+              <Eye color="blue" className="cursor-pointer" />
+            </Link>
 
-          <Link to={"/EditBlog/" + row.id}> <Edit className="cursor-pointer" /></Link>
+            <Link to={"/EditBlog/" + row.id}>
+              {" "}
+              <Edit className="cursor-pointer" />
+            </Link>
+
             {/* {row.isdelete ? (
               <div
                 className="cursor-pointer"
@@ -463,7 +502,9 @@ export const reserveColumns = [
     minWidth: "107px",
     selector: (row) => row.id,
     cell: (row) => (
-      <Link to={`/userList/userInfo/${row.studentId}`}>{`${row.studentName}`}</Link>
+      <Link
+        to={`/userList/userInfo/${row.studentId}`}
+      >{`${row.studentName}`}</Link>
     ),
   },
   {
