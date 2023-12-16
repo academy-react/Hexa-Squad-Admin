@@ -106,7 +106,7 @@ const UserRoleModal = ({ userId, userRoles }) => {
                 </h3>                
                 <div 
                   className='form-switch form-check-success cursor-pointer' 
-                  id='switch-success'
+                  id='switch-admin'
                   onClick={
                     isAdmin ? 
                       () => AddUserRole("false", 1, userId) 
@@ -123,11 +123,11 @@ const UserRoleModal = ({ userId, userRoles }) => {
                   <CustomLabel htmlFor='icon-primary' />
                 </div>
                 {isAdmin ? 
-                  <UncontrolledTooltip placement='top' target='switch-success'>
+                  <UncontrolledTooltip placement='top' target='switch-admin'>
                     غیر فعال کردن این دسترسی
                   </UncontrolledTooltip>
                 :
-                  <UncontrolledTooltip placement='top' target='switch-success'>
+                  <UncontrolledTooltip placement='top' target='switch-admin'>
                   فعال کردن این دسترسی
                   </UncontrolledTooltip>                  
                 }
@@ -145,7 +145,7 @@ const UserRoleModal = ({ userId, userRoles }) => {
                 </h3>                
                 <div 
                   className='form-switch form-check-success' 
-                  id='switch-success'
+                  id='switch-teacher'
                   onClick={
                     isTeacher ? 
                       () => AddUserRole("false", 2, userId) 
@@ -162,11 +162,11 @@ const UserRoleModal = ({ userId, userRoles }) => {
                   <CustomLabel htmlFor='icon-primary' />
                 </div>
                 {isTeacher ? 
-                  <UncontrolledTooltip placement='top' target='switch-success'>
+                  <UncontrolledTooltip placement='top' target='switch-teacher'>
                     غیر فعال کردن این دسترسی
                   </UncontrolledTooltip>
                 :
-                  <UncontrolledTooltip placement='top' target='switch-success'>
+                  <UncontrolledTooltip placement='top' target='switch-teacher'>
                     فعال کردن این دسترسی
                   </UncontrolledTooltip>                  
                 }
@@ -184,7 +184,7 @@ const UserRoleModal = ({ userId, userRoles }) => {
                 </h3>                
                 <div 
                   className='form-switch form-check-success' 
-                  id='switch-success'
+                  id='switch-student'
                   onClick={
                     isStudent ? 
                       () => AddUserRole("false", 3, userId) 
@@ -202,11 +202,11 @@ const UserRoleModal = ({ userId, userRoles }) => {
                   <CustomLabel htmlFor='icon-primary' />
                 </div>
                 {isStudent ? 
-                  <UncontrolledTooltip placement='top' target='switch-success'>
+                  <UncontrolledTooltip placement='top' target='switch-student'>
                     غیر فعال کردن این دسترسی
                   </UncontrolledTooltip>
                 :
-                  <UncontrolledTooltip placement='top' target='switch-success'>
+                  <UncontrolledTooltip placement='top' target='switch-student'>
                     فعال کردن این دسترسی
                   </UncontrolledTooltip>                  
                 }
