@@ -233,7 +233,7 @@ export const userListColumns = [
         <div className="user-info text-truncate ms-1">
           <Link to={`/userList/userInfo/${row.id}`}>
             <div className="d-flex flex-row gap-1">
-              <span className="d-block fw-bold text-truncate">               
+              <span className="d-block fw-bold text-truncate">
                 {row.lname ? row.lname : "کاربر"}
               </span>
               <span className="d-block fw-bold text-truncate">
@@ -860,7 +860,7 @@ export const UserFavorite = [
       return (
         <span>
           {" "}
-          {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />}
+          {<Avatar img={row.tumbImageAddress ? row.tumbImageAddress : pic} className="bg-light-primary" />}
         </span>
       );
     },
@@ -875,14 +875,14 @@ export const UserFavorite = [
       return <span> {row.title}</span>;
     },
   },
-  {
-    name: " توضیحات دوره",
-    sortable: false,
-    sortField: "id",
-    minWidth: "380px",
-    selector: (row) => row.id,
-    cell: (row) => <span>{row.describe}</span>,
-  },
+  // {
+  //   name: " توضیحات دوره",
+  //   sortable: false,
+  //   sortField: "id",
+  //   minWidth: "380px",
+  //   selector: (row) => row.id,
+  //   cell: (row) => <span>{row.describe}</span>,
+  // },
   {
     name: " اخرین اپدیت",
     sortable: true,
