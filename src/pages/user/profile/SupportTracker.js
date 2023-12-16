@@ -28,7 +28,7 @@ const SupportTracker = ({data, primary, danger}) => {
             size: '50%'
           },
           track: {
-            background: '#fff',
+            background: '#D3D3D3',
             strokeWidth: '100%'
           },
           dataLabels: {

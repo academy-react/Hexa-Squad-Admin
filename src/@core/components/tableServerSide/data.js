@@ -231,9 +231,17 @@ export const userListColumns = [
         {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
         <div className="user-info text-truncate ms-1">
           <Link to={`/userList/userInfo/${row.id}`}>
-            <span className="d-block fw-bold text-truncate">
+            <div className="d-flex flex-row gap-1">
+              <span className="d-block fw-bold text-truncate">               
+                {row.lname ? row.lname : "کاربر"}
+              </span>
+              <span className="d-block fw-bold text-truncate">
+                {row.fname ? row.fname : "هگزا اسکواد"}
+              </span>
+            </div>
+            {/* <span className="d-block fw-bold text-truncate">
               {row.fname} {row.lname}{" "}
-            </span>
+            </span> */}
           </Link>
         </div>
       </div>
