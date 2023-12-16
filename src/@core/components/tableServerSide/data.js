@@ -808,6 +808,23 @@ export const UserReserve = [
     ),
   },
   {
+    sortable: false,
+    name: " نمایش جزییات",
+    minWidth: "120px",
+
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-2">
+          <span className="d-block fw-bold text-truncate d-flex gap-1">
+            <Link to={"/Course/detail/" + row.courseId}>
+              <Eye color="blue" className="cursor-pointer" />
+            </Link>
+          </span>
+        </div>
+      </div>
+    ),
+  },
+  {
     name: "پذیرفتن رزرو",
     minWidth: "110px",
     cell: (row) => (
@@ -860,7 +877,12 @@ export const UserFavorite = [
       return (
         <span>
           {" "}
-          {<Avatar img={row.tumbImageAddress ? row.tumbImageAddress : pic} className="bg-light-primary" />}
+          {
+            <Avatar
+              img={row.tumbImageAddress ? row.tumbImageAddress : pic}
+              className="bg-light-primary"
+            />
+          }
         </span>
       );
     },
@@ -875,14 +897,6 @@ export const UserFavorite = [
       return <span> {row.title}</span>;
     },
   },
-  // {
-  //   name: " توضیحات دوره",
-  //   sortable: false,
-  //   sortField: "id",
-  //   minWidth: "380px",
-  //   selector: (row) => row.id,
-  //   cell: (row) => <span>{row.describe}</span>,
-  // },
   {
     name: " اخرین اپدیت",
     sortable: true,
@@ -890,5 +904,23 @@ export const UserFavorite = [
     sortField: "total",
     selector: (row) => row.total,
     cell: (row) => <span>{GregorianToSolar(row.lastUpdate)}</span>,
+  },
+
+  {
+    sortable: false,
+    name: " نمایش جزییات",
+    minWidth: "120px",
+
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-2">
+          <span className="d-block fw-bold text-truncate d-flex gap-1">
+            <Link to={"/Course/detail/" + row.courseId}>
+              <Eye color="blue" className="cursor-pointer" />
+            </Link>
+          </span>
+        </div>
+      </div>
+    ),
   },
 ];
