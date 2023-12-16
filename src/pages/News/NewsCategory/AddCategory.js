@@ -31,8 +31,8 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/base/pages/page-blog.scss";
 import pic from "../../assets/images/icons/News.jpg";
 
-const BlogEdit = () => {
-  const [title, setTitle] = useState();
+const AddCategory = () => {
+  const [categoryName, setCategoryName] = useState();
   const [describe, setDescribe] = useState();
   const [miniDescribe, setMiniDescribe] = useState();
   const [keyword, setKeyword] = useState();
@@ -49,7 +49,7 @@ const BlogEdit = () => {
   const addNews = async () => {
     const obj = {
       // id: urlParam.id,
-      Title: title,
+      CategoryName: categoryName,
       Describe: describe,
       MiniDescribe: miniDescribe,
       Keyword: keyword,
@@ -59,7 +59,7 @@ const BlogEdit = () => {
       Image: files[0],
     };
     try {
-      const response = await instance.post("/News/CreateNews", obj, {
+      const response = await instance.post("/News/CreateNewsCategory", obj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log(response);
@@ -264,4 +264,4 @@ const BlogEdit = () => {
   );
 };
 
-export default BlogEdit;
+export default AddCategory;

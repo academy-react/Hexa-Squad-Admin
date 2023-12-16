@@ -19,6 +19,7 @@ import ProfileConnection from "./ProfileConnection";
 import SupportTracker from "./SupportTracker";
 // import ProfilePosts from './ProfilePosts'
 import ProfileHeader from "./ProfileHeader";
+import ProfileTab from "./ProfileTab";
 // import ProfileTwitterFeeds from './ProfileTwitterFeeds'
 import ProfileLatestPhotos from "./ProfileLatestPhotos";
 // import ProfileSuggestedPages from './ProfileSuggestedPages'
@@ -112,6 +113,12 @@ const Profile = () => {
                 {/* <ProfilePoll data={data.polls} /> */}
               </Col>
             </Row>
+            <Row>
+            <Col sm="12">
+              {/* <ProfileHeader data={data} /> */}
+              <ProfileTab/>
+            </Col>
+          </Row>
             
           </section>
         </div>

@@ -91,10 +91,16 @@ export default [
         navLink: "/NewsList",
       },
       {
-        id: "NewsList",
+        id: "AddNews",
         title: " ایجاد خبر جدید",
         icon: <List size={20} />,
         navLink: "/AddNews",
+      },
+      {
+        id: "CategoryList",
+        title: " لیست دسته بندی",
+        icon: <List size={20} />,
+        navLink: "/CategoryList",
       },
     ],
   },

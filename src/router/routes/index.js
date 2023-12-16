@@ -40,6 +40,7 @@ import EditBlog from "../../pages/News/EditBlog/EditBlog"
 
 import Courses from "../../pages/Courses";
 import ReserveUsers from "../../pages/ReserveUsers";
+import CategoryList from "../../pages/News/NewsCategory/CategoryList";
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -169,6 +170,14 @@ const Routes = [
     children: [
       {path: "/NewsDetails/:id", element:<NewsDetails/>}
     ]
+  },
+  {
+    element: <CategoryList/> ,
+    path: "/CategoryList",
+  },
+  {
+    element: <AddNews/>,
+    path: "/AddCategory",
   },
 ];
 

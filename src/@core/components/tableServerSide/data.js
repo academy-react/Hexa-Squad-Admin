@@ -23,6 +23,7 @@ import {
   Archive,
   FileText,
   X,
+  Star,
   UserPlus,
 } from "react-feather";
 import Avatar from "../avatar";
@@ -43,7 +44,7 @@ import ActiveNews from "../../../utility/api/PutData/ActiveNews";
 import AddUserRole from "../../../utility/api/PostData/AddUserRole/AddUserRole";
 import AddUserRoleModal from "../../../pages/user/list/AddUserRoleModal";
 import UserRoleModal from "../../../pages/user/list/UserRoleModal";
-
+import pic from "../../../assets/images/icons/piclogo.svg";
 export const serverSideColumns = [
   {
     sortable: false,
@@ -319,32 +320,32 @@ export const userListColumns = [
           </DropdownMenu>
         </UncontrolledDropdown>
         <div className="d-flex align-items-center">
-        <div className="user-info text-truncate ms-2">
-        {row.active === "True" ? (
-          <Button 
-            onClick={() => handleDeleteUser(row.id, "/userList")} 
-            size="sm" 
-            color="danger"
-          >
-            حذف
-          </Button>
-        ) : (
-          <Button 
-            onClick={() => ActiveUser(row.id, "/userList")}
-            size="sm" 
-            color="primary"
-          >
-            فعال
-          </Button>
-        )}    
-        <UserRoleModal 
-          userId={row.id} 
-          isStudent={row.isStudent} 
-          isTeacher={row.isTeacher} 
-          userRoles={row.userRoles} 
-        />
-        {/* <AddUserRoleModal userId={row.id} /> */}
-        </div>
+          <div className="user-info text-truncate ms-2">
+            {row.active === "True" ? (
+              <Button
+                onClick={() => handleDeleteUser(row.id, "/userList")}
+                size="sm"
+                color="danger"
+              >
+                حذف
+              </Button>
+            ) : (
+              <Button
+                onClick={() => ActiveUser(row.id, "/userList")}
+                size="sm"
+                color="primary"
+              >
+                فعال
+              </Button>
+            )}
+            <UserRoleModal
+              userId={row.id}
+              isStudent={row.isStudent}
+              isTeacher={row.isTeacher}
+              userRoles={row.userRoles}
+            />
+            {/* <AddUserRoleModal userId={row.id} /> */}
+          </div>
         </div>
       </div>
     ),
@@ -483,6 +484,80 @@ export const NewsListColumns = [
                 }}
               />
             )} */}
+          </span>
+        </div>
+      </div>
+    ),
+  },
+];
+export const CategoryListColumns = [
+  {
+    // sortable: true,
+    name: "تصویر ",
+    minWidth: "300px",
+    // selector: (row) => row.title,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        {row.iconAddress && <Avatar img={pic} className="bg-white shadow" />}
+
+        <div className="user-info text-truncate mx-2">
+          <span className="d-block fw-bold text-truncate">
+            {"دسته بندی" + " " + row.categoryName}
+          </span>
+          {/* <small>{row.typeName}</small> */}
+        </div>
+      </div>
+    ),
+  },
+  {
+    // sortable: true,
+    name: "عدد دسته بندی ",
+    minWidth: "100px",
+    // selector: (row) => row.title,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
+        <div className="user-info text-truncate">
+          <Avatar color="light-primary" content={row.id} />
+          {/* <span className="d-block fw-bold text-truncate">{row.id}</span> */}
+          {/* <small>{row.typeName}</small> */}
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    // sortable: true,
+    name: " نام دسته بندی ",
+    minWidth: "100px",
+    selector: (row) => row.categoryName,
+    cell: (row) => (
+      <Badge color="light-primary">
+        <Star size={12} className="align-middle me-25" />
+        <span className="align-middle">{row.categoryName}</span>
+      </Badge>
+    ),
+  },
+
+  {
+    // sortable: true,
+    name: " اخرین اپدیت ",
+    minWidth: "100px",
+    selector: (row) => GregorianToSolar(row.insertDate),
+  },
+
+  {
+    sortable: false,
+    name: "انجام عملیات",
+    minWidth: "120px",
+
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-2">
+          <span className="d-block fw-bold text-truncate d-flex gap-1">
+            <Link to={"/EditBlog/" + row.id}>
+              <Edit className="cursor-pointer" />
+            </Link>
           </span>
         </div>
       </div>
@@ -674,5 +749,138 @@ export const reservesColumns = [
         </UncontrolledTooltip>
       </div>
     ),
+  },
+];
+
+export const UserReserve = [
+  {
+    name: "نام دوره",
+    sortable: false,
+    minWidth: "150px",
+    sortField: "total",
+    selector: (row) => row.courseName,
+    cell: (row) => {
+      return <span> {row.courseName}</span>;
+    },
+  },
+  {
+    name: "نام رزرو کننده",
+    sortable: false,
+    sortField: "id",
+    minWidth: "107px",
+    selector: (row) => row.id,
+    cell: (row) => <span>{row.studentName}</span>,
+  },
+  {
+    name: "زمان رزرو",
+    sortable: true,
+    minWidth: "150px",
+    sortField: "total",
+    selector: (row) => row.total,
+    cell: (row) => <span>{GregorianToSolar(row.reserverDate)}</span>,
+  },
+  {
+    name: "وضعیت رزرو",
+    sortable: true,
+    minWidth: "150px",
+    sortField: "total",
+    selector: (row) => row.total,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <div className="user-info text-truncate ms-1">
+          <span className="d-block fw-bold text-truncate">
+            {row.accept === true ? (
+              <Badge color="light-success">تایید شده</Badge>
+            ) : (
+              <Badge color="light-danger">تایید نشده</Badge>
+            )}
+          </span>
+        </div>
+      </div>
+    ),
+  },
+  {
+    name: "پذیرفتن رزرو",
+    minWidth: "110px",
+    cell: (row) => (
+      <div className="column-action d-flex gap-2 align-items-center">
+        <Check
+          className="cursor-pointer"
+          id={`accept-tooltip-${row.id}`}
+          onClick={() => {
+            AcceptCourseReserves(
+              row.courseId,
+              row.studentId,
+              "/Course/detail/" + row.courseId
+            );
+          }}
+        />
+        <UncontrolledTooltip
+          placement="top"
+          target={`accept-tooltip-${row.id}`}
+        >
+          تایید رزرو
+        </UncontrolledTooltip>
+        <X
+          className="cursor-pointer"
+          id={`reject-tooltip-${row.id}`}
+          onClick={() => {
+            DeleteCourseReserve(
+              row.reserveId,
+              "/Course/detail/" + row.courseId
+            );
+          }}
+        />
+        <UncontrolledTooltip
+          placement="top"
+          target={`reject-tooltip-${row.id}`}
+        >
+          لغو رزرو
+        </UncontrolledTooltip>
+      </div>
+    ),
+  },
+];
+export const UserFavorite = [
+  {
+    name: "تصویر دوره",
+    sortable: false,
+    minWidth: "150px",
+    sortField: "total",
+    selector: (row) => row.courseName,
+    cell: (row) => {
+      return (
+        <span>
+          {" "}
+          {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />}
+        </span>
+      );
+    },
+  },
+  {
+    name: "نام دوره",
+    sortable: false,
+    minWidth: "100px",
+    sortField: "total",
+    selector: (row) => row.courseName,
+    cell: (row) => {
+      return <span> {row.title}</span>;
+    },
+  },
+  {
+    name: " توضیحات دوره",
+    sortable: false,
+    sortField: "id",
+    minWidth: "380px",
+    selector: (row) => row.id,
+    cell: (row) => <span>{row.describe}</span>,
+  },
+  {
+    name: " اخرین اپدیت",
+    sortable: true,
+    minWidth: "100px",
+    sortField: "total",
+    selector: (row) => row.total,
+    cell: (row) => <span>{GregorianToSolar(row.lastUpdate)}</span>,
   },
 ];

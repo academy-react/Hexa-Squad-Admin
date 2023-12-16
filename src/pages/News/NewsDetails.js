@@ -50,14 +50,15 @@ import {
 import "@styles/base/pages/page-blog.scss";
 
 // ** Images
-import cmtImg from "../../assets/images/logo/logo.svg";
+import cmtImg from "../../assets/images/icons/piclogo.svg";
 
 import instance from "../../utility/interceptor";
 import NewsComments from "./NewsComments";
-
+import { getProfile } from "../../utility/api/GetData/GetProfile";
 const BlogDetails = () => {
   // ** States
   const [data, setData] = useState(null);
+  const [info, setInfo] = useState(null);
   const NewsParams = useParams();
   const fetchNewsData = async () => {
     try {
@@ -69,6 +70,7 @@ const BlogDetails = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchNewsData();
   }, []);
@@ -85,46 +87,13 @@ const BlogDetails = () => {
     return data.blog.tags.map((tag, index) => {
       return (
         <a key={index} href="/" onClick={(e) => e.preventDefault()}>
-          <Badge
-            className={classnames({
-              "me-50": index !== data.blog.tags.length - 1,
-            })}
-            color={badgeColorsArr[tag]}
-            pill
-          >
-            {tag}
+          <Badge className={"me-50"} color={"light-success"} pill>
+            {data.newsCatregoryName}
           </Badge>
         </a>
       );
     });
   };
-
-  // const renderComments = () => {
-  //   return data.comments.map(comment => {
-  //     return (
-  //       <Card className='mb-3' key={comment.userFullName}>
-  //         <CardBody>
-  //           <div className='d-flex'>
-  //             <div>
-  //               <Avatar className='me-75' img={comment.avatar} imgHeight='38' imgWidth='38' />
-  //             </div>
-  //             <div>
-  //               <h6 className='fw-bolder mb-25'>{comment.userFullName}</h6>
-  //               <CardText>{comment.commentedAt}</CardText>
-  //               <CardText>{comment.commentText}</CardText>
-  //               <a href='/' onClick={e => e.preventDefault()}>
-  //                 <div className='d-inline-flex align-items-center'>
-  //                   <CornerUpLeft size={18} className='me-50' />
-  //                   <span>Reply</span>
-  //                 </div>
-  //               </a>
-  //             </div>
-  //           </div>
-  //         </CardBody>
-  //       </Card>
-  //     )
-  //   })
-  // }
 
   return (
     <Fragment>
@@ -172,7 +141,13 @@ const BlogDetails = () => {
                           </small>
                           <span className="text-muted ms-50 me-25">|</span>
                           <small className="text-primary">
-                            {data.newsCatregoryName}
+                            <Badge
+                              className={"me-50"}
+                              color={"light-primary"}
+                              pill
+                            >
+                              {data.newsCatregoryName}
+                            </Badge>
                           </small>
                         </div>
                       </div>
@@ -188,7 +163,7 @@ const BlogDetails = () => {
                         <div>
                           <Avatar
                             img={cmtImg}
-                            className="me-2"
+                            className="me-2 bg-white shadow"
                             imgHeight="60"
                             imgWidth="60"
                           />
@@ -197,46 +172,28 @@ const BlogDetails = () => {
                           <h6 className="fw-bolder mt-1">
                             {data.addUserFullName}
                           </h6>
+                          <div>
+                            <small className="me-25 text-primary">
+                              تعداد کامنت: {data.commentsCount}
+                            </small>
+                            <span className="text-muted ms-50 me-25">|</span>
+                            <small className="text-secondary">
+                              {"اخرین اپدیت: " +
+                                GregorianToSolar(data.updateDate)}
+                            </small>
+                            <span className="text-muted ms-50 me-25">|</span>
+                            <small className="text-muted">
+                              {"تعدا لایک: " + data.currentLikeCount}
+                            </small>
+                          </div>
                           <CardText className="mb-0"></CardText>
                         </div>
                       </div>
                       <hr className="my-2" />
                       <div className="d-flex align-items-center justify-content-between">
-                        <div className="d-flex align-items-center">
-                          {/* <div className='d-flex align-items-center'> */}
-                          {/* <a className='me-50' href='/' onClick={e => e.preventDefault()}> */}
-
-                          {/* <Bookmark size={21} className='text-body align-middle' /> */}
-                          {/* </a> */}
-                          {/* <a href='/' onClick={e => e.preventDefault()}> */}
-                          {/* <div className='text-body align-middle'>{data.blog.bookmarked}</div> */}
-                          {/* </a> */}
-                          {/* </div> */}
+                        <div className="d-flex justify-content-between">
+                          {/* <div className="d-flex align-items-center"></div> */}
                         </div>
-                        {/* <UncontrolledDropdown className='dropdown-icon-wrapper'>
-                          <DropdownToggle tag='span'>
-                            <Share2 size={21} className='text-body cursor-pointer' />
-                          </DropdownToggle>
-                          <DropdownMenu end>
-                            <DropdownItem className='py-50 px-1'>
-                              <GitHub size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Gitlab size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Facebook size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Twitter size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Linkedin size={18} />
-                            </DropdownItem>
-                            
-                          </DropdownMenu>
-                          
-                        </UncontrolledDropdown> */}
                         <Link to={"/EditBlog/" + data.id}>
                           <Button.Ripple color="primary">ویرایش</Button.Ripple>
                         </Link>
