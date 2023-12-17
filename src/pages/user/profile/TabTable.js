@@ -27,10 +27,6 @@ import {
   CardHeader,
   CardTitle,
   Input,
-  Label,
-  Row,
-  Col,
-  Button,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -47,13 +43,10 @@ const TabTable = ({
   currentPage,
   setCurrentPage,
   setSearchValue,
-  allData,
   data,
   onSort,
-  deleteOject,
   setSelectedRows,
   btn,
-  totalCount,
 }) => {
   // Function to toggle sidebar // Add User Toggle
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -139,77 +132,9 @@ const TabTable = ({
         <CardHeader className="border-bottom">
           <CardTitle tag="h4">{title}</CardTitle>
           <CardTitle tag="h4">{btn}</CardTitle>
-          {/* <CardTitle tag="h4">
-            <Button
-              color="primary"
-              className="d-flex gap-1 align-items-center"
-              onClick={toggleSidebar}
-            >
-              {BtnTitle}
-              {BtnIcon}
-            </Button>
-          </CardTitle> */}
         </CardHeader>
-        {/* <Row className="mx-0 mt-1 mb-50">
-          <Col sm="2">
-            <div className="d-flex gap-1 align-items-center">
-              <Label for="sort-select" className="text-nowrap">
-                تعداد در صفحه{" "}
-              </Label>
-              <Input
-                className="dataTable-select"
-                type="select"
-                id="sort-select"
-                style={{ width: "5rem" }}
-                value={rowsPerPage}
-                onChange={(e) => handlePerPage(e)}
-              >
-                <option value={7}>7</option>
-                <option value={10}>10</option>
-                <option value={25}>25</option>
-                <option value={50}>50</option>
-                <option value={75}>75</option>
-                <option value={100}>100</option>
-              </Input>
-            </div>
-          </Col>
-          <Col
-            className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-            sm="4"
-          >
-            {isChecked ? (
-              <Button
-                color="danger"
-                className="d-flex align-items-center justify-content-center gap-1 "
-                style={{ padding: "8px 10px" }}
-                onClick={deleteOject}
-              >
-                <Trash size={18} />
-                حذف کاربر
-              </Button>
-            ) : (
-              ""
-            )}
-          </Col>
-          <Col
-            className="d-flex align-items-center justify-content-sm-end mt-sm-0 mt-1"
-            sm="6"
-          >
-            <Label className="me-1" for="search-input">
-              جستجو
-            </Label>
-            <Input
-              className="dataTable-filter"
-              type="text"
-              bsSize="sm"
-              id="search-input"
-              // value={searchValue}
-              onChange={handleFilter}
-            />
-          </Col>
-        </Row> */}
         <div className="react-dataTable position-relative  ">
-          {currentItems?.length == 0 || totalCount == 0 ? (
+          {currentItems?.length == 0 || currentItems === false ? (
             <div style={{ background: "#fff" }} className="py-3 text-center">
               لیست مد نظر شما خالی است!
             </div>
