@@ -33,7 +33,7 @@ const BlogSidebar = () => {
         params: NewsParams,
       });
       const result = News.news;
-      setData(result.slice(0, 5));
+      setData(result.slice(4, 9));
     } catch (error) {
       console.log(error);
     }
