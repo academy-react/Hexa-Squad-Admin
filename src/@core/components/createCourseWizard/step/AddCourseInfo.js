@@ -147,7 +147,7 @@ const AddCourseInfo = ({
                     <FormikInput
                       name={"Title"}
                       placeholder={"نام دوره را وارد کنید"}
-                      label={"نام دوره"}
+                      children={"نام دوره"}
                       addClass={"col-md-4"}
                       type={"text"}
                     />
@@ -166,13 +166,13 @@ const AddCourseInfo = ({
                         name={"Cost"}
                         placeholder={"قیمت دوره را وارد کنید"}
                         type={"number"}
-                        label={"قیمت دوره"}
+                        children={"قیمت دوره"}
                       />
                     </div>
                     <FormikInput
                       name={"Capacity"}
                       placeholder={"ظرفیت دوره را وارد کنید"}
-                      label={"ظرفیت دوره"}
+                      children={"ظرفیت دوره"}
                       type={"number"}
                       addClass={"col-md-4"}
                     />
@@ -182,13 +182,13 @@ const AddCourseInfo = ({
                       as={"textarea"}
                       name={"MiniDescribe"}
                       placeholder={"توضیحات مخصتر درباره دوره را وارد کنید"}
-                      label={"توضیحات مخصتر درباره دوره"}
+                      children={"توضیحات مخصتر درباره دوره"}
                       addClass={"col-sm-4"}
                     />
                     <FormikInput
                       name={"SessionNumber"}
                       placeholder={" تعداد جلسات دوره را وارد کنید"}
-                      label={"تعداد جلسات دوره"}
+                      children={"تعداد جلسات دوره"}
                       type={"number"}
                       addClass={"col-md-4"}
                     />

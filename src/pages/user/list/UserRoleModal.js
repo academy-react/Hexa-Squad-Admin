@@ -42,6 +42,8 @@ const UserRoleModal = ({ userId, userRoles }) => {
     handleStudentDisabled()
   },[handleAdminDisabled, handleTeacherDisabled, handleStudentDisabled])
 
+  console.log("isStudentttttttt=",isStudent)
+
   const CustomLabel = ({ htmlFor }) => {
     return (
       <Label className='form-check-label' htmlFor={htmlFor}>
@@ -107,18 +109,19 @@ const UserRoleModal = ({ userId, userRoles }) => {
                 <div 
                   className='form-switch form-check-success cursor-pointer' 
                   id='switch-admin'
-                  onClick={
-                    isAdmin ? 
-                      () => AddUserRole("false", 1, userId) 
-                    : 
-                      () => AddUserRole("true", 1, userId)
-                  }                  
+                
                 >
                   <Input 
                     type='switch' 
                     // id='switch-success'
                     name='success' 
                     defaultChecked={isAdmin ? true : false} 
+                    onClick={
+                      isAdmin ? 
+                        () => AddUserRole("false", 1, userId) 
+                      : 
+                        () => AddUserRole("true", 1, userId)
+                    }  
                   />
                   <CustomLabel htmlFor='icon-primary' />
                 </div>
@@ -146,18 +149,19 @@ const UserRoleModal = ({ userId, userRoles }) => {
                 <div 
                   className='form-switch form-check-success' 
                   id='switch-teacher'
-                  onClick={
-                    isTeacher ? 
-                      () => AddUserRole("false", 2, userId) 
-                    : 
-                      () => AddUserRole("true", 2, userId)
-                  }                
+                
                 >
                   <Input 
                     type='switch' 
                     // id='switch-success' 
                     name='success' 
                     defaultChecked={isTeacher ? true : false} 
+                    onClick={
+                      isTeacher ? 
+                        () => AddUserRole("false", 2, userId) 
+                      : 
+                        () => AddUserRole("true", 2, userId)
+                    }
                   />
                   <CustomLabel htmlFor='icon-primary' />
                 </div>
@@ -185,19 +189,24 @@ const UserRoleModal = ({ userId, userRoles }) => {
                 <div 
                   className='form-switch form-check-success' 
                   id='switch-student'
-                  onClick={
-                    isStudent ? 
-                      () => AddUserRole("false", 3, userId) 
-                    : 
-                      () => AddUserRole("true", 3, userId)
-                  }
+                  // onClick={
+                  //   isStudent ? 
+                  //     () => AddUserRole("false", 3, userId) 
+                  //   : 
+                  //     () => AddUserRole("true", 3, userId)
+                  // }
                 >
                   <Input 
                     type='switch' 
                     // id='switch-success' 
                     name='success' 
                     defaultChecked={isStudent ? true : false} 
-
+                    onClick={
+                      isStudent ? 
+                        () => AddUserRole("false", 3, userId) 
+                      : 
+                        () => AddUserRole("true", 3, userId)
+                    }
                   />
                   <CustomLabel htmlFor='icon-primary' />
                 </div>

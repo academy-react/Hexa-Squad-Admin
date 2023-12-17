@@ -1,5 +1,17 @@
 // ** Reactstrap Imports
-import { Badge, Card, CardHeader, Progress, Row } from "reactstrap";
+import {
+  Badge,
+  Button,
+  Card,
+  CardHeader,
+  Input,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Progress,
+  Row,
+} from "reactstrap";
 
 // ** Third Party Components
 import { CheckCircle, ChevronDown, Trash, X, XCircle } from "react-feather";
@@ -26,6 +38,8 @@ import DeleteCourseComment from "../../utility/api/DeleteData/DeleteCourseCommen
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import TableServerSide from "../../@core/components/tableServerSide/TableServerSide";
+import instance from "../../utility/interceptor";
+import toast from "react-hot-toast";
 
 // const projectsArr = [
 //   {
@@ -167,7 +181,7 @@ export const columns = [
   },
   {
     name: "وضعیت تایید",
-    minWidth: "40px",
+    width: "150px",
     selector: (row) => row.progress,
     sortable: true,
     cell: (row) => {
@@ -183,13 +197,37 @@ export const columns = [
   },
   {
     name: "انجام عملیات",
-    width: "220px",
+    width: "320px",
     cell: (row) => {
+      const [centeredModal, setCenteredModal] = useState(false);
+      const [describe, setDescribe] = useState();
+      console.log(row);
+      const AddReply = async () => {
+        try {
+          const AddReplyCourse = await instance.post(
+            "/Course/AddReplyCourseComment",
+            {
+              CourseId: row.courseId,
+              CommentId: row.id,
+              Title: " ریپلای برای : " + row.title,
+              Describe: describe,
+            },
+            { headers: { "Content-Type": "multipart/form-data" } }
+          );
+          if (AddReplyCourse.success) {
+              toast.success(AddReplyCourse.message)
+          }else {
+              toast.error(AddReplyCourse.message)
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
       return (
         <Row className="col-12  px-0">
           {row.accept ? (
             <div
-              className=" d-flex gap-1 cursor-pointer col-6 px-0"
+              className=" d-flex gap-1 cursor-pointer col-4 px-0"
               style={{ color: "#ff4949" }}
               onClick={() => {
                 RejectComment(row.id, "/Course/detail/" + row.courseId);
@@ -200,7 +238,7 @@ export const columns = [
             </div>
           ) : (
             <div
-              className=" d-flex  gap-1 cursor-pointer  col-6 px-0"
+              className=" d-flex  gap-1 cursor-pointer  col-4 px-0"
               style={{ color: "#28c76f" }}
               onClick={() => {
                 AcceptComment(row.id, "/Course/detail/" + row.courseId);
@@ -210,6 +248,49 @@ export const columns = [
               <span className="mr-1">تایید نظر</span>
             </div>
           )}
+
+          <Button
+            color="primary"
+            outline
+            className="col-4"
+            onClick={() => setCenteredModal(!centeredModal)}
+          >
+            ریپلای
+          </Button>
+          <Modal
+            isOpen={centeredModal}
+            toggle={() => setCenteredModal(!centeredModal)}
+            className="modal-dialog-centered"
+          >
+            <ModalHeader toggle={() => setCenteredModal(!centeredModal)}>
+              <h6 className="my-1"> عنوان : {row.title}</h6>
+            </ModalHeader>
+            <ModalBody>
+              <h6> متن پیام : {row.describe}</h6>
+            </ModalBody>{" "}
+            <ModalBody>
+              <Input
+                name={"describe"}
+                type="text"
+                id="describe"
+                placeholder={"ریپلای را وارد کنید"}
+                label={"googleDescribe:"}
+                className={"fs-6"}
+                onChange={(e) => {
+                  setDescribe(e.target.value);
+                }}
+              />
+            </ModalBody>{" "}
+            <ModalFooter>
+              <Button
+                color="primary"
+                type="submit"
+                onClick={(e) => AddReply(e)}
+              >
+                ارسال
+              </Button>{" "}
+            </ModalFooter>
+          </Modal>
           <Row
             className="cursor-pointer col-4 px-0"
             style={{ color: "#ff4949" }}

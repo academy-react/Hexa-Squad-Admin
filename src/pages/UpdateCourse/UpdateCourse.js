@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import instance from "../../utility/interceptor";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Form, Formik } from "formik";
@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 
 const UpdateCourse = () => {
   const urlParams = useParams();
+  const navigator = useNavigate();
   const ref = useRef(null);
   const [editCourseData, setEditCourseData] = useState([]);
   const [cost, setCost] = useState();
@@ -223,6 +224,7 @@ const UpdateCourse = () => {
       });
       if (result.success) {
         toast.success(result.message);
+        navigator("/Course/detail/" + urlParams.id);
       } else {
         toast.error(result.errors[0]);
       }

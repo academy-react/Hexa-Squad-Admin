@@ -17,7 +17,7 @@ const AddTech = ({ TechOptions, stepper, courseId }) => {
       if (result.success) {
         toast.success(result.message);
         setTimeout(() => {
-          window.location.reload();
+          // window.location.reload();
         }, 500);
       }
     } catch (error) {
