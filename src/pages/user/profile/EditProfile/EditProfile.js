@@ -17,7 +17,7 @@ const EditProfile = () => {
   // get profile info
   const urlParam = useParams();
   const [userInfo, setUserInfo] = useState([]);
-  console.log(urlParam);
+  // console.log(urlParam);
   const GetUserInfo = async () => {
     try {
       const response = await instance.get(`/User/UserDetails/${urlParam.id}`);
@@ -117,6 +117,10 @@ const EditProfile = () => {
         title={"ویرایش اطلاعات کاربر"}
         data={[
           { title: "لیست کاربران", link: "/userList" },
+          {
+            title: ` اطلاعات ${userInfo.gmail}`,
+            link: "/userList/userInfo/" + urlParam.id,
+          },
           {
             title: "ویرایش اطلاعات کاربر",
             link: "/userList/userInfoEdit/" + urlParam.id,
