@@ -41,6 +41,9 @@ import EditBlog from "../../pages/News/EditBlog/EditBlog"
 import Courses from "../../pages/Courses";
 import ReserveUsers from "../../pages/ReserveUsers";
 import CategoryList from "../../pages/News/NewsCategory/CategoryList";
+import AddCategory from "../../pages/News/NewsCategory/AddCategory";
+import EditCategory from "../../pages/News/NewsCategory/EditCategory";
+
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -165,6 +168,14 @@ const Routes = [
     ]
   },
   {
+
+    element:<EditCategory/>,
+    path: "/EditCategory",
+    children: [
+      {path: "/EditCategory/:id", element:<EditCategory/>}
+    ]
+  },
+  {
     element: <NewsDetails />,
     path: "/NewsDetails",
     children: [
@@ -176,7 +187,7 @@ const Routes = [
     path: "/CategoryList",
   },
   {
-    element: <AddNews/>,
+    element: <AddCategory/>,
     path: "/AddCategory",
   },
 ];

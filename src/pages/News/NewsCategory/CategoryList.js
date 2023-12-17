@@ -29,7 +29,7 @@ const CategoryList = () => {
   // const [sortColumn, setSortColumn] = useState("InsertDate");
 
   const Btn = () => (
-    <Link to={"/AddNews"}>
+    <Link to={"/AddCategory"}>
       <Button color="primary" className="d-flex gap-1 align-items-center">
         {"ساخت دسته بندی جدید"}
         <PlusSquare />

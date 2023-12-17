@@ -45,6 +45,8 @@ import AddUserRole from "../../../utility/api/PostData/AddUserRole/AddUserRole";
 import AddUserRoleModal from "../../../pages/user/list/AddUserRoleModal";
 import UserRoleModal from "../../../pages/user/list/UserRoleModal";
 import pic from "../../../assets/images/icons/piclogo.svg";
+import EditCategory from "../../../pages/News/NewsCategory/EditCategory";
+
 export const serverSideColumns = [
   {
     sortable: false,
@@ -370,7 +372,13 @@ export const NewsListColumns = [
       <div className="d-flex align-items-center">
         {/* {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />} */}
         <div className="user-info text-truncate">
-          <span className="d-block fw-bold text-truncate">{row.title}</span>
+          <Link to={"/NewsDetails/" + row.id}>
+            {row.isActive === true ? (
+              <span className="d-block fw-bold text-truncate">{row.title}</span>
+            ) : (
+              ""
+            )}{" "}
+          </Link>
           {/* <small>{row.typeName}</small> */}
         </div>
       </div>
@@ -423,56 +431,72 @@ export const NewsListColumns = [
 
     cell: (row) => (
       <div className="d-flex align-items-center">
-        <div className="user-info text-truncate ms-2">
-          <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Link to={"/NewsDetails/" + row.id}>
+        {/* <div className="user-info text-truncate ms-2">
+          <span className="d-block fw-bold text-truncate d-flex gap-1"> */}
+        {/* <Link to={"/NewsDetails/" + row.id}>
               {row.isActive === true ? (
                 <Eye color="blue" className="cursor-pointer" />
               ) : (
                 ""
               )}{" "}
-            </Link>
+            </Link> */}
 
-            <Link to={"/EditBlog/" + row.id}>
-              {" "}
-              {row.isActive === true ? (
-                <Edit className="cursor-pointer" />
-              ) : (
-                ""
-              )}{" "}
-            </Link>
-            {row.isActive === true ? (
-              <React.Fragment>
-                <XCircle
-                  color="red"
-                  className="cursor-pointer"
-                  id="UnControlledExample"
-                  onClick={() => ActiveNews("false", row.id)}
-                ></XCircle>
-                <UncontrolledTooltip
-                  placement="top"
-                  target="UnControlledExample"
+        {row.isActive === true ? (
+          <div className="column-action d-flex">
+            <UncontrolledDropdown>
+              <DropdownToggle tag="div" className="btn btn-sm">
+                <MoreVertical size={14} className="cursor-pointer" />
+              </DropdownToggle>
+              <DropdownMenu style={{ zIndex: 100 }}>
+                <DropdownItem
+                  tag={Link}
+                  className="w-100"
+                  to={"/NewsDetails/" + row.id}
                 >
-                  غیرفعال
-                </UncontrolledTooltip>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <CheckCircle
-                  color="lightGreen"
-                  className="cursor-pointer"
-                  id="UnControlledExample"
-                  onClick={() => ActiveNews("true", row.id)}
-                ></CheckCircle>
-                <UncontrolledTooltip
-                  placement="top"
-                  target="UnControlledExample"
+                  <FileText size={14} className="me-50" />
+                  <span className="align-middle">جزئیات</span>
+                </DropdownItem>
+                <DropdownItem
+                  tag={Link}
+                  className="w-100"
+                  to={"/EditBlog/" + row.id}
                 >
-                  فعال سازی
-                </UncontrolledTooltip>
-              </React.Fragment>
-            )}
-            {/* {row.isdelete ? (
+                  <Archive size={14} className="me-50" />
+                  <span className="align-middle">ویرایش</span>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </div>
+        ) : (
+          ""
+        )}
+
+        {row.isActive === true ? (
+          <React.Fragment>
+            <XCircle
+              color="red"
+              className="cursor-pointer"
+              id="UnControlledExample"
+              onClick={() => ActiveNews("false", row.id)}
+            ></XCircle>
+            <UncontrolledTooltip placement="top" target="UnControlledExample">
+              غیرفعال
+            </UncontrolledTooltip>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <CheckCircle
+              color="lightGreen"
+              className="cursor-pointer"
+              id="UnControlledExample"
+              onClick={() => ActiveNews("true", row.id)}
+            ></CheckCircle>
+            <UncontrolledTooltip placement="top" target="UnControlledExample">
+              فعال سازی
+            </UncontrolledTooltip>
+          </React.Fragment>
+        )}
+        {/* {row.isdelete ? (
               <div
                 className="cursor-pointer"
                 onClick={() => {
@@ -492,8 +516,8 @@ export const NewsListColumns = [
                 }}
               />
             )} */}
-          </span>
-        </div>
+        {/* </span>
+        </div> */}
       </div>
     ),
   },
@@ -563,7 +587,7 @@ export const CategoryListColumns = [
       <div className="d-flex align-items-center">
         <div className="user-info text-truncate ms-2">
           <span className="d-block fw-bold text-truncate d-flex gap-1">
-            <Link to={"/EditBlog/" + row.id}>
+            <Link to={"/EditCategory/" + row.id}>
               <Edit className="cursor-pointer" />
             </Link>
           </span>

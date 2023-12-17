@@ -81,7 +81,7 @@ import AddReply from "../../utility/api/PostData/AddNewsReply/AddNewsReply";
 export const columns = [
   {
     sortable: true,
-    minWidth: "200px",
+    minWidth: "300px",
     name: "اکانت",
     selector: (row) => row.title,
     cell: (row) => {
@@ -106,6 +106,7 @@ export const columns = [
     },
   },
   {
+    minWidth: "300px",
     name: " متن کامنت",
     selector: (row) => row.title,
   },
@@ -137,6 +138,9 @@ export const columns = [
               describe: "description",
             }
           );
+          // if(response.success){
+
+          // }
           console.log(AddReplyNews);
         } catch (error) {
           console.log(error);

@@ -31,7 +31,7 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/base/pages/page-blog.scss";
 import pic from "../../../assets/images/icons/News.jpg";
 
-const AddCategory = () => {
+const EditCategory = () => {
   const [categoryName, setCategoryName] = useState();
   const [iconAddress, setIconAddress] = useState();
   const [iconName, setIconName] = useState();
@@ -46,9 +46,9 @@ const AddCategory = () => {
   const [newsInfo, setNewsInfo] = useState([]);
   const [files, setFiles] = useState([]);
 
-  const addCategory = async () => {
+  const editCategory = async () => {
     const obj = {
-      // id: urlParam.id,
+      id: urlParam.id,
       CategoryName: categoryName,
       IconAddress: iconAddress,
       IconName: iconName,
@@ -57,7 +57,7 @@ const AddCategory = () => {
       Image: files[0],
     };
     try {
-      const response = await instance.post("/News/CreateNewsCategory", obj, {
+      const response = await instance.put("/News/UpdateNewsCategory", obj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log(response);
@@ -159,7 +159,7 @@ const AddCategory = () => {
                           </Col>
                           <Col md="6" className="mb-2">
                             <Label className="form-label" for="iconName">
-                               نام تصویر
+                              نام تصویر
                             </Label>
                             <FormikInput
                               name={"iconName"}
@@ -233,7 +233,7 @@ const AddCategory = () => {
                             <Button
                               color="primary"
                               className="me-1"
-                              onClick={addCategory}
+                              onClick={editCategory}
                             >
                               ثبت تغییرات
                             </Button>
@@ -256,4 +256,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default EditCategory;
