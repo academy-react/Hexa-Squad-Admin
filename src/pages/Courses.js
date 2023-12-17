@@ -8,8 +8,13 @@ import { Col, Row } from "reactstrap";
 import DeleteCourse from "../utility/api/DeleteData";
 import BreadCrumbs from "../@core/components/breadcrumbs";
 import CreateCourse from "../@core/components/modals/CreateCourse";
+import { useDispatch, useSelector } from "react-redux";
+import { onActiveChange } from "../redux/setActiveCourses";
+import { onDelete, onDeletedChange } from "../redux/setDeletedCourses";
 
 const Courses = () => {
+  const deletedData = useSelector((state) => state.setDeletedCourses.data);
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -27,6 +32,36 @@ const Courses = () => {
   const [isActiveData, setIsActiveData] = useState(false);
   const [isDeletedData, setIsDeletedData] = useState(false);
   const [isCurrentData, setIsCurrentData] = useState(false);
+
+  const setSetActiveCourses = (active) => {
+    setActiveCourses(active);
+    setAllActiveCourses(active);
+  };
+  const setSetDeletedCourses = (active) => {
+    setDeletedCourses(active);
+    setAllDeletedCourses(active);
+  };
+  const setToDispatch = () => {
+    dispatch(
+      onActiveChange((data) => {
+        setSetActiveCourses(data);
+      })
+    );
+    dispatch(
+      onDeletedChange((data) => {
+        setSetDeletedCourses(data);
+      })
+    );
+  };
+  useEffect(() => {
+    // dispatch(onDelete(deletedCourses.slice(0, 2)));
+  }, [deletedCourses]);
+
+  useEffect(() => {
+    console.log("deletedData", deletedData);
+    setAllDeletedCourses(deletedData);
+    setDeletedCourses(deletedData);
+  }, [deletedData]);
 
   const [selectedRows, setSelectedRows] = useState([]);
   const getData = () => {
@@ -107,6 +142,7 @@ const Courses = () => {
       data?.filter((course) => {
         return course.statusName === "درحال برگذاری";
       });
+    setToDispatch();
     setActiveCourses(active);
     setAllActiveCourses(active);
     setDeletedCourses(deleted);
