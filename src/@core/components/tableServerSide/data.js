@@ -259,13 +259,13 @@ export const userListColumns = [
   {
     sortable: false,
     name: "شماره موبایل",
-    minWidth: "200px",
+    width: "150px",
     selector: (row) => row.phoneNumber,
   },
   {
     sortable: true,
     name: "تاریخ",
-    minWidth: "150px",
+    minWidth: "120px",
     selector: (row) => GregorianToSolar(row.insertDate),
     link: (row) => row.id,
   },

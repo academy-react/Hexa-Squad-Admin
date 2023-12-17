@@ -30,6 +30,7 @@ import "@styles/base/plugins/forms/form-quill-editor.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/base/pages/page-blog.scss";
 import pic from "../../assets/images/icons/News.jpg";
+import { parse } from "@babel/core";
 
 const BlogEdit = () => {
   const [title, setTitle] = useState();
@@ -40,12 +41,22 @@ const BlogEdit = () => {
   const [googleTitle, setGoogleTitle] = useState();
   const [googleDescribe, setGoogleDescribe] = useState();
   const [image, setImage] = useState();
+  const [newsList, setNewsList] = useState([]);
   // const [currentImageAddress, setCurrentImageAddress] = useState()
 
   const urlParam = useParams();
   const [newsInfo, setNewsInfo] = useState([]);
   const [files, setFiles] = useState([]);
 
+  const getList = async () => {
+    try {
+      const News = await instance.get("/News/GetListNewsCategory");
+      setNewsList(News);
+      console.log(News);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const addNews = async () => {
     const obj = {
       // id: urlParam.id,
@@ -59,9 +70,12 @@ const BlogEdit = () => {
       Image: files[0],
     };
     try {
-      const response = await instance.post("/News/CreateNews", obj, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await toast.promise(
+        instance.post("/News/CreateNews", obj, {
+          headers: { "Content-Type": "multipart/form-data" },
+        }),
+        { loading: "در حال ایجاد دوره" }
+      );
       console.log(response);
       if (response.success) {
         toast.success(" بلاگ شما ثبت شد");
@@ -72,6 +86,9 @@ const BlogEdit = () => {
       console.error("Error submitting post:", error);
     }
   };
+  useEffect(() => {
+    getList();
+  }, []);
 
   const postNewsInfo = (values) => {
     setTitle(values.Title);
@@ -159,11 +176,20 @@ const BlogEdit = () => {
                             <Label className="form-label" for="newsCatregoryId">
                               دسته بندی
                             </Label>
-                            <FormikInput
-                              type={"number"}
-                              name={"newsCatregoryId"}
-                              placeholder={" عدد دسته بندی"}
-                            />
+                            <select
+                              name="newsCatregoryId"
+                              onChange={(e) => {
+                                setNewsCatregoryId(parseInt(e.target.value));
+                                console.log(parseInt(e.target.value));
+                              }}
+                              className="col-12 form-control mt-1"
+                            >
+                              {newsList.map((item, i) => (
+                                <option value={item.id} key={i}>
+                                  {item.categoryName}
+                                </option>
+                              ))}
+                            </select>
                           </Col>
                           <Col md="6" className="mb-2">
                             <Label className="form-label" for="miniDescribe">
