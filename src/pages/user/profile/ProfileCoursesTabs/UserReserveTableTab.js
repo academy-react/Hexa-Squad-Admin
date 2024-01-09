@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
-import { UserFavorite } from "../../../@core/components/tableServerSide/data";
-import TableServerSide from "./TabTable";
+import { UserReserve } from "../../../../@core/components/tableServerSide/data";
+import TableServerSide from "../TabTable";
 import { useParams } from "react-router-dom";
-import instance from "../../../utility/interceptor";
+import instance from "../../../../utility/interceptor";
 
-const userFavoriteTable = () => {
+const UserReserveTable = () => {
   const [data, setData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +26,7 @@ const userFavoriteTable = () => {
   const GetUserInfo = async () => {
     try {
       const response = await instance.get(`/User/UserDetails/${urlParam.id}`);
-      const result = response.courses;
+      const result = response.coursesReseves;
       setData(result);
     } catch (error) {
       console.log(error);
@@ -47,11 +47,11 @@ const userFavoriteTable = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setSelectedRows={setSelectedRows}
-        serverSideColumns={UserFavorite}
-        title={"لیست علاقه مندی ها "}
+        serverSideColumns={UserReserve}
+        title={"لیست دوره های رزرو شده"}
       />
     </Fragment>
   );
 };
 
-export default userFavoriteTable;
+export default UserReserveTable;

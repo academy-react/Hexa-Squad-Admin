@@ -22,11 +22,7 @@ import Error from "../../pages/Error";
 import TeacherCourses from "../../pages/TeacherCourses";
 import NewsList from "../../pages/News/NewsList";
 import CreateCourse from "../../pages/CreateCourse/CreateCourse";
-// import  from "../../views/apps/user/profile/index";
 import User from "../../pages/user/list/UserListTabs/Users";
-import UserList from "../../pages/user/list/UserList";
-import AdminList from "../../pages/user/list/AdminList";
-import TeacherList from "../../pages/user/list/TeacherList";
 import Profile from '../../pages/user/profile';
 import EditProfile from "../../pages/user/profile/EditProfile/EditProfile";
 
@@ -55,14 +51,6 @@ const TemplateTitle = "%s -  Admin Panel";
 
 // ** Default Route
 const DefaultRoute = "/home";
-
-// const Home = lazy(() => import("../../pages/Home"));
-// const SecondPage = lazy(() => import("../../pages/SecondPage"));
-// const Login = lazy(() => import("../../pages/Login"));
-// const Register = lazy(() => import("../../pages/Register"));
-// const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
-// const Error = lazy(() => import("../../pages/Error"));
-// const Sample = lazy(() => import("../../pages/Sample"));
 
 // ** Merge Routes
 const Routes = [
@@ -139,14 +127,7 @@ const Routes = [
     path: "/userList/userInfoEdit",
     children: [{ path: "/userList/userInfoEdit/:id", element: <EditProfile /> }],
   },
-  {
-    element: <AdminList />,
-    path: "/adminList",
-  },
-  {
-    element: <TeacherList />,
-    path: "/teacherList",
-  },
+
 
   {
     element: <NewsList />,

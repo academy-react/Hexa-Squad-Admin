@@ -50,21 +50,22 @@ const AddCategory = () => {
     const obj = {
       // id: urlParam.id,
       CategoryName: categoryName,
-      IconAddress: iconAddress,
-      IconName: iconName,
+      // IconAddress: iconAddress,
+      // IconName: iconName,
       GoogleTitle: googleTitle,
       GoogleDescribe: googleDescribe,
       Image: files[0],
     };
     try {
-      const response = await instance.post("/News/CreateNewsCategory", obj, {
+      const response = await toast.promise(instance.post("/News/CreateNewsCategory", obj, {
         headers: { "Content-Type": "multipart/form-data" },
-      });
-      console.log(response);
+      }),
+      { loading: "در حال ایجاد دسته بندی" }
+      );
       if (response.success) {
         toast.success(" دسته بندی شما ثبت شد");
       } else {
-        toast.error(" لطفا متن دسته بندی را به درستی وارد کنید");
+        toast.error(response.errors);
       }
     } catch (error) {
       console.error("Error submitting post:", error);
@@ -147,7 +148,7 @@ const AddCategory = () => {
                               type={"text"}
                             />
                           </Col>
-                          <Col md="6" className="mb-2">
+                          {/* <Col md="6" className="mb-2">
                             <Label className="form-label" for="iconAddress">
                               ادرس دسته بندی
                             </Label>
@@ -166,7 +167,7 @@ const AddCategory = () => {
                               placeholder={" نام تصویر را وارد کنید"}
                               type={"text"}
                             />
-                          </Col>
+                          </Col> */}
                           {/* <Col md="6" className="mb-2">
                             <Label className="form-label" for="keyword">
                               کلمات کلیدی

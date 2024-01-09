@@ -43,8 +43,22 @@ const EditCategory = () => {
   // const [currentImageAddress, setCurrentImageAddress] = useState()
 
   const urlParam = useParams();
-  const [newsInfo, setNewsInfo] = useState([]);
+  const [newsCategory, setNewsCategory] = useState([]);
   const [files, setFiles] = useState([]);
+
+  // get category
+  const CategoryList = async (query) => {
+    try {
+      const News = await instance.get("/News/GetNewsCategory/" + urlParam.id);
+      console.log(News);
+      setNewsCategory(News);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    CategoryList();
+  }, []);
 
   const editCategory = async () => {
     const obj = {
@@ -57,9 +71,11 @@ const EditCategory = () => {
       Image: files[0],
     };
     try {
-      const response = await instance.put("/News/UpdateNewsCategory", obj, {
+      const response = await toast.promise(instance.put("/News/UpdateNewsCategory", obj, {
         headers: { "Content-Type": "multipart/form-data" },
-      });
+      }),
+        { loading: "در حال ویرایش دسته بندی" }
+      );
       console.log(response);
       if (response.success) {
         toast.success(" دسته بندی شما ثبت شد");
@@ -91,20 +107,20 @@ const EditCategory = () => {
   return (
     <div className="blog-edit-wrapper">
       <Breadcrumbs
-        title={" ایجاد دسته بندی جدید"}
+        title={"ویرایش دسته بندی "}
         data={[
           { title: "لیست دسته بندی", link: "/CategoryList" },
-          { title: "ایجاد دسته بندی جدید", link: "/AddCategory" },
+          { title: "ویرایش دسته بندی ", link: `/EditCategory/${urlParam.id}` },
         ]}
       />
 
       <Formik
         initialValues={{
-          categoryName: categoryName,
-          iconAddress: iconAddress,
-          iconName: iconName,
-          googleTitle: googleTitle,
-          googleDescribe: googleDescribe,
+          categoryName: newsCategory.categoryName,
+          iconAddress: newsCategory.iconAddress,
+          iconName: newsCategory.iconName,
+          googleTitle: newsCategory.googleTitle,
+          googleDescribe: newsCategory.googleDescribe,
           image: "",
         }}
         enableReinitialize={true}

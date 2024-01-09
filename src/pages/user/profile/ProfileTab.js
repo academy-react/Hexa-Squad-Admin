@@ -6,8 +6,8 @@ import { Home, Settings, EyeOff, User, Bookmark ,Heart} from "react-feather";
 
 // ** Reactstrap Imports
 import { TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
-import UserReserveTableTab from "../profile/UserReserveTableTab";
-import UserFavoriteTable from "../profile/UserFavoriteTable";
+import UserReserveTableTab from "./ProfileCoursesTabs/UserReserveTableTab";
+import UserFavoriteTable from "./ProfileCoursesTabs/UserFavoriteTable";
 const TabsIcons = () => {
   // ** State
   const [active, setActive] = useState("1");

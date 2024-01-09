@@ -16,9 +16,9 @@ const activeAndDeActiveCourse = async (id, to, active) => {
       }
     );
     if (deletedCourse.success) {
-      setTimeout(() => {
-        window.location = to;
-      }, 600);
+      // setTimeout(() => {
+      //   window.location = to;
+      // }, 600);
     }
     console.log(deletedCourse);
     return deletedCourse;

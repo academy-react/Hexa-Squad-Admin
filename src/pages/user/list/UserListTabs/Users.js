@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import BreadCrumbs from "../../../../@core/components/breadcrumbs";
 import UserRoleTabs from "./UserRoleTabs";
-import TeacherList from "../TeacherList";
 
 const User = () => {
 
