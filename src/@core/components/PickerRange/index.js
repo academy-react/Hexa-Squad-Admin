@@ -1,17 +1,10 @@
 // ** React Imports
-import { Fragment, useState } from "react";
-import DatePicker, { Calendar } from "react-multi-date-picker";
+import { Fragment } from "react";
+import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
-// ** Reactstrap Imports
-import { Label } from "reactstrap";
-
-// ** Third Party Components
-// import Flatpickr from "react-flatpickr";
-// console.log(getStyle);
 const PickerRange = ({ picker, setDateRange }) => {
-  // ** State
   return (
     <Fragment>
       <DatePicker

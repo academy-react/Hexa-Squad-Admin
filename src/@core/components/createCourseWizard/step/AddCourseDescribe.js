@@ -12,14 +12,14 @@ const AddCourseDescribe = ({ setDescribe, stepper, onSubmit }) => {
         <CardHeader className="mt-2  mb-4">
           <h2>توضیحات دوره را وارد کنید</h2>
         </CardHeader>
-        <EditorJsComponent setDescribe={setDescribe} />
-        {/* <textarea
+        {/* <EditorJsComponent setDescribe={setDescribe} /> */}
+        <textarea
           className="form-control"
           placeholder="توضیحات دوره"
           onChange={(v) => {
             setDescribe(v.target.value);
           }}
-        /> */}
+        />
       </div>
       <div className="d-flex justify-content-between">
         <Button
