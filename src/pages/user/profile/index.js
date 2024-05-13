@@ -5,10 +5,6 @@ import { useParams } from "react-router-dom";
 // ** Third Party Components
 import instance from "../../../utility/interceptor";
 
-// ** Custom Components
-import UILoader from "@components/ui-loader";
-import Breadcrumbs from "@components/breadcrumbs";
-
 // ** Reactstrap Imports
 import { Row, Col, Button } from "reactstrap";
 
@@ -17,18 +13,13 @@ import { Row, Col, Button } from "reactstrap";
 import ProfileAbout from "./ProfileAbout";
 import ProfileConnection from "./ProfileConnection";
 import SupportTracker from "./SupportTracker";
-// import ProfilePosts from './ProfilePosts'
 import ProfileHeader from "./ProfileHeader";
 import ProfileTab from "./ProfileTab";
-// import ProfileTwitterFeeds from './ProfileTwitterFeeds'
-import ProfileLatestPhotos from "./ProfileLatestPhotos";
-// import ProfileSuggestedPages from './ProfileSuggestedPages'
-// import ProfileFriendsSuggestions from './ProfileFriendsSuggestions'
+
 
 // ** Styles
 import "@styles/react/pages/page-profile.scss";
 import BreadCrumbs from "../../../@core/components/breadcrumbs";
-// import BreadCrumbs from "../../../../@core/components/breadcrumbs";
 
 // ** Context
 import { ThemeColors } from '@src/utility/context/ThemeColors'

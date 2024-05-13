@@ -15,7 +15,7 @@ import NestedList from "@editorjs/nested-list";
 import { Button } from "reactstrap";
 import toast from "react-hot-toast";
 
-const EditorJsComponent = ({ setDescribe, defaultData }) => {
+const EditorJsComponent = ({ setDescribe, defaultData, dontShowBtn }) => {
   const [editorState, setEditorState] = useState();
   useEffect(() => {
     const editor = new EditorJS({
@@ -71,24 +71,28 @@ const EditorJsComponent = ({ setDescribe, defaultData }) => {
   return (
     <div>
       <div id="editor"></div>
-      <Button
-        className="d-block mx-auto "
-        color="info"
-        type="button"
-        onClick={() => {
-          editorState
-            .save()
-            .then((outputData) => {
-              toast.success("توضیحات با موفیقت ذخیره شد");
-              setDescribe(JSON.stringify(outputData));
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }}
-      >
-        ذخیره توضیحات دوره
-      </Button>
+      {dontShowBtn ? (
+        ""
+      ) : (
+        <Button
+          className="d-block mx-auto "
+          color="info"
+          type="button"
+          onClick={() => {
+            editorState
+              .save()
+              .then((outputData) => {
+                toast.success("توضیحات با موفیقت ذخیره شد");
+                setDescribe(JSON.stringify(outputData));
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }}
+        >
+          ذخیره توضیحات دوره
+        </Button>
+      )}
     </div>
   );
 };

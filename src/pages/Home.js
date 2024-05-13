@@ -62,9 +62,9 @@ const Home = () => {
             totalCount={data.allUser}
             activeCount={data.inCompeletUserCount}
             diactiveCount={data.deactiveUsers}
-            activePercent={data.activeUserPercent}
+            activePercent={data.activeUserPercent && data.activeUserPercent.slice(0, 2)}
             activeLlabel={'کاربران فعال'}
-            diactivePercent={data.interActiveUserPercent}
+            diactivePercent={data.interActiveUserPercent && data.interActiveUserPercent.slice(0, 1)}
             diactiveLlabel={"کاربران غیرفعال"}
           />
         </Col>

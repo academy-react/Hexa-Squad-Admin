@@ -38,6 +38,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useParams } from "react-router-dom";
 import AddReply from "../../utility/api/PostData/AddNewsReply/AddNewsReply";
+import toast from "react-hot-toast";
 
 // const MySwal = withReactContent(Swal);
 // export const handleSuspendedClick = (id) => {
@@ -138,9 +139,11 @@ export const columns = [
               describe: "description",
             }
           );
-          // if(response.success){
-
-          // }
+          if(AddReplyNews.success){
+            toast.success(AddReplyNews.message)
+          } else {
+            toast.error(AddReplyNews.errors)
+          }
           console.log(AddReplyNews);
         } catch (error) {
           console.log(error);

@@ -74,13 +74,13 @@ const BlogEdit = () => {
         instance.post("/News/CreateNews", obj, {
           headers: { "Content-Type": "multipart/form-data" },
         }),
-        { loading: "در حال ایجاد دوره" }
+        { loading: "در حال ایجاد خبر" }
       );
       console.log(response);
       if (response.success) {
         toast.success(" بلاگ شما ثبت شد");
       } else {
-        toast.error(" لطفا متن بلاگ را به درستی وارد کنید");
+        toast.error(response.errors[0]);
       }
     } catch (error) {
       console.error("Error submitting post:", error);

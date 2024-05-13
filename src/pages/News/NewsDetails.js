@@ -101,7 +101,7 @@ const BlogDetails = () => {
         title="جزئیات اخبار"
         data={[
           { title: "لیست اخبار", link: "/NewsList" },
-          { title: "جزییات خبر" },
+          { title: "جزییات خبر" , link: "/NewsDetails/" + NewsParams.id},
         ]}
       />
       <div className="blog-wrapper">

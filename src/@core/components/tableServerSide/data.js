@@ -41,8 +41,6 @@ import UserImage from "../UserImage/UserImage";
 import Reservers from "../modals/Reservers";
 import SeparationPrice from "../../../utility/SeparationPrice/SeparationPrice";
 import ActiveNews from "../../../utility/api/PutData/ActiveNews";
-import AddUserRole from "../../../utility/api/PostData/AddUserRole/AddUserRole";
-import AddUserRoleModal from "../../../pages/user/list/AddUserRoleModal";
 import UserRoleModal from "../../../pages/user/list/UserRoleModal";
 import pic from "../../../assets/images/icons/piclogo.svg";
 import EditCategory from "../../../pages/News/NewsCategory/EditCategory";
@@ -65,7 +63,7 @@ export const serverSideColumns = [
         }}
       >
         <Link to={"/Course/detail/" + row.courseId}>
-          {row.tumbImageAddress && <Avatar img={row.tumbImageAddress} />}
+          { <Avatar img={row.tumbImageAddress ? row.tumbImageAddress : pic} />}
         </Link>
         <div className="user-info text-truncate ms-1">
           <Link
@@ -850,41 +848,43 @@ export const UserReserve = [
     name: "پذیرفتن رزرو",
     minWidth: "110px",
     cell: (row) => (
-      <div className="column-action d-flex gap-2 align-items-center">
-        <Check
-          className="cursor-pointer"
-          id={`accept-tooltip-${row.id}`}
-          onClick={() => {
-            AcceptCourseReserves(
-              row.courseId,
-              row.studentId,
-              "/Course/detail/" + row.courseId
-            );
-          }}
-        />
-        <UncontrolledTooltip
-          placement="top"
-          target={`accept-tooltip-${row.id}`}
-        >
-          تایید رزرو
-        </UncontrolledTooltip>
-        <X
-          className="cursor-pointer"
-          id={`reject-tooltip-${row.id}`}
-          onClick={() => {
-            DeleteCourseReserve(
-              row.reserveId,
-              "/Course/detail/" + row.courseId
-            );
-          }}
-        />
-        <UncontrolledTooltip
-          placement="top"
-          target={`reject-tooltip-${row.id}`}
-        >
-          لغو رزرو
-        </UncontrolledTooltip>
-      </div>
+      row.accept === false && (
+        <div className="column-action d-flex gap-2 align-items-center">
+          <Check
+            className="cursor-pointer"
+            id={`accept-tooltip-${row.id}`}
+            onClick={() => {
+              AcceptCourseReserves(
+                row.courseId,
+                row.studentId,
+                "/userList/userInfo/" + row.id
+              );
+            }}
+          />
+          <UncontrolledTooltip
+            placement="top"
+            target={`accept-tooltip-${row.id}`}
+          >
+            تایید رزرو
+          </UncontrolledTooltip>
+          <X
+            className="cursor-pointer"
+            id={`reject-tooltip-${row.id}`}
+            onClick={() => {
+              DeleteCourseReserve(
+                row.reserveId,
+                "/userList/userInfo/" + row.id
+              );
+            }}
+          />
+          <UncontrolledTooltip
+            placement="top"
+            target={`reject-tooltip-${row.id}`}
+          >
+            لغو رزرو
+          </UncontrolledTooltip>
+        </div>
+      )
     ),
   },
 ];

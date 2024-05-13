@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { Activity, User } from 'react-feather'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import UserList from '../UserList';
-import TeacherList from '../TeacherList';
-import AdminList from '../AdminList';
 import HandleUsersList from './HandleUsersList';
 import AddUSer from '../AddUser';
 

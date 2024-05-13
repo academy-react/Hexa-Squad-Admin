@@ -79,8 +79,7 @@ const DataTableServerSide = ({
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + rowsPerPage;
   const currentItems = data.length > 0 && data.slice(itemOffset, endOffset);
-  console.log("currentItems", currentItems);
-  console.log("data", data);
+
   // ** Function to handle filter
   const handleFilter = (e) => {
     const value = e.target.value;

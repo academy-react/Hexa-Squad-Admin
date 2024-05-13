@@ -5,12 +5,6 @@ import toast from "react-hot-toast";
 // ** Custom Components
 import Sidebar from '@components/sidebar'
 
-// ** Utils
-import { selectThemeColors } from '@utils'
-
-// ** Third Party Components
-import Select from 'react-select'
-import classnames from 'classnames'
 import { useForm, Controller } from 'react-hook-form'
 
 // ** Reactstrap Imports
@@ -101,30 +95,9 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     data.preventDefault()
     setData(data)
     if (checkIsValid(data)) {
-      // toggleSidebar()
-      // dispatch(
-      //   addUser({
-      //     role,
-      //     avatar: '',
-      //     status: 'active',
-      //     email: data.email,
-      //     currentPlan: plan,
-      //     billing: 'auto debit',
-      //     company: data.company,
-      //     contact: data.contact,
-      //     fullName: data.fullName,
-      //     username: data.username,
-      //     country: data.country.value
-      //   })
-      // )
       AddNewUser(data)
     } else {
       for (const key in data) {
-        // if (data[key] === null) {
-        //   setError('country', {
-        //     type: 'manual'
-        //   })
-        // }
         if (data[key] !== null && data[key].length === 0) {
           setError(key, {
             type: 'manual'
@@ -233,44 +206,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             <Input type="checkbox" id='isTeacher' name='isTeacher' checked={teacher} onChange={handleTeacherCheckbox}></Input>
           </div>
 
-
-          {/* <div className='mt-1'>
-            <span className='mx-8'>دانشجو</span>
-            <Controller
-              name='isStudent'
-              control={control}
-              render={({ field }) => (
-                <Input 
-                  type="checkbox" 
-                  id='isStudent' 
-                  name='isStudent' 
-                  invalid={errors.isStudent && true} {...field} 
-                  checked={student} 
-                  onChange={handleStudentCheckbox}
-                />
-              )}
-            />
-            <span className='ml-4'>استاد</span>
-            <Controller
-              name='isTeacher'
-              control={control}
-              render={({ field }) => (
-                <Input 
-                  type="checkbox" 
-                  id='isTeacher' 
-                  name='isTeacher' 
-                  invalid={errors.isTeacher && true} {...field} 
-                  checked={teacher} 
-                  onChange={handleTeacherCheckbox}
-                />
-              )}
-            />
-          </div> */}
-
         </div>
-
-
-
         
         {/* <div className='mb-2'>
           <Label className='form-label' for='user-role'>

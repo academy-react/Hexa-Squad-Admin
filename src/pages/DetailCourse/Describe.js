@@ -24,7 +24,7 @@ const Describe = ({ describe }) => {
           توضیحات دوره
         </CardTitle>
         {typeof Describe === "object" && Describe !== null ? (
-          <EditorJsComponent defaultData={Describe} />
+          <EditorJsComponent dontShowBtn={true} defaultData={Describe} />
         ) : (
           <p>{Describe}</p>
         )}

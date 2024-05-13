@@ -56,7 +56,7 @@ const EditProfile = () => {
       telegramLink: telegram, // 2
       homeAdderess: homeAdderess, // 1
       nationalCode: nationalCode, // 1
-      birthDay: birthDay, // 1
+      // birthDay: birthDay, // 1
     };
     try {
       const result = await instance.put("/User/UpdateUser", obj);

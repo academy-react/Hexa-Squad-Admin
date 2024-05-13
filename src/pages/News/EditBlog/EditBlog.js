@@ -8,11 +8,12 @@ import AddNewsInfo from "./Steps/AddNewsInfo";
 import AddNewsPhoto from "./Steps/AddNewsPhoto";
 import BreadCrumbs from "../../../@core/components/breadcrumbs";
 import instance from "../../../utility/interceptor";
+
 const EditProfile = () => {
   // get profile info
   const urlParam = useParams();
   const [newsInfo, setNewsInfo] = useState([]);
-  console.log(urlParam);
+
   const GetNewsInfo = async () => {
     try {
       const response = await instance.get(`/News/${urlParam.id}`);
@@ -58,9 +59,11 @@ const EditProfile = () => {
       Image: files[0], // 2
     };
     try {
-      const result = await instance.put("/News/UpdateNews", obj, {
+      const result = await toast.promise(instance.put("/News/UpdateNews", obj, {
         headers: { "Content-Type": "multipart/form-data" },
-      });
+      }),
+        { loading: "در حال ویرایش خبر" }
+      )
 
       if (result.success) {
         toast.success(result.message);
@@ -122,6 +125,10 @@ const EditProfile = () => {
         title={" ویرایش توضیحات بلاگ"}
         data={[
           { title: "لیست اخبار", link: "/NewsList" },
+          {
+            title: ` جزئیات ${newsInfo.title}`,
+            link: "/NewsDetails/" + urlParam.id,
+          },
           { title: "ویرایش اطلاعات اخبار", link: "/EditBlog/" + urlParam.id },
         ]}
       />
